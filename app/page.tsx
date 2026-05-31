@@ -1,3 +1,5 @@
-export default function Home() {
-  return <div>Habitflow</div>
+import { redirect } from "next/navigation"
+
+export default function RootPage() {
+  redirect("/dashboard")
 }
