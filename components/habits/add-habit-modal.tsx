@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react"
 import { Plus } from "lucide-react"
+import { toast } from "sonner"
 import { createHabit } from "@/actions/habit.actions"
 import type { HabitFormValues } from "@/lib/validations"
 import { Button } from "@/components/ui/button"
@@ -26,7 +27,9 @@ export function AddHabitModal() {
       const result = await createHabit(values)
       if (result?.error) {
         setError(result.error)
+        toast.error(result.error)
       } else {
+        toast.success(`"${values.name}" added to your tracker.`)
         setOpen(false)
       }
     })

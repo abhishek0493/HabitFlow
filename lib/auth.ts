@@ -4,6 +4,9 @@ import bcrypt from "bcryptjs"
 import { db } from "@/lib/db"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  // Trust the deployment host. Auth.js auto-trusts localhost in dev, but under
+  // `next start` / self-hosted production it throws UntrustedHost without this.
+  trustHost: true,
   session: { strategy: "jwt" },
   providers: [
     Credentials({

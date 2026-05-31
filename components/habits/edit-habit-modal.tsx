@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react"
 import { Pencil } from "lucide-react"
+import { toast } from "sonner"
 import { updateHabit } from "@/actions/habit.actions"
 import type { HabitFormValues } from "@/lib/validations"
 import { Button } from "@/components/ui/button"
@@ -35,7 +36,9 @@ export function EditHabitModal({ habit }: EditHabitModalProps) {
       const result = await updateHabit(habit.id, values)
       if (result?.error) {
         setError(result.error)
+        toast.error(result.error)
       } else {
+        toast.success("Habit updated.")
         setOpen(false)
       }
     })

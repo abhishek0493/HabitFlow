@@ -8,6 +8,8 @@ import {
   toDateString,
 } from "@/lib/date-utils"
 
+export const metadata = { title: "Dashboard" }
+
 export default async function DashboardPage({
   searchParams,
 }: {

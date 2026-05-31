@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react"
 import { Trash2 } from "lucide-react"
+import { toast } from "sonner"
 import { deleteHabit } from "@/actions/habit.actions"
 import { Button } from "@/components/ui/button"
 import {
@@ -30,8 +31,13 @@ export function DeleteHabitDialog({
 
   function handleConfirm() {
     startTransition(async () => {
-      await deleteHabit(habitId)
-      setOpen(false)
+      const result = await deleteHabit(habitId)
+      if (result?.error) {
+        toast.error(result.error)
+      } else {
+        toast.success(`"${habitName}" removed from your tracker.`)
+        setOpen(false)
+      }
     })
   }
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useTransition } from "react"
+import { useState, useTransition } from "react"
 import {
   DndContext,
   PointerSensor,
@@ -15,6 +15,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable"
 import { CalendarCheck2 } from "lucide-react"
+import { toast } from "sonner"
 import type { Habit } from "@/lib/generated/prisma/client"
 import { reorderHabits } from "@/actions/habit.actions"
 import { HabitItem } from "@/components/habits/habit-item"
@@ -29,9 +30,13 @@ export function HabitsClient({ initialHabits }: HabitsClientProps) {
   const [, startTransition] = useTransition()
 
   // Keep local state in sync when the server revalidates (add/edit/delete).
-  useEffect(() => {
+  // Sync during render (not in an effect) per React's "adjust state on prop
+  // change" pattern — avoids a cascading-render effect.
+  const [syncedHabits, setSyncedHabits] = useState(initialHabits)
+  if (syncedHabits !== initialHabits) {
+    setSyncedHabits(initialHabits)
     setHabits(initialHabits)
-  }, [initialHabits])
+  }
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -43,15 +48,23 @@ export function HabitsClient({ initialHabits }: HabitsClientProps) {
     const { active, over } = event
     if (!over || active.id === over.id) return
 
-    const oldIndex = habits.findIndex((h) => h.id === active.id)
-    const newIndex = habits.findIndex((h) => h.id === over.id)
-    if (oldIndex === -1 || newIndex === -1) return
+    setHabits((prev) => {
+      const oldIndex = prev.findIndex((h) => h.id === active.id)
+      const newIndex = prev.findIndex((h) => h.id === over.id)
+      if (oldIndex === -1 || newIndex === -1) return prev
 
-    const newOrder = arrayMove(habits, oldIndex, newIndex)
-    setHabits(newOrder) // optimistic update
+      const reordered = arrayMove(prev, oldIndex, newIndex)
 
-    startTransition(() => {
-      reorderHabits(newOrder.map((h) => h.id))
+      // Fire the server action in the background; revert on failure.
+      startTransition(async () => {
+        const result = await reorderHabits(reordered.map((h) => h.id))
+        if (result?.error) {
+          toast.error("Could not save new order. Please try again.")
+          setHabits(prev) // revert to the snapshot before the drag
+        }
+      })
+
+      return reordered
     })
   }
 

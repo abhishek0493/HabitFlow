@@ -1,6 +1,6 @@
 "use client"
 
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import {
@@ -24,6 +24,7 @@ interface GridHeaderProps {
   onNextPeriod: () => void
   onToday: () => void
   isCurrentPeriod: boolean
+  isFetching: boolean
 }
 
 export function GridHeader({
@@ -36,6 +37,7 @@ export function GridHeader({
   onNextPeriod,
   onToday,
   isCurrentPeriod,
+  isFetching,
 }: GridHeaderProps) {
   const periodLabel =
     view === "month"
@@ -53,8 +55,11 @@ export function GridHeader({
         <ChevronLeft className="h-4 w-4" />
       </Button>
 
-      <span className="min-w-[140px] text-center text-lg font-semibold text-gray-900">
+      <span className="flex min-w-[140px] items-center justify-center gap-2 text-center text-lg font-semibold text-gray-900">
         {periodLabel}
+        {isFetching && (
+          <Loader2 className="h-3.5 w-3.5 flex-shrink-0 animate-spin text-gray-400" />
+        )}
       </span>
 
       <Button

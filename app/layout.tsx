@@ -14,8 +14,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Habitflow",
-  description: "Track what matters, every day.",
+  title: {
+    default: "Habitflow",
+    template: "%s | Habitflow",
+  },
+  description: "Track your daily habits with a simple, visual grid.",
 };
 
 export default function RootLayout({

@@ -22,7 +22,7 @@ export function Sidebar() {
   const user = session?.user
 
   return (
-    <aside className="flex h-screen w-60 flex-col border-r border-gray-200 bg-gray-50">
+    <aside className="hidden h-screen w-60 flex-col border-r border-gray-200 bg-gray-50 md:flex">
       {/* Top — brand */}
       <div className="flex items-center gap-2 border-b border-gray-200 px-5 py-4">
         <CalendarCheck2 className="h-5 w-5 text-gray-900" />

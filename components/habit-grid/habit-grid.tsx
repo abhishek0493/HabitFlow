@@ -114,15 +114,19 @@ export function HabitGrid({
     }
   }, [view, monthYear, weekStart, todayString])
 
+  // Timestamp for the server-provided initialData, computed once on mount
+  // (kept out of render scope to satisfy the react-hooks purity rule).
+  const [initialDataUpdatedAt] = useState(() => Date.now())
+
   // ── Fetch logs for the visible period ─────────────────────────────────────
-  const { data: logs = [] } = useQuery({
+  const { data: logs = [], isFetching } = useQuery({
     queryKey: ["habitLogs", startDate, endDate],
     queryFn: () => getHabitLogs(startDate, endDate),
     initialData:
       startDate === initialStartDate && endDate === initialEndDate
         ? initialLogs
         : undefined,
-    initialDataUpdatedAt: Date.now(),
+    initialDataUpdatedAt,
   })
 
   // ── Toggle mutation with optimistic update ────────────────────────────────
@@ -251,6 +255,7 @@ export function HabitGrid({
         onNextPeriod={handleNextPeriod}
         onToday={handleToday}
         isCurrentPeriod={isCurrentPeriod}
+        isFetching={isFetching}
       />
 
       {habits.length > 0 && (
