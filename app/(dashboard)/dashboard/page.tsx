@@ -1,10 +1,28 @@
-export default function DashboardPage() {
+import { getHabits } from "@/actions/habit.actions"
+import { getHabitLogsForMonth } from "@/actions/log.actions"
+import { HabitGrid } from "@/components/habit-grid/habit-grid"
+
+export default async function DashboardPage() {
+  const today = new Date()
+  const year = today.getFullYear()
+  const month = today.getMonth() + 1
+
+  // Fetch both in parallel
+  const [habits, logs] = await Promise.all([
+    getHabits(),
+    getHabitLogsForMonth(year, month),
+  ])
+
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
-      <p className="text-gray-500 mt-2">
-        Your habit grid will appear here in Chunk 04.
-      </p>
+    <div className="p-6">
+      <div className="rounded-lg border bg-white shadow-sm">
+        <HabitGrid
+          initialHabits={habits}
+          initialLogs={logs}
+          initialYear={year}
+          initialMonth={month}
+        />
+      </div>
     </div>
   )
 }
