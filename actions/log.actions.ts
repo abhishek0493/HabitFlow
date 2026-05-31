@@ -38,6 +38,34 @@ export type HabitLogEntry = Awaited<
   ReturnType<typeof getHabitLogsForMonth>
 >[number]
 
+// ─── Fetch logs for any arbitrary date range (used by both views) ─────────────
+
+export async function getHabitLogs(startDate: string, endDate: string) {
+  const session = await auth()
+  if (!session?.user?.id) return []
+
+  const start = new Date(`${startDate}T00:00:00.000Z`)
+  const end = new Date(`${endDate}T00:00:00.000Z`)
+
+  const logs = await db.habitLog.findMany({
+    where: {
+      habit: { userId: session.user.id, isActive: true },
+      date: { gte: start, lte: end },
+    },
+    select: {
+      habitId: true,
+      date: true,
+      completed: true,
+    },
+  })
+
+  return logs.map((log) => ({
+    habitId: log.habitId,
+    date: log.date.toISOString().split("T")[0],
+    completed: log.completed,
+  }))
+}
+
 // ─── Toggle a single log entry ────────────────────────────────────────────────
 
 export async function toggleHabitLog(habitId: string, date: string) {

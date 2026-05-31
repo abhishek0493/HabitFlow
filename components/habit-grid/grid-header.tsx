@@ -2,45 +2,66 @@
 
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { getMonthName } from "@/lib/date-utils"
+import { cn } from "@/lib/utils"
+import {
+  getMonthName,
+  getWeekDays,
+  formatWeekRange,
+} from "@/lib/date-utils"
+
+type ViewMode = "month" | "week"
 
 interface GridHeaderProps {
+  // Month view
   year: number
   month: number
-  onPrevMonth: () => void
-  onNextMonth: () => void
+  // Week view
+  weekStart: Date
+  // Shared
+  view: ViewMode
+  onViewChange: (view: ViewMode) => void
+  onPrevPeriod: () => void
+  onNextPeriod: () => void
   onToday: () => void
-  isCurrentMonth: boolean
+  isCurrentPeriod: boolean
 }
 
 export function GridHeader({
   year,
   month,
-  onPrevMonth,
-  onNextMonth,
+  weekStart,
+  view,
+  onViewChange,
+  onPrevPeriod,
+  onNextPeriod,
   onToday,
-  isCurrentMonth,
+  isCurrentPeriod,
 }: GridHeaderProps) {
+  const periodLabel =
+    view === "month"
+      ? `${getMonthName(month)} ${year}`
+      : formatWeekRange(getWeekDays(weekStart)[0], getWeekDays(weekStart)[6])
+
   return (
-    <div className="flex items-center gap-2 border-b p-4">
+    <div className="flex flex-wrap items-center gap-3 border-b p-4">
       <Button
         variant="ghost"
         size="icon"
-        onClick={onPrevMonth}
-        aria-label="Previous month"
+        onClick={onPrevPeriod}
+        aria-label="Previous period"
       >
         <ChevronLeft className="h-4 w-4" />
       </Button>
 
       <span className="min-w-[140px] text-center text-lg font-semibold text-gray-900">
-        {getMonthName(month)} {year}
+        {periodLabel}
       </span>
 
       <Button
         variant="ghost"
         size="icon"
-        onClick={onNextMonth}
-        aria-label="Next month"
+        onClick={onNextPeriod}
+        aria-label="Next period"
       >
         <ChevronRight className="h-4 w-4" />
       </Button>
@@ -49,11 +70,38 @@ export function GridHeader({
         variant="outline"
         size="sm"
         onClick={onToday}
-        disabled={isCurrentMonth}
-        className="ml-auto"
+        disabled={isCurrentPeriod}
       >
         Today
       </Button>
+
+      {/* View toggle — segmented control */}
+      <div className="ml-auto flex overflow-hidden rounded-md border border-gray-200">
+        <button
+          type="button"
+          onClick={() => onViewChange("month")}
+          className={cn(
+            "px-3 py-1.5 text-sm font-medium transition-colors",
+            view === "month"
+              ? "bg-gray-900 text-white"
+              : "bg-white text-gray-600 hover:bg-gray-50"
+          )}
+        >
+          Month
+        </button>
+        <button
+          type="button"
+          onClick={() => onViewChange("week")}
+          className={cn(
+            "border-l border-gray-200 px-3 py-1.5 text-sm font-medium transition-colors",
+            view === "week"
+              ? "bg-gray-900 text-white"
+              : "bg-white text-gray-600 hover:bg-gray-50"
+          )}
+        >
+          Week
+        </button>
+      </div>
     </div>
   )
 }

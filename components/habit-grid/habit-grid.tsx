@@ -1,49 +1,127 @@
 "use client"
 
-import React, { useMemo, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { CalendarCheck2 } from "lucide-react"
 import type { Habit } from "@/lib/generated/prisma/client"
-import {
-  getHabitLogsForMonth,
-  toggleHabitLog,
-  type HabitLogEntry,
-} from "@/actions/log.actions"
+import { getHabitLogs, toggleHabitLog, type HabitLogEntry } from "@/actions/log.actions"
 import {
   getDaysInMonth,
   buildDateString,
   getTodayString,
+  toDateString,
   shiftMonth,
+  getWeekStart,
+  getWeekDays,
+  getShortDayName,
+  shiftWeek,
 } from "@/lib/date-utils"
 import { cn } from "@/lib/utils"
 import { GridHeader } from "@/components/habit-grid/grid-header"
 import { GridCell } from "@/components/habit-grid/grid-cell"
 
+type ViewMode = "month" | "week"
+
+type DisplayColumn = {
+  date: string // "YYYY-MM-DD"
+  label: string // "15"
+  dayName?: string // "Mon" — only in week view
+  isToday: boolean
+}
+
 interface HabitGridProps {
   initialHabits: Habit[]
   initialLogs: HabitLogEntry[]
-  initialYear: number
-  initialMonth: number
+  initialView: ViewMode // view the server resolved from searchParams
+  initialStartDate: string // start of the period the server fetched
+  initialEndDate: string // end of the period the server fetched
 }
 
 export function HabitGrid({
   initialHabits,
   initialLogs,
-  initialYear,
-  initialMonth,
+  initialView,
+  initialStartDate,
+  initialEndDate,
 }: HabitGridProps) {
   const habits = initialHabits
   const today = new Date()
-  const [year, setYear] = useState(initialYear)
-  const [month, setMonth] = useState(initialMonth)
   const todayString = getTodayString()
 
-  // ── Fetch logs for the visible month ──────────────────────────────────────
+  // Initialise state from the server-resolved view/date so SSR renders the
+  // correct view immediately (no month→week flash on direct/bookmarked week
+  // URLs). initialStartDate is the period start ("YYYY-MM-DD"): the 1st of the
+  // month for month view, or the week's Monday for week view.
+  const [view, setView] = useState<ViewMode>(initialView)
+  const [monthYear, setMonthYear] = useState(() => {
+    if (initialView === "month") {
+      const [y, m] = initialStartDate.split("-").map(Number)
+      if (y && m) return { year: y, month: m }
+    }
+    return { year: today.getFullYear(), month: today.getMonth() + 1 }
+  })
+  const [weekStart, setWeekStart] = useState(() => {
+    if (initialView === "week") {
+      return new Date(`${initialStartDate}T00:00:00.000Z`)
+    }
+    return getWeekStart(today)
+  })
+
+  // ── Keep the URL in sync whenever view or date changes ────────────────────
+  useEffect(() => {
+    const params = new URLSearchParams()
+    params.set("view", view)
+    if (view === "month") {
+      params.set("date", buildDateString(monthYear.year, monthYear.month, 1))
+    } else {
+      params.set("date", toDateString(weekStart))
+    }
+    window.history.replaceState(null, "", `?${params.toString()}`)
+  }, [view, monthYear, weekStart])
+
+  // ── Derived display columns + the fetch range ─────────────────────────────
+  const { startDate, endDate, displayColumns } = useMemo<{
+    startDate: string
+    endDate: string
+    displayColumns: DisplayColumn[]
+  }>(() => {
+    if (view === "month") {
+      const { year, month } = monthYear
+      const days = getDaysInMonth(year, month)
+      return {
+        startDate: buildDateString(year, month, 1),
+        endDate: buildDateString(year, month, days),
+        displayColumns: Array.from({ length: days }, (_, i) => {
+          const date = buildDateString(year, month, i + 1)
+          return { date, label: String(i + 1), isToday: date === todayString }
+        }),
+      }
+    } else {
+      const days = getWeekDays(weekStart)
+      return {
+        startDate: toDateString(days[0]),
+        endDate: toDateString(days[6]),
+        displayColumns: days.map((d) => {
+          const date = toDateString(d)
+          return {
+            date,
+            label: String(d.getDate()),
+            dayName: getShortDayName(d),
+            isToday: date === todayString,
+          }
+        }),
+      }
+    }
+  }, [view, monthYear, weekStart, todayString])
+
+  // ── Fetch logs for the visible period ─────────────────────────────────────
   const { data: logs = [] } = useQuery({
-    queryKey: ["habitLogs", year, month],
-    queryFn: () => getHabitLogsForMonth(year, month),
+    queryKey: ["habitLogs", startDate, endDate],
+    queryFn: () => getHabitLogs(startDate, endDate),
     initialData:
-      year === initialYear && month === initialMonth ? initialLogs : undefined,
+      startDate === initialStartDate && endDate === initialEndDate
+        ? initialLogs
+        : undefined,
     initialDataUpdatedAt: Date.now(),
   })
 
@@ -55,16 +133,18 @@ export function HabitGrid({
       toggleHabitLog(habitId, date),
 
     onMutate: async ({ habitId, date }) => {
-      await queryClient.cancelQueries({ queryKey: ["habitLogs", year, month] })
+      await queryClient.cancelQueries({
+        queryKey: ["habitLogs", startDate, endDate],
+      })
 
       const previousLogs = queryClient.getQueryData<HabitLogEntry[]>([
         "habitLogs",
-        year,
-        month,
+        startDate,
+        endDate,
       ])
 
       queryClient.setQueryData<HabitLogEntry[]>(
-        ["habitLogs", year, month],
+        ["habitLogs", startDate, endDate],
         (old = []) => {
           const exists = old.some(
             (l) => l.habitId === habitId && l.date === date
@@ -84,14 +164,16 @@ export function HabitGrid({
     onError: (_err, _variables, context) => {
       if (context?.previousLogs) {
         queryClient.setQueryData(
-          ["habitLogs", year, month],
+          ["habitLogs", startDate, endDate],
           context.previousLogs
         )
       }
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["habitLogs", year, month] })
+      queryClient.invalidateQueries({
+        queryKey: ["habitLogs", startDate, endDate],
+      })
     },
   })
 
@@ -100,68 +182,124 @@ export function HabitGrid({
     return new Set(logs.map((l) => `${l.habitId}:${l.date}`))
   }, [logs])
 
-  // ── Month navigation ──────────────────────────────────────────────────────
-  const handlePrevMonth = () => {
-    const shifted = shiftMonth(year, month, -1)
-    setYear(shifted.year)
-    setMonth(shifted.month)
+  // ── Period navigation ─────────────────────────────────────────────────────
+  const handlePrevPeriod = () => {
+    if (view === "month") {
+      setMonthYear((prev) => shiftMonth(prev.year, prev.month, -1))
+    } else {
+      setWeekStart((prev) => shiftWeek(prev, -1))
+    }
   }
 
-  const handleNextMonth = () => {
-    const shifted = shiftMonth(year, month, 1)
-    setYear(shifted.year)
-    setMonth(shifted.month)
+  const handleNextPeriod = () => {
+    if (view === "month") {
+      setMonthYear((prev) => shiftMonth(prev.year, prev.month, 1))
+    } else {
+      setWeekStart((prev) => shiftWeek(prev, 1))
+    }
   }
 
   const handleToday = () => {
-    setYear(today.getFullYear())
-    setMonth(today.getMonth() + 1)
+    const now = new Date()
+    if (view === "month") {
+      setMonthYear({ year: now.getFullYear(), month: now.getMonth() + 1 })
+    } else {
+      setWeekStart(getWeekStart(now))
+    }
   }
 
-  const isCurrentMonth =
-    year === today.getFullYear() && month === today.getMonth() + 1
+  const isCurrentPeriod = (() => {
+    const now = new Date()
+    if (view === "month") {
+      return (
+        monthYear.year === now.getFullYear() &&
+        monthYear.month === now.getMonth() + 1
+      )
+    }
+    return toDateString(weekStart) === toDateString(getWeekStart(now))
+  })()
+
+  const handleViewChange = (newView: ViewMode) => {
+    if (newView === "week" && view === "month") {
+      // Switch to week: show the week containing the 1st of the displayed month
+      const anchor = new Date(monthYear.year, monthYear.month - 1, 1)
+      setWeekStart(getWeekStart(anchor))
+    } else if (newView === "month" && view === "week") {
+      // Switch to month: show the month containing the week start
+      setMonthYear({
+        year: weekStart.getFullYear(),
+        month: weekStart.getMonth() + 1,
+      })
+    }
+    setView(newView)
+  }
 
   // ── Grid geometry ─────────────────────────────────────────────────────────
-  const daysInMonth = getDaysInMonth(year, month)
-  const days = Array.from({ length: daysInMonth }, (_, i) => i + 1)
-  const gridTemplateColumns = `160px repeat(${daysInMonth}, 34px)`
+  const colWidth = view === "week" ? "80px" : "34px"
+  const gridTemplateColumns = `160px repeat(${displayColumns.length}, ${colWidth})`
+  const headerHeight = view === "week" ? "h-14" : "h-10"
 
   return (
     <div>
       <GridHeader
-        year={year}
-        month={month}
-        onPrevMonth={handlePrevMonth}
-        onNextMonth={handleNextMonth}
+        year={monthYear.year}
+        month={monthYear.month}
+        weekStart={weekStart}
+        view={view}
+        onViewChange={handleViewChange}
+        onPrevPeriod={handlePrevPeriod}
+        onNextPeriod={handleNextPeriod}
         onToday={handleToday}
-        isCurrentMonth={isCurrentMonth}
+        isCurrentPeriod={isCurrentPeriod}
       />
 
       {habits.length > 0 && (
         <div className="overflow-x-auto">
           {/* w-max sizes the grid box to its content (sum of tracks) so the
-              sticky name column pins across the full scroll width, not just
-              the first viewport's worth. */}
+              sticky name column pins across the full scroll width. */}
           <div className="grid w-max" style={{ gridTemplateColumns }}>
             {/* ── Date header row ── */}
-            <div className="sticky left-0 z-20 h-10 border-b border-r border-gray-100 bg-white" />
-            {days.map((day) => {
-              const dateString = buildDateString(year, month, day)
-              const isDayToday = dateString === todayString
-              return (
-                <div
-                  key={day}
+            <div
+              className={cn(
+                "sticky left-0 z-20 border-b border-r border-gray-100 bg-white",
+                headerHeight
+              )}
+            />
+            {displayColumns.map((col) => (
+              <div
+                key={col.date}
+                className={cn(
+                  "flex select-none flex-col items-center justify-center border-b border-r border-gray-100",
+                  headerHeight
+                )}
+              >
+                {col.dayName && (
+                  <span
+                    className={cn(
+                      "mb-0.5 text-xs",
+                      col.isToday
+                        ? "font-medium text-blue-500"
+                        : "text-gray-400"
+                    )}
+                  >
+                    {col.dayName}
+                  </span>
+                )}
+                {col.isToday && view === "week" && (
+                  <span className="mb-1 h-1 w-1 rounded-full bg-blue-500" />
+                )}
+                <span
                   className={cn(
-                    "flex h-10 select-none items-center justify-center border-b border-r border-gray-100 text-xs",
-                    isDayToday
+                    "text-xs",
+                    col.isToday
                       ? "font-bold text-blue-600"
                       : "font-medium text-gray-500"
                   )}
                 >
-                  {day}
-                </div>
-              )
-            })}
+                  {col.label}
+                </span>
+              </div>
+            ))}
 
             {/* ── Habit rows ── */}
             {habits.map((habit) => (
@@ -179,23 +317,20 @@ export function HabitGrid({
                   </span>
                 </div>
 
-                {days.map((day) => {
-                  const dateString = buildDateString(year, month, day)
-                  const isCompleted = completedSet.has(
-                    `${habit.id}:${dateString}`
-                  )
-                  const isFuture = dateString > todayString
-                  const isToday = dateString === todayString
+                {displayColumns.map((col) => {
+                  const isCompleted = completedSet.has(`${habit.id}:${col.date}`)
+                  const isFuture = col.date > todayString
+                  const isToday = col.date === todayString
 
                   return (
                     <GridCell
-                      key={day}
+                      key={col.date}
                       isCompleted={isCompleted}
                       isFuture={isFuture}
                       isToday={isToday}
                       color={habit.color}
                       onClick={() =>
-                        toggleLog({ habitId: habit.id, date: dateString })
+                        toggleLog({ habitId: habit.id, date: col.date })
                       }
                     />
                   )
