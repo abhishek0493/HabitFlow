@@ -4,12 +4,19 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { signOut, useSession } from "next-auth/react"
 import { motion } from "motion/react"
-import { CalendarCheck2, LayoutDashboard, ListTodo, LogOut } from "lucide-react"
+import {
+  BookOpen,
+  CalendarCheck2,
+  LayoutDashboard,
+  ListTodo,
+  LogOut,
+} from "lucide-react"
 import { cn } from "@/lib/utils"
 import { ThemeToggle } from "@/components/theme-toggle"
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/journal", label: "Journal", icon: BookOpen },
   { href: "/habits", label: "Habits", icon: ListTodo },
 ]
 

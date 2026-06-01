@@ -10,12 +10,13 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  password  String
-  habits    Habit[]
-  createdAt DateTime @default(now())
+  id             String         @id @default(cuid())
+  email          String         @unique
+  name           String?
+  password       String
+  habits         Habit[]
+  journalEntries JournalEntry[]
+  createdAt      DateTime       @default(now())
 }
 
 model Habit {
@@ -42,5 +43,21 @@ model HabitLog {
   createdAt DateTime @default(now())
 
   @@unique([habitId, date])
+  @@index([date])
+}
+
+model JournalEntry {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date      DateTime @db.Date
+  content   String   @db.Text
+  mood      Int?
+  wordCount Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, date])
+  @@index([userId])
   @@index([date])
 }
