@@ -37,15 +37,16 @@ export function HabitItem({ habit }: HabitItemProps) {
       ref={setNodeRef}
       style={style}
       className={cn(
-        "group flex items-center gap-3 px-4 py-3 transition-colors hover:bg-gray-50",
-        isDragging && "relative z-10 rounded-md bg-white shadow-lg"
+        "group flex items-center gap-3 px-4 py-3 transition-colors hover:bg-accent/50",
+        isDragging &&
+          "relative z-10 rounded-xl bg-card shadow-xl ring-1 ring-border"
       )}
     >
       {/* Drag handle */}
       <button
         type="button"
         aria-label="Drag to reorder"
-        className="cursor-grab touch-none text-gray-400 active:cursor-grabbing"
+        className="cursor-grab touch-none text-muted-foreground/50 transition-colors hover:text-muted-foreground active:cursor-grabbing"
         {...attributes}
         {...listeners}
       >
@@ -54,8 +55,11 @@ export function HabitItem({ habit }: HabitItemProps) {
 
       {/* Colour dot */}
       <span
-        className="h-4 w-4 shrink-0 rounded-full"
-        style={{ backgroundColor: habit.color }}
+        className="h-4 w-4 shrink-0 rounded-full ring-2 ring-inset ring-white/20"
+        style={{
+          backgroundColor: habit.color,
+          boxShadow: `0 0 8px -1px ${habit.color}80`,
+        }}
         aria-hidden
       />
 
@@ -65,7 +69,7 @@ export function HabitItem({ habit }: HabitItemProps) {
       )}
 
       {/* Name */}
-      <span className="text-sm font-medium text-gray-900">{habit.name}</span>
+      <span className="text-sm font-medium text-foreground">{habit.name}</span>
 
       {/* Spacer */}
       <span className="flex-1" />

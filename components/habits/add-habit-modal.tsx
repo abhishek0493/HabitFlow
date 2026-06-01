@@ -48,7 +48,7 @@ export function AddHabitModal() {
             Choose a name, colour, and optional emoji.
           </DialogDescription>
         </DialogHeader>
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && <p className="text-sm text-destructive">{error}</p>}
         <HabitForm
           onSubmit={handleSubmit}
           isPending={isPending}

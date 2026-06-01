@@ -2,17 +2,12 @@
 
 import { useState, useTransition } from "react"
 import Link from "next/link"
+import { motion } from "motion/react"
+import { CalendarCheck2 } from "lucide-react"
 import { registerUser } from "@/actions/auth.actions"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card"
 
 export default function RegisterPage() {
   const [name, setName] = useState("")
@@ -26,19 +21,28 @@ export default function RegisterPage() {
     setError("")
     startTransition(async () => {
       const result = await registerUser({ name, email, password })
-      if (result?.error) {
-        setError(result.error)
-      }
+      if (result?.error) setError(result.error)
     })
   }
 
   return (
-    <Card className="w-full max-w-[400px] shadow-sm">
-      <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-bold">Habitflow</CardTitle>
-        <CardDescription>Start building better habits today.</CardDescription>
-      </CardHeader>
-      <CardContent>
+    <motion.div
+      initial={{ opacity: 0, y: 16, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      className="w-full max-w-[400px]"
+    >
+      <div className="mb-6 flex flex-col items-center text-center">
+        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-gradient shadow-lg shadow-brand/30">
+          <CalendarCheck2 className="h-6 w-6 text-white" />
+        </div>
+        <h1 className="text-2xl font-bold tracking-tight">Create your account</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Start building better habits today.
+        </p>
+      </div>
+
+      <div className="glass rounded-2xl border border-border p-6 shadow-xl shadow-black/5">
         <form onSubmit={onSubmit} className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <Label htmlFor="name">Name</Label>
@@ -72,23 +76,39 @@ export default function RegisterPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <p className="text-xs text-gray-500">Min. 8 characters</p>
+            <p className="text-xs text-muted-foreground">Min. 8 characters</p>
           </div>
 
-          {error && <p className="text-sm text-red-600">{error}</p>}
+          {error && (
+            <motion.p
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-sm text-destructive"
+            >
+              {error}
+            </motion.p>
+          )}
 
-          <Button type="submit" className="w-full" disabled={isPending}>
+          <Button
+            type="submit"
+            size="lg"
+            className="mt-1 w-full bg-brand-gradient text-white shadow-md shadow-brand/25 transition-all hover:shadow-lg hover:shadow-brand/40 hover:brightness-105"
+            disabled={isPending}
+          >
             {isPending ? "Creating account…" : "Create account"}
           </Button>
         </form>
 
-        <p className="mt-4 text-center text-sm text-gray-500">
+        <p className="mt-5 text-center text-sm text-muted-foreground">
           Already have an account?{" "}
-          <Link href="/login" className="font-medium text-gray-900 underline">
+          <Link
+            href="/login"
+            className="font-medium text-brand underline-offset-4 hover:underline"
+          >
             Sign in
           </Link>
         </p>
-      </CardContent>
-    </Card>
+      </div>
+    </motion.div>
   )
 }

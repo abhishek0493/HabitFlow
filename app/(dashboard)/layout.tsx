@@ -15,7 +15,7 @@ export default async function DashboardLayout({
 
   return (
     <SessionProvider session={session}>
-      <div className="flex h-screen bg-gray-50">
+      <div className="flex h-screen bg-background">
         {/* Desktop sidebar (hidden on mobile via class inside Sidebar) */}
         <Sidebar />
 

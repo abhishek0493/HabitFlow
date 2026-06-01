@@ -59,7 +59,7 @@ export function EditHabitModal({ habit }: EditHabitModalProps) {
             Update the name, colour, or emoji for this habit.
           </DialogDescription>
         </DialogHeader>
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && <p className="text-sm text-destructive">{error}</p>}
         <HabitForm
           defaultValues={{
             name: habit.name,

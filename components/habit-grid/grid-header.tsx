@@ -1,6 +1,7 @@
 "use client"
 
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react"
+import { motion } from "motion/react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import {
@@ -45,20 +46,21 @@ export function GridHeader({
       : formatWeekRange(getWeekDays(weekStart)[0], getWeekDays(weekStart)[6])
 
   return (
-    <div className="flex flex-wrap items-center gap-3 border-b p-4">
+    <div className="flex flex-wrap items-center gap-2 border-b border-border p-4">
       <Button
         variant="ghost"
         size="icon"
         onClick={onPrevPeriod}
         aria-label="Previous period"
+        className="rounded-full"
       >
         <ChevronLeft className="h-4 w-4" />
       </Button>
 
-      <span className="flex min-w-[140px] items-center justify-center gap-2 text-center text-lg font-semibold text-gray-900">
+      <span className="flex min-w-[150px] items-center justify-center gap-2 text-center text-lg font-semibold tracking-tight text-foreground">
         {periodLabel}
         {isFetching && (
-          <Loader2 className="h-3.5 w-3.5 flex-shrink-0 animate-spin text-gray-400" />
+          <Loader2 className="h-3.5 w-3.5 flex-shrink-0 animate-spin text-brand" />
         )}
       </span>
 
@@ -67,6 +69,7 @@ export function GridHeader({
         size="icon"
         onClick={onNextPeriod}
         aria-label="Next period"
+        className="rounded-full"
       >
         <ChevronRight className="h-4 w-4" />
       </Button>
@@ -76,36 +79,38 @@ export function GridHeader({
         size="sm"
         onClick={onToday}
         disabled={isCurrentPeriod}
+        className="rounded-full"
       >
         Today
       </Button>
 
-      {/* View toggle — segmented control */}
-      <div className="ml-auto flex overflow-hidden rounded-md border border-gray-200">
-        <button
-          type="button"
-          onClick={() => onViewChange("month")}
-          className={cn(
-            "px-3 py-1.5 text-sm font-medium transition-colors",
-            view === "month"
-              ? "bg-gray-900 text-white"
-              : "bg-white text-gray-600 hover:bg-gray-50"
-          )}
-        >
-          Month
-        </button>
-        <button
-          type="button"
-          onClick={() => onViewChange("week")}
-          className={cn(
-            "border-l border-gray-200 px-3 py-1.5 text-sm font-medium transition-colors",
-            view === "week"
-              ? "bg-gray-900 text-white"
-              : "bg-white text-gray-600 hover:bg-gray-50"
-          )}
-        >
-          Week
-        </button>
+      {/* View toggle — segmented control with a sliding indicator */}
+      <div className="ml-auto flex rounded-full border border-border bg-muted/60 p-0.5">
+        {(["month", "week"] as const).map((mode) => {
+          const active = view === mode
+          return (
+            <button
+              key={mode}
+              type="button"
+              onClick={() => onViewChange(mode)}
+              className={cn(
+                "relative rounded-full px-3.5 py-1.5 text-sm font-medium capitalize transition-colors",
+                active
+                  ? "text-white"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {active && (
+                <motion.span
+                  layoutId="view-indicator"
+                  className="absolute inset-0 -z-0 rounded-full bg-brand-gradient shadow-sm shadow-brand/30"
+                  transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                />
+              )}
+              <span className="relative z-10">{mode}</span>
+            </button>
+          )
+        })}
       </div>
     </div>
   )

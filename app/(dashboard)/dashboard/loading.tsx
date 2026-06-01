@@ -2,8 +2,8 @@ import { GridSkeleton } from "@/components/habit-grid/grid-skeleton"
 
 export default function DashboardLoading() {
   return (
-    <div className="p-6">
-      <div className="rounded-lg border bg-white shadow-sm">
+    <div className="p-4 sm:p-6">
+      <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
         <GridSkeleton />
       </div>
     </div>

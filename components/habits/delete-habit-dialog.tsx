@@ -48,7 +48,7 @@ export function DeleteHabitDialog({
           <Button
             variant="ghost"
             size="icon"
-            className="text-gray-500 hover:text-red-600"
+            className="text-muted-foreground hover:text-destructive"
           />
         }
         aria-label={`Delete ${habitName}`}

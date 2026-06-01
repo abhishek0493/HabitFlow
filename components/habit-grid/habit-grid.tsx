@@ -266,7 +266,7 @@ export function HabitGrid({
             {/* ── Date header row ── */}
             <div
               className={cn(
-                "sticky left-0 z-20 border-b border-r border-gray-100 bg-white",
+                "sticky left-0 z-20 border-b border-r border-border bg-card",
                 headerHeight
               )}
             />
@@ -274,8 +274,9 @@ export function HabitGrid({
               <div
                 key={col.date}
                 className={cn(
-                  "flex select-none flex-col items-center justify-center border-b border-r border-gray-100",
-                  headerHeight
+                  "flex select-none flex-col items-center justify-center border-b border-r border-border",
+                  headerHeight,
+                  col.isToday && "bg-brand/5"
                 )}
               >
                 {col.dayName && (
@@ -283,22 +284,22 @@ export function HabitGrid({
                     className={cn(
                       "mb-0.5 text-xs",
                       col.isToday
-                        ? "font-medium text-blue-500"
-                        : "text-gray-400"
+                        ? "font-medium text-brand"
+                        : "text-muted-foreground/70"
                     )}
                   >
                     {col.dayName}
                   </span>
                 )}
                 {col.isToday && view === "week" && (
-                  <span className="mb-1 h-1 w-1 rounded-full bg-blue-500" />
+                  <span className="mb-1 h-1 w-1 rounded-full bg-brand" />
                 )}
                 <span
                   className={cn(
                     "text-xs",
                     col.isToday
-                      ? "font-bold text-blue-600"
-                      : "font-medium text-gray-500"
+                      ? "font-bold text-brand"
+                      : "font-medium text-muted-foreground"
                   )}
                 >
                   {col.label}
@@ -309,15 +310,15 @@ export function HabitGrid({
             {/* ── Habit rows ── */}
             {habits.map((habit) => (
               <React.Fragment key={habit.id}>
-                <div className="sticky left-0 z-10 flex h-9 items-center gap-2 border-b border-r border-gray-100 bg-white px-3">
-                  <div
-                    className="h-3 w-3 flex-shrink-0 rounded-full"
+                <div className="sticky left-0 z-10 flex h-9 items-center gap-2 border-b border-r border-border bg-card px-3">
+                  <span
+                    className="h-3 w-3 flex-shrink-0 rounded-full ring-2 ring-inset ring-white/20"
                     style={{ backgroundColor: habit.color }}
                   />
                   {habit.emoji && (
                     <span className="text-sm leading-none">{habit.emoji}</span>
                   )}
-                  <span className="truncate text-sm font-medium text-gray-700">
+                  <span className="truncate text-sm font-medium text-foreground/90">
                     {habit.name}
                   </span>
                 </div>
@@ -349,13 +350,18 @@ export function HabitGrid({
       {/* Empty state */}
       {habits.length === 0 && (
         <div className="flex flex-col items-center justify-center px-6 py-20 text-center">
-          <CalendarCheck2 className="mb-4 h-12 w-12 text-gray-300" />
-          <p className="text-base font-medium text-gray-700">
+          <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand/10 ring-1 ring-inset ring-brand/20">
+            <CalendarCheck2 className="h-8 w-8 text-brand" />
+          </div>
+          <p className="text-base font-medium text-foreground">
             No habits to track yet
           </p>
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-muted-foreground">
             Go to{" "}
-            <a href="/habits" className="text-blue-600 hover:underline">
+            <a
+              href="/habits"
+              className="font-medium text-brand underline-offset-4 hover:underline"
+            >
               Habits
             </a>{" "}
             to add your first habit.

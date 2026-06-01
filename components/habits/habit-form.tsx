@@ -48,7 +48,7 @@ export function HabitForm({
           {...register("name")}
         />
         {errors.name && (
-          <p className="text-sm text-red-600">{errors.name.message}</p>
+          <p className="text-sm text-destructive">{errors.name.message}</p>
         )}
       </div>
 
@@ -63,7 +63,7 @@ export function HabitForm({
           )}
         />
         {errors.color && (
-          <p className="text-sm text-red-600">{errors.color.message}</p>
+          <p className="text-sm text-destructive">{errors.color.message}</p>
         )}
       </div>
 
@@ -71,9 +71,9 @@ export function HabitForm({
       <div className="flex flex-col gap-2">
         <Label htmlFor="habit-emoji">Emoji (optional)</Label>
         <Input id="habit-emoji" placeholder="e.g. 🏋️" {...register("emoji")} />
-        <p className="text-xs text-gray-500">Paste or type a single emoji</p>
+        <p className="text-xs text-muted-foreground">Paste or type a single emoji</p>
         {errors.emoji && (
-          <p className="text-sm text-red-600">{errors.emoji.message}</p>
+          <p className="text-sm text-destructive">{errors.emoji.message}</p>
         )}
       </div>
 

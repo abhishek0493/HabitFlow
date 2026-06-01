@@ -3,13 +3,10 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { signOut, useSession } from "next-auth/react"
-import {
-  CalendarCheck2,
-  LayoutDashboard,
-  ListTodo,
-  LogOut,
-} from "lucide-react"
+import { motion } from "motion/react"
+import { CalendarCheck2, LayoutDashboard, ListTodo, LogOut } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -20,54 +17,76 @@ export function Sidebar() {
   const pathname = usePathname()
   const { data: session } = useSession()
   const user = session?.user
+  const initial = (user?.name ?? user?.email ?? "?").charAt(0).toUpperCase()
 
   return (
-    <aside className="hidden h-screen w-60 flex-col border-r border-gray-200 bg-gray-50 md:flex">
+    <aside className="hidden h-screen w-64 flex-col border-r border-sidebar-border bg-sidebar/80 backdrop-blur-xl md:flex">
       {/* Top — brand */}
-      <div className="flex items-center gap-2 border-b border-gray-200 px-5 py-4">
-        <CalendarCheck2 className="h-5 w-5 text-gray-900" />
-        <span className="text-lg font-semibold text-gray-900">Habitflow</span>
+      <div className="flex items-center gap-2.5 px-5 py-5">
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-gradient shadow-lg shadow-brand/25">
+          <CalendarCheck2 className="h-5 w-5 text-white" />
+        </div>
+        <span className="text-lg font-semibold tracking-tight">Habitflow</span>
       </div>
 
       {/* Middle — nav */}
       <nav className="flex flex-1 flex-col gap-1 p-3">
         {navItems.map(({ href, label, icon: Icon }) => {
-          const isActive =
-            pathname === href || pathname.startsWith(`${href}/`)
+          const isActive = pathname === href || pathname.startsWith(`${href}/`)
           return (
             <Link
               key={href}
               href={href}
               className={cn(
-                "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                "group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                 isActive
-                  ? "bg-gray-200 text-gray-900"
-                  : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                  ? "text-sidebar-accent-foreground"
+                  : "text-muted-foreground hover:text-foreground"
               )}
             >
-              <Icon className="h-4 w-4" />
+              {isActive && (
+                <motion.span
+                  layoutId="sidebar-active"
+                  className="absolute inset-0 -z-10 rounded-lg bg-sidebar-accent"
+                  transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                />
+              )}
+              <Icon
+                className={cn(
+                  "h-4 w-4 transition-transform duration-200 group-hover:scale-110",
+                  isActive && "text-brand"
+                )}
+              />
               {label}
             </Link>
           )
         })}
       </nav>
 
-      {/* Bottom — user + sign out */}
-      <div className="border-t border-gray-200 p-3">
-        <div className="px-2 pb-2">
-          <p className="truncate text-sm font-medium text-gray-900">
-            {user?.name ?? "—"}
-          </p>
-          <p className="truncate text-xs text-gray-500">{user?.email ?? ""}</p>
+      {/* Bottom — user + actions */}
+      <div className="border-t border-sidebar-border p-3">
+        <div className="flex items-center gap-3 px-2 pb-3">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-gradient text-sm font-semibold text-white shadow-md shadow-brand/20">
+            {initial}
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-sm font-medium">{user?.name ?? "—"}</p>
+            <p className="truncate text-xs text-muted-foreground">
+              {user?.email ?? ""}
+            </p>
+          </div>
         </div>
-        <button
-          type="button"
-          onClick={() => signOut({ callbackUrl: "/login" })}
-          className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900"
-        >
-          <LogOut className="h-4 w-4" />
-          Sign out
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => signOut({ callbackUrl: "/login" })}
+            className="flex flex-1 items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+          >
+            <LogOut className="h-4 w-4" />
+            Sign out
+          </button>
+          <ThemeToggle />
+        </div>
       </div>
     </aside>
   )

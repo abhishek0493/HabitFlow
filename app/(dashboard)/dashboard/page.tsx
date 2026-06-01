@@ -48,8 +48,8 @@ export default async function DashboardPage({
   ])
 
   return (
-    <div className="p-6">
-      <div className="rounded-lg border bg-white shadow-sm">
+    <div className="animate-fade-in p-4 sm:p-6">
+      <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
         <HabitGrid
           initialHabits={habits}
           initialLogs={logs}

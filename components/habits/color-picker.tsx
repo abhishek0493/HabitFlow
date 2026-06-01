@@ -40,8 +40,8 @@ export function ColorPicker({ value, onChange }: ColorPickerProps) {
             onClick={() => onChange(color)}
             style={{ backgroundColor: color }}
             className={cn(
-              "flex h-7 w-7 items-center justify-center rounded-full ring-2 ring-transparent ring-offset-2 transition",
-              isSelected && "ring-gray-900"
+              "flex h-7 w-7 items-center justify-center rounded-full ring-2 ring-transparent ring-offset-2 ring-offset-card transition hover:scale-110",
+              isSelected && "ring-foreground"
             )}
           >
             {isSelected && <Check className="h-4 w-4 text-white" />}

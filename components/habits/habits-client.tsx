@@ -15,6 +15,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable"
 import { CalendarCheck2 } from "lucide-react"
+import { motion } from "motion/react"
 import { toast } from "sonner"
 import type { Habit } from "@/lib/generated/prisma/client"
 import { reorderHabits } from "@/actions/habit.actions"
@@ -69,20 +70,31 @@ export function HabitsClient({ initialHabits }: HabitsClientProps) {
   }
 
   return (
-    <div className="p-8">
+    <div className="animate-fade-in mx-auto max-w-3xl p-4 sm:p-8">
       {/* Page header */}
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-semibold text-gray-900">Habits</h1>
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight text-foreground">
+            Habits
+          </h1>
+          <p className="mt-0.5 text-sm text-muted-foreground">
+            Create, reorder, and manage what you track.
+          </p>
+        </div>
         <AddHabitModal />
       </div>
 
       {/* List card */}
-      <div className="rounded-lg border bg-white shadow-sm">
+      <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
         {habits.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-3 px-6 py-16 text-center">
-            <CalendarCheck2 className="h-12 w-12 text-gray-300" />
-            <h2 className="text-lg font-medium text-gray-900">No habits yet</h2>
-            <p className="max-w-sm text-sm text-gray-500">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-brand/10 ring-1 ring-inset ring-brand/20">
+              <CalendarCheck2 className="h-8 w-8 text-brand" />
+            </div>
+            <h2 className="text-lg font-medium text-foreground">
+              No habits yet
+            </h2>
+            <p className="max-w-sm text-sm text-muted-foreground">
               Add your first habit to start tracking your progress.
             </p>
             <div className="mt-2">
@@ -99,11 +111,16 @@ export function HabitsClient({ initialHabits }: HabitsClientProps) {
               items={habits.map((h) => h.id)}
               strategy={verticalListSortingStrategy}
             >
-              <ul className="divide-y">
-                {habits.map((habit) => (
-                  <li key={habit.id}>
+              <ul className="divide-y divide-border">
+                {habits.map((habit, i) => (
+                  <motion.li
+                    key={habit.id}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: Math.min(i * 0.04, 0.3) }}
+                  >
                     <HabitItem habit={habit} />
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
             </SortableContext>
