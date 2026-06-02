@@ -15,6 +15,8 @@ import { WeekdayMissChart } from "./weekday-miss-chart"
 import { ComparisonChart } from "./comparison-chart"
 import { Milestones } from "./milestones"
 import { MoodCorrelation } from "./mood-correlation"
+import { TaskStats } from "./task-stats"
+import type { Priority } from "@/lib/validations"
 
 interface Habit {
   id: string
@@ -35,10 +37,17 @@ interface MoodEntry {
   mood: number | null
 }
 
+interface TodoEntry {
+  date: string
+  completed: boolean
+  priority: Priority
+}
+
 interface AnalyticsData {
   habits: Habit[]
   logs: LogEntry[]
   moods: MoodEntry[]
+  todos: TodoEntry[]
 }
 
 interface AnalyticsDashboardProps {
@@ -46,7 +55,7 @@ interface AnalyticsDashboardProps {
 }
 
 export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
-  const { habits, logs, moods } = initialData
+  const { habits, logs, moods, todos } = initialData
   const [timeRange, setTimeRange] = useState<7 | 30 | 90>(30)
 
   // 1. Generate chronological list of dates for the active range (ascending)
@@ -218,21 +227,26 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
 
   if (habits.length === 0) {
     return (
-      <div className="premium-panel flex min-h-[350px] flex-col items-center justify-center rounded-2xl p-12 text-center">
-        <div className="relative mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand/10 ring-1 ring-inset ring-brand/20">
-          <span className="absolute inset-0 animate-glow-pulse rounded-2xl bg-brand-gradient opacity-30 blur-xl" />
-          <ListTodo className="h-8 w-8 text-brand" />
+      <div className="space-y-10">
+        <div className="premium-panel flex min-h-[350px] flex-col items-center justify-center rounded-2xl p-12 text-center">
+          <div className="relative mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand/10 ring-1 ring-inset ring-brand/20">
+            <span className="absolute inset-0 animate-glow-pulse rounded-2xl bg-brand-gradient opacity-30 blur-xl" />
+            <ListTodo className="h-8 w-8 text-brand" />
+          </div>
+          <h3 className="text-lg font-bold text-foreground">No habit analytics yet</h3>
+          <p className="mt-2 text-sm text-muted-foreground max-w-sm">
+            Habit insights require active habits to track. Create a habit on the habits page and log some entries to view them.
+          </p>
+          <a
+            href="/habits"
+            className="mt-6 inline-flex items-center gap-1.5 rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand-2 shadow-md transition-colors"
+          >
+            Manage Habits <ArrowUpRight className="h-4 w-4" />
+          </a>
         </div>
-        <h3 className="text-lg font-bold text-foreground">No Analytics Available</h3>
-        <p className="mt-2 text-sm text-muted-foreground max-w-sm">
-          Analytics require active habits to track. Create a habit on the habits page and log some entries to view insights.
-        </p>
-        <a
-          href="/habits"
-          className="mt-6 inline-flex items-center gap-1.5 rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand-2 shadow-md transition-colors"
-        >
-          Manage Habits <ArrowUpRight className="h-4 w-4" />
-        </a>
+
+        {/* Task analytics work independently of habits. */}
+        <TaskStats todos={todos} dates={dates} />
       </div>
     )
   }
@@ -388,6 +402,11 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
       {/* Milestones & Achievements */}
       <div className="pt-2">
         <Milestones habits={habits} logs={logs} dates={dates} />
+      </div>
+
+      {/* Task focus — daily to-do completion analytics */}
+      <div className="border-t border-border/50 pt-8">
+        <TaskStats todos={todos} dates={dates} />
       </div>
     </div>
   )
