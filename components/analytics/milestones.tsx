@@ -114,7 +114,6 @@ export function Milestones({ habits, logs, dates }: MilestonesProps) {
     // Filter weeks that actually have a full 7 days represented in dates range
     // to verify completeness.
     let hasPerfectWeek = false
-    let totalPerfectWeeks = 0
     weeklyStatus.forEach((isPerfect, mondayStr) => {
       // Find how many days of this week are in dates
       const monDate = new Date(`${mondayStr}T00:00:00.000Z`)
@@ -131,7 +130,6 @@ export function Milestones({ habits, logs, dates }: MilestonesProps) {
       // If we tracked all 7 days of this week and all were perfect
       if (weekDaysInRange === 7 && isPerfect) {
         hasPerfectWeek = true
-        totalPerfectWeeks++
       }
     })
 
@@ -240,17 +238,17 @@ export function Milestones({ habits, logs, dates }: MilestonesProps) {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: idx * 0.05 }}
-            className={`glass relative overflow-hidden rounded-xl border p-5 transition-all duration-300 flex flex-col items-center text-center gap-3.5 group ${
+            className={`premium-panel kinetic-card group relative flex flex-col items-center gap-3.5 overflow-hidden rounded-xl p-5 text-center transition-all duration-300 ${
               badge.isUnlocked
-                ? "border-border/60 hover:shadow-lg hover:shadow-brand/5 dark:hover:shadow-brand/20"
-                : "border-border/30 opacity-70"
+                ? "opacity-100"
+                : "opacity-70 grayscale-[0.15]"
             }`}
           >
             {/* Badge Graphic */}
             <div className="relative">
               {/* Unlock glow background */}
               {badge.isUnlocked && (
-                <div className={`absolute inset-0 -z-10 rounded-full blur-xl opacity-30 bg-gradient-to-tr ${badge.gradient}`} />
+                <div className={`absolute inset-0 -z-10 animate-glow-pulse rounded-full bg-gradient-to-tr ${badge.gradient} opacity-30 blur-xl`} />
               )}
               <div
                 className={`flex h-14 w-14 items-center justify-center rounded-2xl shadow-inner border transition-transform duration-300 group-hover:scale-110 ${

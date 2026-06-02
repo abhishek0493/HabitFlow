@@ -122,7 +122,7 @@ export function TrendChart({ data }: TrendChartProps) {
         )}
       </div>
 
-      <div className="glass rounded-xl p-4 border border-border">
+      <div className="premium-panel kinetic-card rounded-xl p-4">
         {data.length === 0 ? (
           <div className="flex h-[200px] items-center justify-center text-sm text-muted-foreground">
             No data available for this range
@@ -233,10 +233,13 @@ export function TrendChart({ data }: TrendChartProps) {
                   />
 
                   {/* Pulsing Outer Ring */}
-                  <circle
+                  <motion.circle
                     cx={points[hoverIndex].x}
                     cy={points[hoverIndex].y}
                     r={8}
+                    initial={{ scale: 0.7, opacity: 0.9 }}
+                    animate={{ scale: [0.8, 1.45, 0.8], opacity: [0.8, 0.2, 0.8] }}
+                    transition={{ duration: 1.4, repeat: Infinity }}
                     fill="none"
                     className="stroke-brand/30 fill-none"
                     strokeWidth={1.5}

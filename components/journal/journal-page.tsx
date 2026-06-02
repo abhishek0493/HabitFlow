@@ -83,13 +83,21 @@ export function JournalPage({ initialDate, initialEntry }: JournalPageProps) {
   }
 
   return (
-    <div className="animate-fade-in mx-auto max-w-2xl px-4 py-8">
+    <div className="animate-fade-in mx-auto max-w-3xl px-4 py-8">
+      <div className="mb-6 text-center">
+        <p className="text-xs font-bold uppercase tracking-[0.24em] text-brand">
+          Daily notes
+        </p>
+        <h1 className="mt-2 text-3xl font-black tracking-tight text-brand-gradient sm:text-4xl">
+          Journal
+        </h1>
+      </div>
       {/* Date navigation */}
       <DateNav currentDate={currentDate} onDateChange={handleDateChange} />
 
       {/* Main journal card — softly fades while a new day's entry loads */}
       <div
-        className="mt-6 overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-opacity duration-200"
+        className="premium-panel mt-6 overflow-hidden rounded-2xl transition-opacity duration-300"
         style={{ opacity: isLoading ? 0.5 : 1 }}
       >
         {/* Mood section — softly tinted by the selected mood */}

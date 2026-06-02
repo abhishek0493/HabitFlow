@@ -18,10 +18,18 @@ export default async function AnalyticsPage() {
   return (
     <div className="animate-fade-in p-4 sm:p-6 lg:p-8">
       <div className="mx-auto max-w-7xl space-y-8">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-bold tracking-tight bg-text-gradient bg-brand-gradient bg-clip-text text-transparent">Analytics</h1>
-          <p className="text-sm text-muted-foreground">
-            Analyze your progress, discover consistency trends, and track milestones.
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.24em] text-brand">
+              Signal room
+            </p>
+            <h1 className="mt-2 text-3xl font-black tracking-tight text-brand-gradient sm:text-4xl">
+              Analytics
+            </h1>
+          </div>
+          <p className="max-w-md text-sm leading-6 text-muted-foreground">
+            Watch consistency patterns, streak heat, and journal signals move in
+            one polished dashboard.
           </p>
         </div>
         <AnalyticsDashboard initialData={data} />

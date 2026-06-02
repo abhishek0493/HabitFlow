@@ -37,7 +37,7 @@ export function AddHabitModal() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger render={<Button />}>
+      <DialogTrigger render={<Button className="shadow-lg shadow-brand/25" />}>
         <Plus className="h-4 w-4" />
         Add habit
       </DialogTrigger>

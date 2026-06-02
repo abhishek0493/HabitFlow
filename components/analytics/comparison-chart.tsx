@@ -75,7 +75,7 @@ export function ComparisonChart({ habits, logs, dates }: ComparisonChartProps) {
         </span>
       </div>
 
-      <div className="glass rounded-xl p-5 border border-border flex flex-col gap-5">
+      <div className="premium-panel kinetic-card flex flex-col gap-5 rounded-xl p-5">
         {comparisonData.length === 0 ? (
           <div className="flex h-[150px] items-center justify-center text-sm text-muted-foreground">
             No habits to compare

@@ -42,7 +42,7 @@ export function WeekdayMissChart({ habits, logs, dates }: WeekdayMissChartProps)
       // Shift so 0 = Mon, ..., 6 = Sun
       const shiftedDay = rawDay === 0 ? 6 : rawDay - 1
       totalDaysByWeekday[shiftedDay]++
-    });
+    })
 
     // Create a completion lookup table for fast checking
     const completionMap = new Set(
@@ -128,7 +128,7 @@ export function WeekdayMissChart({ habits, logs, dates }: WeekdayMissChartProps)
             id="habit-filter"
             value={selectedHabitId}
             onChange={(e) => setSelectedHabitId(e.target.value)}
-            className="flex-1 sm:flex-initial h-8 rounded-lg border border-border bg-card px-2.5 py-1 text-xs font-medium focus:outline-none focus:ring-1 focus:ring-brand"
+            className="h-8 flex-1 rounded-lg border border-border bg-card/60 px-2.5 py-1 text-xs font-semibold shadow-sm backdrop-blur-md transition-all focus:outline-none focus:ring-2 focus:ring-brand/35 sm:flex-initial"
           >
             <option value="all">All Habits (Combined)</option>
             {habits.map((h) => (
@@ -140,10 +140,10 @@ export function WeekdayMissChart({ habits, logs, dates }: WeekdayMissChartProps)
         </div>
       </div>
 
-      <div className="glass rounded-xl p-4 border border-border flex flex-col gap-4">
+      <div className="premium-panel kinetic-card flex flex-col gap-4 rounded-xl p-4">
         {/* Insight callout */}
         {worstDay && worstDay.missRate > 20 && (
-          <div className="flex items-start gap-2.5 rounded-lg bg-destructive/10 border border-destructive/20 p-3 text-xs text-destructive-foreground">
+          <div className="flex items-start gap-2.5 rounded-xl border border-destructive/20 bg-destructive/10 p-3 text-xs text-destructive">
             <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
             <div>
               <span className="font-semibold">Attention needed:</span> You consistently miss tracking on{" "}
@@ -214,7 +214,7 @@ export function WeekdayMissChart({ habits, logs, dates }: WeekdayMissChartProps)
                       y={paddingTop}
                       width={barWidth}
                       height={chartHeight}
-                      className="fill-muted/20 rounded-md"
+                      className="fill-muted/20"
                       rx={4}
                     />
 
@@ -230,6 +230,24 @@ export function WeekdayMissChart({ habits, logs, dates }: WeekdayMissChartProps)
                       opacity={data.missRate > 0 ? (isWorst ? 0.95 : 0.75) : 0}
                       rx={4}
                     />
+
+                    {data.missRate > 0 && (
+                      <motion.rect
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: [0.1, 0.45, 0.1] }}
+                        transition={{
+                          duration: 1.8,
+                          repeat: Infinity,
+                          delay: index * 0.08,
+                        }}
+                        x={x}
+                        y={Math.max(y - 8, paddingTop)}
+                        width={barWidth}
+                        height={Math.min(8, barHeight)}
+                        fill={barColor}
+                        rx={4}
+                      />
+                    )}
 
                     {/* Percentage on top of active bar (hover or always if height permits) */}
                     {data.missRate > 10 && (
@@ -250,7 +268,7 @@ export function WeekdayMissChart({ habits, logs, dates }: WeekdayMissChartProps)
                       textAnchor="middle"
                       className={`text-[10px] font-semibold ${
                         isWorst
-                          ? "fill-destructive-foreground font-bold"
+                          ? "fill-destructive font-bold"
                           : "fill-muted-foreground/80 font-medium"
                       }`}
                     >

@@ -14,7 +14,7 @@ import {
   arrayMove,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable"
-import { CalendarCheck2 } from "lucide-react"
+import { CalendarCheck2, GripVertical, Sparkles } from "lucide-react"
 import { motion } from "motion/react"
 import { toast } from "sonner"
 import type { Habit } from "@/lib/generated/prisma/client"
@@ -70,28 +70,43 @@ export function HabitsClient({ initialHabits }: HabitsClientProps) {
   }
 
   return (
-    <div className="animate-fade-in mx-auto max-w-3xl p-4 sm:p-8">
+    <div className="animate-fade-in mx-auto max-w-4xl p-4 sm:p-8">
       {/* Page header */}
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-foreground">
+          <p className="text-xs font-bold uppercase tracking-[0.24em] text-brand">
+            Habit studio
+          </p>
+          <h1 className="mt-2 text-3xl font-black tracking-tight text-brand-gradient sm:text-4xl">
             Habits
           </h1>
-          <p className="mt-0.5 text-sm text-muted-foreground">
-            Create, reorder, and manage what you track.
+          <p className="mt-2 max-w-lg text-sm leading-6 text-muted-foreground">
+            Create rituals, tune their color signatures, and drag the order until
+            the tracker feels right.
           </p>
         </div>
         <AddHabitModal />
       </div>
 
       {/* List card */}
-      <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+      <div className="premium-panel overflow-hidden rounded-2xl">
+        <div className="flex items-center justify-between border-b border-border/70 bg-card/35 px-5 py-3 text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
+          <span className="flex items-center gap-2">
+            <Sparkles className="h-3.5 w-3.5 text-brand" />
+            Active stack
+          </span>
+          <span className="flex items-center gap-2">
+            <GripVertical className="h-3.5 w-3.5" />
+            Drag to remix
+          </span>
+        </div>
         {habits.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-3 px-6 py-16 text-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-brand/10 ring-1 ring-inset ring-brand/20">
+            <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-brand/10 ring-1 ring-inset ring-brand/20">
+              <span className="absolute inset-0 animate-glow-pulse rounded-2xl bg-brand-gradient opacity-30 blur-xl" />
               <CalendarCheck2 className="h-8 w-8 text-brand" />
             </div>
-            <h2 className="text-lg font-medium text-foreground">
+            <h2 className="text-lg font-bold text-foreground">
               No habits yet
             </h2>
             <p className="max-w-sm text-sm text-muted-foreground">
@@ -111,13 +126,17 @@ export function HabitsClient({ initialHabits }: HabitsClientProps) {
               items={habits.map((h) => h.id)}
               strategy={verticalListSortingStrategy}
             >
-              <ul className="divide-y divide-border">
+              <ul className="divide-y divide-border/65">
                 {habits.map((habit, i) => (
                   <motion.li
                     key={habit.id}
-                    initial={{ opacity: 0, y: 8 }}
+                    initial={{ opacity: 0, y: 12, scale: 0.98 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: Math.min(i * 0.04, 0.3) }}
+                    transition={{
+                      duration: 0.35,
+                      delay: Math.min(i * 0.04, 0.3),
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
                   >
                     <HabitItem habit={habit} />
                   </motion.li>

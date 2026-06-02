@@ -28,7 +28,7 @@ interface ColorPickerProps {
 
 export function ColorPicker({ value, onChange }: ColorPickerProps) {
   return (
-    <div className="flex flex-wrap gap-1.5">
+    <div className="flex flex-wrap gap-2">
       {PRESET_COLORS.map((color) => {
         const isSelected = value.toLowerCase() === color.toLowerCase()
         return (
@@ -40,8 +40,8 @@ export function ColorPicker({ value, onChange }: ColorPickerProps) {
             onClick={() => onChange(color)}
             style={{ backgroundColor: color }}
             className={cn(
-              "flex h-7 w-7 items-center justify-center rounded-full ring-2 ring-transparent ring-offset-2 ring-offset-card transition hover:scale-110",
-              isSelected && "ring-foreground"
+              "flex h-8 w-8 items-center justify-center rounded-xl ring-2 ring-transparent ring-offset-2 ring-offset-card transition-all duration-300 hover:-translate-y-0.5 hover:scale-110",
+              isSelected && "scale-110 ring-foreground shadow-lg"
             )}
           >
             {isSelected && <Check className="h-4 w-4 text-white" />}
