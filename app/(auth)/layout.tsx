@@ -6,7 +6,8 @@ export default function AuthLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="bg-aurora relative flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="ambient-shell bg-aurora relative flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="noise-overlay" aria-hidden />
       <div className="absolute right-4 top-4">
         <ThemeToggle />
       </div>

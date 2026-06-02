@@ -41,13 +41,14 @@ export function MobileNav() {
 
   return (
     // md:hidden ensures this is invisible on desktop
-    <div className="glass flex h-14 flex-shrink-0 items-center justify-between border-b border-border px-4 md:hidden">
+    <div className="glass flex h-14 flex-shrink-0 items-center justify-between border-b border-border/80 px-4 shadow-lg shadow-black/5 md:hidden">
       {/* App name */}
       <div className="flex items-center gap-2.5">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-gradient shadow-md shadow-brand/25">
+        <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-brand-gradient shadow-md shadow-brand/30 ring-1 ring-white/25">
+          <span className="absolute inset-0 animate-glow-pulse rounded-lg bg-brand-gradient opacity-40 blur-md" />
           <CalendarCheck2 className="h-[18px] w-[18px] text-white" />
         </div>
-        <span className="font-semibold tracking-tight">Habitflow</span>
+        <span className="font-bold tracking-tight text-brand-gradient">Habitflow</span>
       </div>
 
       <div className="flex items-center gap-1.5">
@@ -63,13 +64,13 @@ export function MobileNav() {
             <Menu className="h-5 w-5" />
           </Button>
 
-          <SheetContent side="left" className="flex w-72 flex-col p-0">
+          <SheetContent side="left" className="glass flex w-72 flex-col overflow-hidden p-0">
             <SheetHeader className="px-5 pb-3 pt-5">
               <SheetTitle className="flex items-center gap-2.5 text-base font-semibold">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-gradient shadow-md shadow-brand/25">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-gradient shadow-md shadow-brand/25 ring-1 ring-white/25">
                   <CalendarCheck2 className="h-[18px] w-[18px] text-white" />
                 </div>
-                Habitflow
+                <span className="text-brand-gradient">Habitflow</span>
               </SheetTitle>
             </SheetHeader>
 
@@ -86,10 +87,10 @@ export function MobileNav() {
                     href={href}
                     onClick={() => setOpen(false)}
                     className={cn(
-                      "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                      "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all duration-300",
                       isActive
-                        ? "bg-accent text-accent-foreground"
-                        : "text-muted-foreground hover:bg-accent/60 hover:text-foreground"
+                        ? "bg-accent text-accent-foreground shadow-sm"
+                        : "text-muted-foreground hover:-translate-y-0.5 hover:bg-accent/60 hover:text-foreground"
                     )}
                   >
                     <Icon
@@ -106,8 +107,8 @@ export function MobileNav() {
             {/* User info + sign out */}
             <div className="space-y-3 px-5 py-4">
               {session?.user && (
-                <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-gradient text-sm font-semibold text-white">
+                <div className="premium-panel flex items-center gap-3 rounded-xl p-3">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-gradient text-sm font-bold text-white ring-1 ring-white/25">
                     {initial}
                   </div>
                   <div className="min-w-0">

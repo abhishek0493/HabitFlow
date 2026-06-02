@@ -48,8 +48,21 @@ export default async function DashboardPage({
   ])
 
   return (
-    <div className="animate-fade-in p-4 sm:p-6">
-      <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+    <div className="animate-fade-in p-4 sm:p-6 lg:p-8">
+      <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.24em] text-brand">
+            Habit cockpit
+          </p>
+          <h1 className="mt-2 text-3xl font-black tracking-tight text-brand-gradient sm:text-4xl">
+            Daily flow
+          </h1>
+        </div>
+        <p className="max-w-md text-sm leading-6 text-muted-foreground">
+          A cinematic grid for tiny daily proof. Tap, glow, keep moving.
+        </p>
+      </div>
+      <div className="premium-panel scanline overflow-hidden rounded-2xl">
         <HabitGrid
           initialHabits={habits}
           initialLogs={logs}

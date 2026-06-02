@@ -127,10 +127,11 @@ export function MoodCorrelation({ habits, logs, moods, dates }: MoodCorrelationP
         )}
       </div>
 
-      <div className="glass rounded-xl p-5 border border-border">
+      <div className="premium-panel kinetic-card rounded-xl p-5">
         {!hasEnoughData ? (
           <div className="flex flex-col items-center justify-center py-8 text-center gap-3">
-            <div className="h-12 w-12 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand">
+            <div className="relative flex h-12 w-12 items-center justify-center rounded-xl border border-brand/20 bg-brand/10 text-brand">
+              <span className="absolute inset-0 animate-glow-pulse rounded-xl bg-brand-gradient opacity-25 blur-lg" />
               <BookOpen className="h-6 w-6" />
             </div>
             <div className="max-w-md">
@@ -149,7 +150,7 @@ export function MoodCorrelation({ habits, logs, moods, dates }: MoodCorrelationP
         ) : (
           <div className="flex flex-col gap-5">
             {/* Overall Stat banner */}
-            <div className="rounded-xl bg-brand/5 border border-brand/10 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="flex flex-col items-start justify-between gap-3 rounded-xl border border-brand/10 bg-brand/5 p-4 sm:flex-row sm:items-center">
               <div>
                 <p className="text-xs font-semibold text-brand tracking-wide uppercase">
                   Mood Summary
@@ -158,10 +159,10 @@ export function MoodCorrelation({ habits, logs, moods, dates }: MoodCorrelationP
                   Your overall average mood is {overallAvgMood.toFixed(1)}/5.0
                 </h4>
                 <p className="text-xs text-muted-foreground mt-1 leading-normal">
-                  Let's see which habits lift your mood the most when completed.
+                  Let&apos;s see which habits lift your mood the most when completed.
                 </p>
               </div>
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-brand/10 border border-brand/20">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-brand/20 bg-brand/10 shadow-[0_0_24px_color-mix(in_oklch,var(--brand)_22%,transparent)]">
                 {getMoodEmoji(overallAvgMood)}
               </div>
             </div>
@@ -176,7 +177,7 @@ export function MoodCorrelation({ habits, logs, moods, dates }: MoodCorrelationP
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3, delay: idx * 0.05 }}
-                    className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl border border-border/40 hover:border-border/80 transition-all bg-card/40"
+                    className="flex flex-col justify-between gap-3 rounded-xl border border-border/40 bg-card/40 p-3.5 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand/25 hover:bg-card/55 sm:flex-row sm:items-center"
                   >
                     {/* Habit Info */}
                     <div className="flex items-center gap-2.5">

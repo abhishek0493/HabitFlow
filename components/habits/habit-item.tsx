@@ -37,16 +37,20 @@ export function HabitItem({ habit }: HabitItemProps) {
       ref={setNodeRef}
       style={style}
       className={cn(
-        "group flex items-center gap-3 px-4 py-3 transition-colors hover:bg-accent/50",
+        "group relative flex items-center gap-3 overflow-hidden px-4 py-3.5 transition-all duration-300 hover:bg-accent/45",
         isDragging &&
-          "relative z-10 rounded-xl bg-card shadow-xl ring-1 ring-border"
+          "relative z-10 rounded-xl bg-card shadow-2xl shadow-brand/15 ring-1 ring-brand/25"
       )}
     >
+      <span
+        className="absolute inset-y-2 left-0 w-1 rounded-r-full opacity-70 transition-all duration-300 group-hover:opacity-100"
+        style={{ backgroundColor: habit.color, boxShadow: `0 0 18px ${habit.color}` }}
+      />
       {/* Drag handle */}
       <button
         type="button"
         aria-label="Drag to reorder"
-        className="cursor-grab touch-none text-muted-foreground/50 transition-colors hover:text-muted-foreground active:cursor-grabbing"
+        className="cursor-grab touch-none rounded-lg p-1 text-muted-foreground/50 transition-all duration-300 hover:-translate-y-0.5 hover:bg-muted hover:text-muted-foreground active:cursor-grabbing"
         {...attributes}
         {...listeners}
       >
@@ -55,21 +59,23 @@ export function HabitItem({ habit }: HabitItemProps) {
 
       {/* Colour dot */}
       <span
-        className="h-4 w-4 shrink-0 rounded-full ring-2 ring-inset ring-white/20"
+        className="h-4 w-4 shrink-0 rounded-full ring-2 ring-inset ring-white/20 transition-transform duration-300 group-hover:scale-125"
         style={{
           backgroundColor: habit.color,
-          boxShadow: `0 0 8px -1px ${habit.color}80`,
+          boxShadow: `0 0 14px -1px ${habit.color}a0`,
         }}
         aria-hidden
       />
 
       {/* Emoji */}
       {habit.emoji && (
-        <span className="text-base leading-none">{habit.emoji}</span>
+        <span className="text-base leading-none transition-transform duration-300 group-hover:scale-125">
+          {habit.emoji}
+        </span>
       )}
 
       {/* Name */}
-      <span className="text-sm font-medium text-foreground">{habit.name}</span>
+      <span className="text-sm font-bold text-foreground">{habit.name}</span>
 
       {/* Spacer */}
       <span className="flex-1" />

@@ -3,9 +3,7 @@
 import React, { useMemo, useState } from "react"
 import { motion } from "motion/react"
 import {
-  Calendar,
   CheckCircle2,
-  TrendingUp,
   AlertTriangle,
   Flame,
   Activity,
@@ -220,8 +218,9 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
 
   if (habits.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center p-12 text-center border border-border/60 bg-card/60 glass rounded-2xl min-h-[350px]">
-        <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand/10 ring-1 ring-inset ring-brand/20">
+      <div className="premium-panel flex min-h-[350px] flex-col items-center justify-center rounded-2xl p-12 text-center">
+        <div className="relative mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand/10 ring-1 ring-inset ring-brand/20">
+          <span className="absolute inset-0 animate-glow-pulse rounded-2xl bg-brand-gradient opacity-30 blur-xl" />
           <ListTodo className="h-8 w-8 text-brand" />
         </div>
         <h3 className="text-lg font-bold text-foreground">No Analytics Available</h3>
@@ -241,15 +240,15 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
   return (
     <div className="space-y-6">
       {/* Time Range Filter Header */}
-      <div className="flex justify-end bg-card/45 backdrop-blur-md rounded-xl p-1.5 border border-border/40 w-fit ml-auto">
+      <div className="premium-panel ml-auto flex w-fit rounded-2xl p-1.5">
         {([7, 30, 90] as const).map((range) => (
           <button
             key={range}
             onClick={() => setTimeRange(range)}
             className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
               timeRange === range
-                ? "bg-brand text-white shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
+                ? "bg-brand-gradient text-white shadow-lg shadow-brand/25"
+                : "text-muted-foreground hover:-translate-y-0.5 hover:text-foreground"
             }`}
           >
             {range} Days
@@ -260,8 +259,13 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
       {/* KPI Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Card 1: Overall Completion Rate */}
-        <div className="glass rounded-xl border border-border p-4.5 flex items-center gap-4 relative overflow-hidden group">
-          <div className="h-10 w-10 rounded-lg bg-brand/10 text-brand flex items-center justify-center shrink-0">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35 }}
+          className="premium-panel kinetic-card flex items-center gap-4 rounded-xl p-4.5"
+        >
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand shadow-[0_0_24px_color-mix(in_oklch,var(--brand)_24%,transparent)]">
             <Activity className="h-5 w-5" />
           </div>
           <div className="min-w-0 flex-1">
@@ -272,11 +276,16 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
               {Math.round(overallStats.completionRate)}%
             </h3>
           </div>
-        </div>
+        </motion.div>
 
         {/* Card 2: Longest Streak */}
-        <div className="glass rounded-xl border border-border p-4.5 flex items-center gap-4 relative overflow-hidden group">
-          <div className="h-10 w-10 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: 0.05 }}
+          className="premium-panel kinetic-card flex items-center gap-4 rounded-xl p-4.5"
+        >
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/10 text-amber-500 shadow-[0_0_24px_rgba(245,158,11,0.18)]">
             <Flame className="h-5 w-5" />
           </div>
           <div className="min-w-0 flex-1">
@@ -287,11 +296,16 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
               {overallStats.maxStreak} {overallStats.maxStreak === 1 ? "day" : "days"}
             </h3>
           </div>
-        </div>
+        </motion.div>
 
         {/* Card 3: Most Consistent Habit */}
-        <div className="glass rounded-xl border border-border p-4.5 flex items-center gap-4 relative overflow-hidden group">
-          <div className="h-10 w-10 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: 0.1 }}
+          className="premium-panel kinetic-card flex items-center gap-4 rounded-xl p-4.5"
+        >
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-500 shadow-[0_0_24px_rgba(16,185,129,0.18)]">
             <CheckCircle2 className="h-5 w-5" />
           </div>
           <div className="min-w-0 flex-1">
@@ -312,11 +326,16 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
               )}
             </h3>
           </div>
-        </div>
+        </motion.div>
 
         {/* Card 4: Needs Attention */}
-        <div className="glass rounded-xl border border-border p-4.5 flex items-center gap-4 relative overflow-hidden group">
-          <div className="h-10 w-10 rounded-lg bg-rose-500/10 text-rose-500 flex items-center justify-center shrink-0">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: 0.15 }}
+          className="premium-panel kinetic-card flex items-center gap-4 rounded-xl p-4.5"
+        >
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-rose-500/10 text-rose-500 shadow-[0_0_24px_rgba(244,63,94,0.18)]">
             <AlertTriangle className="h-5 w-5" />
           </div>
           <div className="min-w-0 flex-1">
@@ -343,7 +362,7 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
               )}
             </h3>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Main charts section: Trend and Performance Comparison */}

@@ -33,7 +33,7 @@ export function MoodPicker({
   return (
     <div className="px-6 pb-5 pt-5">
       {/* Label */}
-      <p className="mb-4 text-sm font-medium text-muted-foreground">
+      <p className="mb-4 text-sm font-bold text-muted-foreground">
         How are you feeling today?
       </p>
 
@@ -61,8 +61,8 @@ export function MoodPicker({
               {/* Circle */}
               <div
                 className={cn(
-                  "flex h-14 w-14 items-center justify-center rounded-full transition-all duration-150",
-                  "group-hover:scale-110 group-hover:shadow-md",
+                  "flex h-14 w-14 items-center justify-center rounded-2xl transition-all duration-300",
+                  "group-hover:-translate-y-1 group-hover:scale-110 group-hover:shadow-lg",
                   isSelected ? "scale-105" : "scale-100",
                   isPopping && "mood-pop",
                   !isSelected && "bg-muted group-hover:bg-muted-foreground/20"

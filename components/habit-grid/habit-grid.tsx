@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { CalendarCheck2 } from "lucide-react"
+import { motion } from "motion/react"
 import type { Habit } from "@/lib/generated/prisma/client"
 import { getHabitLogs, toggleHabitLog, type HabitLogEntry } from "@/actions/log.actions"
 import {
@@ -265,11 +266,11 @@ export function HabitGrid({
         <div className="overflow-x-auto">
           {/* w-max sizes the grid box to its content (sum of tracks) so the
               sticky name column pins across the full scroll width. */}
-          <div className="grid w-max" style={{ gridTemplateColumns }}>
+          <div className="grid w-max bg-card/25" style={{ gridTemplateColumns }}>
             {/* ── Date header row ── */}
             <div
               className={cn(
-                "sticky left-0 z-20 border-b border-r border-border bg-card",
+                "sticky left-0 z-20 border-b border-r border-border/70 bg-card/80 backdrop-blur-xl",
                 headerHeight
               )}
             />
@@ -277,11 +278,14 @@ export function HabitGrid({
               <div
                 key={col.date}
                 className={cn(
-                  "flex select-none flex-col items-center justify-center border-b border-r border-border",
+                  "relative flex select-none flex-col items-center justify-center border-b border-r border-border/60 bg-card/35 backdrop-blur-sm",
                   headerHeight,
-                  col.isToday && "bg-brand/5"
+                  col.isToday && "bg-brand/10"
                 )}
               >
+                {col.isToday && (
+                  <span className="absolute inset-x-2 top-1 h-px bg-brand-gradient shadow-[0_0_14px_var(--brand)]" />
+                )}
                 {col.dayName && (
                   <span
                     className={cn(
@@ -295,7 +299,7 @@ export function HabitGrid({
                   </span>
                 )}
                 {col.isToday && view === "week" && (
-                  <span className="mb-1 h-1 w-1 rounded-full bg-brand" />
+                  <span className="mb-1 h-1.5 w-1.5 rounded-full bg-brand shadow-[0_0_10px_var(--brand)]" />
                 )}
                 <span
                   className={cn(
@@ -311,21 +315,32 @@ export function HabitGrid({
             ))}
 
             {/* ── Habit rows ── */}
-            {habits.map((habit) => (
+            {habits.map((habit, rowIndex) => (
               <React.Fragment key={habit.id}>
-                <div className="sticky left-0 z-10 flex h-9 items-center gap-2 border-b border-r border-border bg-card px-3">
+                <motion.div
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{
+                    duration: 0.32,
+                    delay: Math.min(rowIndex * 0.035, 0.4),
+                  }}
+                  className="sticky left-0 z-10 flex h-10 items-center gap-2 border-b border-r border-border/70 bg-card/82 px-3 backdrop-blur-xl"
+                >
                   <span
-                    className="h-3 w-3 flex-shrink-0 rounded-full ring-2 ring-inset ring-white/20"
-                    style={{ backgroundColor: habit.color }}
+                    className="h-3.5 w-3.5 flex-shrink-0 rounded-full ring-2 ring-inset ring-white/20"
+                    style={{
+                      backgroundColor: habit.color,
+                      boxShadow: `0 0 14px ${habit.color}80`,
+                    }}
                   />
                   {habit.emoji && (
                     <span className="text-sm leading-none">{habit.emoji}</span>
                   )}
                   <HabitNameLabel
                     name={habit.name}
-                    className="text-sm font-medium text-foreground/90"
+                    className="text-sm font-semibold text-foreground/90"
                   />
-                </div>
+                </motion.div>
 
                 {displayColumns.map((col) => {
                   const isCompleted = completedSet.has(`${habit.id}:${col.date}`)
@@ -354,10 +369,11 @@ export function HabitGrid({
       {/* Empty state */}
       {habits.length === 0 && (
         <div className="flex flex-col items-center justify-center px-6 py-20 text-center">
-          <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand/10 ring-1 ring-inset ring-brand/20">
+          <div className="relative mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand/10 ring-1 ring-inset ring-brand/20">
+            <span className="absolute inset-0 animate-glow-pulse rounded-2xl bg-brand-gradient opacity-30 blur-xl" />
             <CalendarCheck2 className="h-8 w-8 text-brand" />
           </div>
-          <p className="text-base font-medium text-foreground">
+          <p className="text-base font-bold text-foreground">
             No habits to track yet
           </p>
           <p className="mt-1 text-sm text-muted-foreground">

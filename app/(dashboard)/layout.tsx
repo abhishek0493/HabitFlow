@@ -15,14 +15,15 @@ export default async function DashboardLayout({
 
   return (
     <SessionProvider session={session}>
-      <div className="flex h-screen bg-background">
+      <div className="ambient-shell flex h-screen bg-background">
+        <div className="noise-overlay" aria-hidden />
         {/* Desktop sidebar (hidden on mobile via class inside Sidebar) */}
         <Sidebar />
 
         {/* Right side: MobileNav stacks on top, then the page */}
         <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
           <MobileNav />
-          <main className="flex-1 overflow-auto">{children}</main>
+          <main className="relative flex-1 overflow-auto">{children}</main>
         </div>
       </div>
     </SessionProvider>

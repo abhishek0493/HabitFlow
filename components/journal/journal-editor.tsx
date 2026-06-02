@@ -117,11 +117,11 @@ export function JournalEditor({
     <div className="px-6 py-6">
       <EditorContent
         editor={editor}
-        className="text-base"
+        className="rounded-xl bg-background/20 px-1 text-base transition-all duration-300 focus-within:bg-background/35"
         style={{ fontSize: "16px", lineHeight: "1.8" }}
       />
 
-      <div className="mt-4 flex items-center justify-between border-t border-border pt-3">
+      <div className="mt-4 flex items-center justify-between border-t border-border/70 pt-3">
         {/* Word count */}
         <span className="text-xs text-muted-foreground">
           {wordCount} {wordCount === 1 ? "word" : "words"}

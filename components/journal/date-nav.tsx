@@ -49,7 +49,7 @@ export function DateNav({ currentDate, onDateChange }: DateNavProps) {
   const isToday = currentDate === today
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="premium-panel mx-auto flex max-w-2xl items-center gap-2 rounded-2xl p-2">
       <Button
         variant="ghost"
         size="icon"
@@ -65,7 +65,7 @@ export function DateNav({ currentDate, onDateChange }: DateNavProps) {
           render={
             <Button
               variant="ghost"
-              className="gap-2 rounded-full px-3 text-base font-semibold tracking-tight"
+              className="min-w-0 flex-1 gap-2 rounded-full px-3 text-base font-bold tracking-tight"
             />
           }
         >
