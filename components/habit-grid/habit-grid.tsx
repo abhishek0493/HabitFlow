@@ -19,6 +19,8 @@ import {
 import { cn } from "@/lib/utils"
 import { GridHeader } from "@/components/habit-grid/grid-header"
 import { GridCell } from "@/components/habit-grid/grid-cell"
+import { HabitNameLabel } from "@/components/habit-grid/habit-name"
+import { TooltipProvider } from "@/components/ui/tooltip"
 
 type ViewMode = "month" | "week"
 
@@ -244,7 +246,8 @@ export function HabitGrid({
   const headerHeight = view === "week" ? "h-14" : "h-10"
 
   return (
-    <div>
+    <TooltipProvider delay={250}>
+      <div>
       <GridHeader
         year={monthYear.year}
         month={monthYear.month}
@@ -318,9 +321,10 @@ export function HabitGrid({
                   {habit.emoji && (
                     <span className="text-sm leading-none">{habit.emoji}</span>
                   )}
-                  <span className="truncate text-sm font-medium text-foreground/90">
-                    {habit.name}
-                  </span>
+                  <HabitNameLabel
+                    name={habit.name}
+                    className="text-sm font-medium text-foreground/90"
+                  />
                 </div>
 
                 {displayColumns.map((col) => {
@@ -368,6 +372,7 @@ export function HabitGrid({
           </p>
         </div>
       )}
-    </div>
+      </div>
+    </TooltipProvider>
   )
 }
