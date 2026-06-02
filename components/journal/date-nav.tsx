@@ -16,16 +16,22 @@ interface DateNavProps {
   onDateChange: (date: string) => void
 }
 
-// Display label, e.g. "Sunday, June 1, 2026"
-function formatDisplayDate(dateString: string): string {
+// Display label split into weekday + rest, so the weekday can be hidden on
+// small screens (e.g. mobile shows "June 1, 2026", desktop "Sunday, June 1, 2026").
+function formatDisplayParts(dateString: string): {
+  weekday: string
+  rest: string
+} {
   const [year, month, day] = dateString.split("-").map(Number)
   const date = new Date(year, month - 1, day)
-  return date.toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  })
+  return {
+    weekday: date.toLocaleDateString("en-US", { weekday: "long" }),
+    rest: date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }),
+  }
 }
 
 // Shift by one day using LOCAL calendar components (avoids the UTC off-by-one
@@ -64,7 +70,10 @@ export function DateNav({ currentDate, onDateChange }: DateNavProps) {
           }
         >
           <CalendarDays className="h-4 w-4 text-muted-foreground" />
-          {formatDisplayDate(currentDate)}
+          <span className="hidden sm:inline">
+            {formatDisplayParts(currentDate).weekday},&nbsp;
+          </span>
+          {formatDisplayParts(currentDate).rest}
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="center">
           <Calendar

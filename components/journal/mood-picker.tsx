@@ -38,7 +38,7 @@ export function MoodPicker({
       </p>
 
       {/* Mood buttons */}
-      <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center gap-3 sm:gap-4">
         {MOODS.map(({ level, emoji, label, color }) => {
           const isSelected = selectedMood === level
           const isPopping = poppingLevel === level

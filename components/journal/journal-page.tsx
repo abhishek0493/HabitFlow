@@ -2,10 +2,15 @@
 
 import { useEffect, useRef, useState } from "react"
 import dynamic from "next/dynamic"
-import { getJournalEntry, upsertJournalEntry } from "@/actions/journal.actions"
+import {
+  getJournalEntry,
+  getJournalDatesForMonth,
+  upsertJournalEntry,
+} from "@/actions/journal.actions"
 import { getTodayString } from "@/lib/date-utils"
 import { DateNav } from "@/components/journal/date-nav"
 import { MoodPicker, MOODS } from "@/components/journal/mood-picker"
+import { EntryCalendar } from "@/components/journal/entry-calendar"
 
 // Tiptap must run client-side only.
 const JournalEditor = dynamic(
@@ -42,6 +47,8 @@ export function JournalPage({ initialDate, initialEntry }: JournalPageProps) {
   const latestContentRef = useRef(initialEntry?.content ?? "")
   const latestWordCountRef = useRef(initialEntry?.wordCount ?? 0)
 
+  const isToday = currentDate === getTodayString()
+
   // Keep the URL in sync with the selected date (local-safe "today").
   useEffect(() => {
     if (currentDate === getTodayString()) {
@@ -52,13 +59,15 @@ export function JournalPage({ initialDate, initialEntry }: JournalPageProps) {
   }, [currentDate])
 
   const handleDateChange = async (newDate: string) => {
-    setCurrentDate(newDate)
+    if (newDate === currentDate) return
     setIsLoading(true)
     const fetchedEntry = await getJournalEntry(newDate)
     setEntry(fetchedEntry)
     setSelectedMood(fetchedEntry?.mood ?? null)
     latestContentRef.current = fetchedEntry?.content ?? ""
     latestWordCountRef.current = fetchedEntry?.wordCount ?? 0
+    // Update the date LAST so the keyed editor remounts with the fresh entry.
+    setCurrentDate(newDate)
     setIsLoading(false)
   }
 
@@ -78,8 +87,11 @@ export function JournalPage({ initialDate, initialEntry }: JournalPageProps) {
       {/* Date navigation */}
       <DateNav currentDate={currentDate} onDateChange={handleDateChange} />
 
-      {/* Main journal card */}
-      <div className="mt-6 overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+      {/* Main journal card — softly fades while a new day's entry loads */}
+      <div
+        className="mt-6 overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-opacity duration-200"
+        style={{ opacity: isLoading ? 0.5 : 1 }}
+      >
         {/* Mood section — softly tinted by the selected mood */}
         <div
           className="border-b border-border transition-colors duration-700"
@@ -92,26 +104,36 @@ export function JournalPage({ initialDate, initialEntry }: JournalPageProps) {
           <MoodPicker selectedMood={selectedMood} onSelect={handleMoodSelect} />
         </div>
 
-        {/* Editor section */}
-        {isLoading ? (
-          <div className="min-h-[320px] animate-pulse space-y-3 px-6 py-6">
-            <div className="h-4 w-3/4 rounded bg-muted" />
-            <div className="h-4 w-1/2 rounded bg-muted" />
-            <div className="h-4 w-5/6 rounded bg-muted" />
+        {/* Warm empty-state hint when the day has no saved entry yet */}
+        {!entry && !isLoading && (
+          <div className="px-6 pb-0 pt-5 text-center">
+            <p className="text-sm italic text-muted-foreground/70">
+              {isToday
+                ? "A fresh page. Start whenever you're ready."
+                : "Nothing was written on this day."}
+            </p>
           </div>
-        ) : (
-          <JournalEditor
-            key={currentDate}
-            date={currentDate}
-            initialContent={entry?.content ?? ""}
-            initialMood={selectedMood}
-            onChange={(content, words) => {
-              latestContentRef.current = content
-              latestWordCountRef.current = words
-            }}
-          />
         )}
+
+        {/* Editor — keyed by date so it remounts with the right content */}
+        <JournalEditor
+          key={currentDate}
+          date={currentDate}
+          initialContent={entry?.content ?? ""}
+          initialMood={selectedMood}
+          onChange={(content, words) => {
+            latestContentRef.current = content
+            latestWordCountRef.current = words
+          }}
+        />
       </div>
+
+      {/* Entry history calendar */}
+      <EntryCalendar
+        currentDate={currentDate}
+        onDateSelect={handleDateChange}
+        fetchDatesForMonth={getJournalDatesForMonth}
+      />
     </div>
   )
 }
