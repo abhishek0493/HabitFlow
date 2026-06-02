@@ -21,3 +21,22 @@ export const habitSchema = z.object({
 })
 
 export type HabitFormValues = z.infer<typeof habitSchema>
+
+// ─── To-do ────────────────────────────────────────────────────────────────────
+
+export const PRIORITIES = ["LOW", "MEDIUM", "HIGH"] as const
+export type Priority = (typeof PRIORITIES)[number]
+
+export const todoSchema = z.object({
+  title: z
+    .string()
+    .min(1, "Task title is required")
+    .max(120, "Title must be 120 characters or less"),
+  notes: z
+    .string()
+    .max(2000, "Notes must be 2000 characters or less")
+    .optional(),
+  priority: z.enum(PRIORITIES),
+})
+
+export type TodoFormValues = z.infer<typeof todoSchema>

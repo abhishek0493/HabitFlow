@@ -19,6 +19,7 @@ import {
   BookOpen,
   CalendarCheck2,
   LayoutDashboard,
+  ListChecks,
   ListTodo,
   LogOut,
 } from "lucide-react"
@@ -26,6 +27,7 @@ import { cn } from "@/lib/utils"
 
 const NAV_LINKS = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/todos", label: "To-do", icon: ListChecks },
   { href: "/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/journal", label: "Journal", icon: BookOpen },
   { href: "/habits", label: "Habits", icon: ListTodo },

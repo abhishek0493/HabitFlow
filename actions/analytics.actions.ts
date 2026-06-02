@@ -21,7 +21,7 @@ export async function getAnalyticsData(daysLimit = 90) {
   const startDateStr = `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`
   const startUtcDate = new Date(`${startDateStr}T00:00:00.000Z`)
 
-  const [habits, logs, journalEntries] = await Promise.all([
+  const [habits, logs, journalEntries, todos] = await Promise.all([
     // Fetch all active habits
     db.habit.findMany({
       where: { userId: session.user.id, isActive: true },
@@ -50,6 +50,18 @@ export async function getAnalyticsData(daysLimit = 90) {
         mood: true,
       },
     }),
+    // Fetch todos in the date range (for task analytics)
+    db.todo.findMany({
+      where: {
+        userId: session.user.id,
+        date: { gte: startUtcDate },
+      },
+      select: {
+        date: true,
+        completed: true,
+        priority: true,
+      },
+    }),
   ])
 
   // Map dates to "YYYY-MM-DD" format to avoid timezone discrepancies on the client
@@ -69,6 +81,11 @@ export async function getAnalyticsData(daysLimit = 90) {
     moods: journalEntries.map((entry) => ({
       date: entry.date.toISOString().split("T")[0],
       mood: entry.mood,
+    })),
+    todos: todos.map((t) => ({
+      date: t.date.toISOString().split("T")[0],
+      completed: t.completed,
+      priority: t.priority,
     })),
   }
 }

@@ -9,6 +9,7 @@ import {
   BookOpen,
   CalendarCheck2,
   LayoutDashboard,
+  ListChecks,
   ListTodo,
   LogOut,
 } from "lucide-react"
@@ -17,6 +18,7 @@ import { ThemeToggle } from "@/components/theme-toggle"
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/todos", label: "To-do", icon: ListChecks },
   { href: "/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/journal", label: "Journal", icon: BookOpen },
   { href: "/habits", label: "Habits", icon: ListTodo },

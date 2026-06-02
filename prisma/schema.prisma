@@ -16,6 +16,7 @@ model User {
   password       String
   habits         Habit[]
   journalEntries JournalEntry[]
+  todos          Todo[]
   createdAt      DateTime       @default(now())
 }
 
@@ -59,5 +60,29 @@ model JournalEntry {
 
   @@unique([userId, date])
   @@index([userId])
+  @@index([date])
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+model Todo {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date        DateTime  @db.Date
+  title       String
+  notes       String?   @db.Text
+  priority    Priority  @default(MEDIUM)
+  completed   Boolean   @default(false)
+  completedAt DateTime?
+  order       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([userId, date])
   @@index([date])
 }
