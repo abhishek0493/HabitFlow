@@ -236,6 +236,31 @@
     background-position: 200% 0;
   }
 }
+@keyframes mood-pop {
+  0% {
+    transform: scale(1.08);
+  }
+  40% {
+    transform: scale(1.18);
+  }
+  100% {
+    transform: scale(1.08);
+  }
+}
+.mood-pop {
+  animation: mood-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Tiptap placeholder (shown when the editor is empty) ── */
+.tiptap p.is-editor-empty:first-child::before,
+.ProseMirror p.is-editor-empty:first-child::before {
+  color: var(--muted-foreground);
+  opacity: 0.6;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
 
 /* ── Refined scrollbars ── */
 * {
