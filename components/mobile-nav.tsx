@@ -15,6 +15,7 @@ import { Separator } from "@/components/ui/separator"
 import { ThemeToggle } from "@/components/theme-toggle"
 import {
   Menu,
+  BarChart3,
   BookOpen,
   CalendarCheck2,
   LayoutDashboard,
@@ -25,6 +26,7 @@ import { cn } from "@/lib/utils"
 
 const NAV_LINKS = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/journal", label: "Journal", icon: BookOpen },
   { href: "/habits", label: "Habits", icon: ListTodo },
 ]
