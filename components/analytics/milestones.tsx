@@ -246,10 +246,6 @@ export function Milestones({ habits, logs, dates }: MilestonesProps) {
           >
             {/* Badge Graphic */}
             <div className="relative">
-              {/* Unlock glow background */}
-              {badge.isUnlocked && (
-                <div className={`absolute inset-0 -z-10 animate-glow-pulse rounded-full bg-gradient-to-tr ${badge.gradient} opacity-30 blur-xl`} />
-              )}
               <div
                 className={`flex h-14 w-14 items-center justify-center rounded-2xl shadow-inner border transition-transform duration-300 group-hover:scale-110 ${
                   badge.isUnlocked

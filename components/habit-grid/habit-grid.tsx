@@ -383,7 +383,6 @@ export function HabitGrid({
       {habits.length === 0 && (
         <div className="flex flex-col items-center justify-center px-6 py-20 text-center">
           <div className="relative mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand/10 ring-1 ring-inset ring-brand/20">
-            <span className="absolute inset-0 animate-glow-pulse rounded-2xl bg-brand-gradient opacity-30 blur-xl" />
             <CalendarCheck2 className="h-8 w-8 text-brand" />
           </div>
           <p className="text-base font-bold text-foreground">

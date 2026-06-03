@@ -131,7 +131,6 @@ export function MoodCorrelation({ habits, logs, moods, dates }: MoodCorrelationP
         {!hasEnoughData ? (
           <div className="flex flex-col items-center justify-center py-8 text-center gap-3">
             <div className="relative flex h-12 w-12 items-center justify-center rounded-xl border border-brand/20 bg-brand/10 text-brand">
-              <span className="absolute inset-0 animate-glow-pulse rounded-xl bg-brand-gradient opacity-25 blur-lg" />
               <BookOpen className="h-6 w-6" />
             </div>
             <div className="max-w-md">

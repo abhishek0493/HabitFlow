@@ -109,7 +109,6 @@ export function TaskStats({ todos, dates }: TaskStatsProps) {
       {stats.total === 0 ? (
         <div className="premium-panel flex min-h-[180px] flex-col items-center justify-center rounded-2xl p-10 text-center">
           <div className="relative mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand/10 ring-1 ring-inset ring-brand/20">
-            <span className="absolute inset-0 animate-glow-pulse rounded-2xl bg-brand-gradient opacity-30 blur-xl" />
             <ListChecks className="h-7 w-7 text-brand" />
           </div>
           <h3 className="text-base font-bold text-foreground">

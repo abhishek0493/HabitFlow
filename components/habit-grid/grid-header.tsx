@@ -57,7 +57,7 @@ export function GridHeader({
         <ChevronLeft className="h-4 w-4" />
       </Button>
 
-      <span className="flex min-w-[150px] items-center justify-center gap-2 text-center text-lg font-black tracking-tight text-foreground">
+      <span className="flex min-w-[150px] items-center justify-center gap-2 text-center text-lg font-medium tracking-tight text-foreground">
         {periodLabel}
         {isFetching && (
           <Loader2 className="h-3.5 w-3.5 flex-shrink-0 animate-spin text-brand" />
@@ -103,7 +103,7 @@ export function GridHeader({
               {active && (
                 <motion.span
                   layoutId="view-indicator"
-                  className="absolute inset-0 -z-0 rounded-full bg-brand-gradient shadow-lg shadow-brand/30"
+                  className="absolute inset-0 -z-0 rounded-full bg-brand"
                   transition={{ type: "spring", stiffness: 400, damping: 32 }}
                 />
               )}

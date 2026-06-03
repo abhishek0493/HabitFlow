@@ -230,7 +230,6 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
       <div className="space-y-10">
         <div className="premium-panel flex min-h-[350px] flex-col items-center justify-center rounded-2xl p-12 text-center">
           <div className="relative mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand/10 ring-1 ring-inset ring-brand/20">
-            <span className="absolute inset-0 animate-glow-pulse rounded-2xl bg-brand-gradient opacity-30 blur-xl" />
             <ListTodo className="h-8 w-8 text-brand" />
           </div>
           <h3 className="text-lg font-bold text-foreground">No habit analytics yet</h3>

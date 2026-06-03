@@ -85,10 +85,10 @@ export function JournalPage({ initialDate, initialEntry }: JournalPageProps) {
   return (
     <div className="animate-fade-in mx-auto max-w-3xl px-4 py-8">
       <div className="mb-6 text-center">
-        <p className="text-xs font-bold uppercase tracking-[0.24em] text-brand">
+        <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
           Daily notes
         </p>
-        <h1 className="mt-2 text-3xl font-black tracking-tight text-brand-gradient sm:text-4xl">
+        <h1 className="mt-2 text-3xl font-medium tracking-tight text-foreground sm:text-4xl">
           Journal
         </h1>
       </div>

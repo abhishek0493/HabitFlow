@@ -184,10 +184,10 @@ export function TodoPage({ initialDate, initialTodos }: TodoPageProps) {
     <div className="animate-fade-in mx-auto max-w-3xl px-4 py-8">
       {/* Header */}
       <div className="mb-6 text-center">
-        <p className="text-xs font-bold uppercase tracking-[0.24em] text-brand">
+        <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
           Daily plan
         </p>
-        <h1 className="mt-2 text-3xl font-black tracking-tight text-brand-gradient sm:text-4xl">
+        <h1 className="mt-2 text-3xl font-medium tracking-tight text-foreground sm:text-4xl">
           To-do
         </h1>
       </div>
@@ -251,7 +251,6 @@ export function TodoPage({ initialDate, initialTodos }: TodoPageProps) {
           {total === 0 ? (
             <div className="flex flex-col items-center justify-center gap-3 px-6 py-16 text-center">
               <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-brand/10 ring-1 ring-inset ring-brand/20">
-                <span className="absolute inset-0 animate-glow-pulse rounded-2xl bg-brand-gradient opacity-30 blur-xl" />
                 <ListChecks className="h-8 w-8 text-brand" />
               </div>
               <h2 className="text-lg font-bold text-foreground">
