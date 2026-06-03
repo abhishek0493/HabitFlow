@@ -70,16 +70,23 @@ export function HabitGrid({
     return getWeekStart(today)
   })
 
-  // ── Keep the URL in sync whenever view or date changes ────────────────────
+  // ── Keep the URL + persistence cookie in sync on view/date changes ─────────
   useEffect(() => {
+    const date =
+      view === "month"
+        ? buildDateString(monthYear.year, monthYear.month, 1)
+        : toDateString(weekStart)
+
     const params = new URLSearchParams()
     params.set("view", view)
-    if (view === "month") {
-      params.set("date", buildDateString(monthYear.year, monthYear.month, 1))
-    } else {
-      params.set("date", toDateString(weekStart))
-    }
+    params.set("date", date)
     window.history.replaceState(null, "", `?${params.toString()}`)
+
+    // Persist so a bare `/dashboard` link (e.g. sidebar) restores this view.
+    // Read back server-side in app/(dashboard)/dashboard/page.tsx.
+    const maxAge = 60 * 60 * 24 * 30 // 30 days
+    document.cookie = `hf_dash_view=${view}; path=/; max-age=${maxAge}; samesite=lax`
+    document.cookie = `hf_dash_date=${date}; path=/; max-age=${maxAge}; samesite=lax`
   }, [view, monthYear, weekStart])
 
   // ── Derived display columns + the fetch range ─────────────────────────────
