@@ -147,47 +147,53 @@ export function HabitGrid({
       toggleHabitLog(habitId, date),
 
     onMutate: async ({ habitId, date }) => {
-      await queryClient.cancelQueries({
-        queryKey: ["habitLogs", startDate, endDate],
+      // Affect ALL cached ranges, not just the visible one, so month, week,
+      // and any previously-fetched period stay in sync the instant you toggle.
+      await queryClient.cancelQueries({ queryKey: ["habitLogs"] })
+
+      const previous = queryClient.getQueriesData<HabitLogEntry[]>({
+        queryKey: ["habitLogs"],
       })
 
-      const previousLogs = queryClient.getQueryData<HabitLogEntry[]>([
-        "habitLogs",
-        startDate,
-        endDate,
-      ])
-
-      queryClient.setQueryData<HabitLogEntry[]>(
-        ["habitLogs", startDate, endDate],
-        (old = []) => {
-          const exists = old.some(
-            (l) => l.habitId === habitId && l.date === date
-          )
-          if (exists) {
-            return old.filter(
-              (l) => !(l.habitId === habitId && l.date === date)
-            )
-          }
-          return [...old, { habitId, date, completed: true }]
-        }
+      // Decide the target state once from the visible range so every cached
+      // range converges to the same value (no per-range drift).
+      const visible =
+        queryClient.getQueryData<HabitLogEntry[]>([
+          "habitLogs",
+          startDate,
+          endDate,
+        ]) ?? []
+      const willComplete = !visible.some(
+        (l) => l.habitId === habitId && l.date === date
       )
 
-      return { previousLogs }
+      for (const [key] of previous) {
+        const [, rangeStart, rangeEnd] = key as [string, string, string]
+        // Skip ranges that don't contain this date (ISO strings sort lexically).
+        if (!rangeStart || !rangeEnd || date < rangeStart || date > rangeEnd) {
+          continue
+        }
+        queryClient.setQueryData<HabitLogEntry[]>(key, (old = []) => {
+          const without = old.filter(
+            (l) => !(l.habitId === habitId && l.date === date)
+          )
+          return willComplete ? [...without, { habitId, date, completed: true }] : without
+        })
+      }
+
+      return { previous }
     },
 
     onError: (_err, _variables, context) => {
-      if (context?.previousLogs) {
-        queryClient.setQueryData(
-          ["habitLogs", startDate, endDate],
-          context.previousLogs
-        )
-      }
+      // Roll every touched range back to its pre-toggle snapshot.
+      context?.previous.forEach(([key, data]) => {
+        queryClient.setQueryData(key, data)
+      })
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["habitLogs", startDate, endDate],
-      })
+      // Refetch every range so an un-viewed period is fresh when next shown.
+      queryClient.invalidateQueries({ queryKey: ["habitLogs"] })
     },
   })
 
