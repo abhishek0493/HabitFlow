@@ -34,7 +34,7 @@ export function Sidebar() {
     <aside className="glass hidden h-screen w-68 flex-col border-r border-sidebar-border/80 bg-sidebar/75 shadow-2xl shadow-black/5 md:flex">
       {/* Top — brand */}
       <div className="relative flex items-center gap-3 px-5 py-5">
-        <div className="absolute left-5 top-5 h-9 w-9 animate-glow-pulse rounded-xl bg-brand-gradient opacity-50 blur-lg" />
+        <div className="absolute left-5 top-5 h-9 w-9 rounded-xl bg-brand-gradient opacity-50 blur-lg" />
         <div className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-brand-gradient shadow-lg shadow-brand/30 ring-1 ring-white/25">
           <CalendarCheck2 className="h-5 w-5 text-white" />
         </div>
