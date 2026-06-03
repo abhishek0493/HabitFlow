@@ -1,3 +1,4 @@
+import { cookies } from "next/headers"
 import { getHabits } from "@/actions/habit.actions"
 import { getHabitLogs } from "@/actions/log.actions"
 import { HabitGrid } from "@/components/habit-grid/habit-grid"
@@ -10,6 +11,12 @@ import {
 
 export const metadata = { title: "Dashboard" }
 
+// Cookies the grid writes on every view/date change so that returning to a bare
+// `/dashboard` link (e.g. from the sidebar) restores the last-used view instead
+// of snapping back to the month default.
+const DASH_VIEW_COOKIE = "hf_dash_view"
+const DASH_DATE_COOKIE = "hf_dash_date"
+
 export default async function DashboardPage({
   searchParams,
 }: {
@@ -17,17 +24,26 @@ export default async function DashboardPage({
   searchParams: Promise<{ view?: string; date?: string }>
 }) {
   const { view: viewParam, date: dateParam } = await searchParams
+
+  // Explicit URL params win (bookmarks / reloads); otherwise fall back to the
+  // persisted cookie so navigation round-trips keep the user's chosen view.
+  const cookieStore = await cookies()
+  const view: "month" | "week" =
+    (viewParam ?? cookieStore.get(DASH_VIEW_COOKIE)?.value) === "week"
+      ? "week"
+      : "month"
+  const date = dateParam ?? cookieStore.get(DASH_DATE_COOKIE)?.value
+
   const today = new Date()
-  const view = viewParam === "week" ? "week" : "month"
 
   let startDate: string
   let endDate: string
 
   if (view === "week") {
-    // Parse the week start from the URL, or default to the current week
+    // Parse the week start from the URL/cookie, or default to the current week
     const parsedWeekStart =
-      dateParam && /^\d{4}-\d{2}-\d{2}$/.test(dateParam)
-        ? new Date(`${dateParam}T00:00:00.000Z`)
+      date && /^\d{4}-\d{2}-\d{2}$/.test(date)
+        ? new Date(`${date}T00:00:00.000Z`)
         : getWeekStart(today)
 
     const weekEnd = new Date(parsedWeekStart)
