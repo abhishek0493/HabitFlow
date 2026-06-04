@@ -129,7 +129,7 @@ export function TodoCalendar({
               className={cn(
                 "relative flex h-9 flex-col items-center justify-center rounded-lg text-xs transition-all duration-300",
                 isSelected &&
-                  "bg-brand-gradient font-bold text-white shadow-lg shadow-brand/20",
+                  "bg-brand font-bold text-primary-foreground",
                 !isSelected && isToday && "font-bold text-foreground ring-1 ring-inset ring-brand/40",
                 !isSelected &&
                   "text-foreground/80 hover:-translate-y-0.5 hover:bg-accent"

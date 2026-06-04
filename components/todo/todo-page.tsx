@@ -202,7 +202,7 @@ export function TodoPage({ initialDate, initialTodos }: TodoPageProps) {
       >
         {/* Progress summary */}
         <div className="premium-panel flex items-center gap-4 rounded-2xl p-4">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand shadow-[0_0_24px_color-mix(in_oklch,var(--brand)_22%,transparent)]">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
             <CheckCircle2 className="h-5 w-5" />
           </div>
           <div className="min-w-0 flex-1">

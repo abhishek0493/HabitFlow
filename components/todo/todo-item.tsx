@@ -43,13 +43,13 @@ export function TodoItem({ todo, onToggle, onUpdate, onDelete }: TodoItemProps) 
       className={cn(
         "group relative flex items-start gap-3 overflow-hidden px-4 py-3 transition-all duration-300 hover:bg-accent/45",
         isDragging &&
-          "relative z-10 rounded-xl bg-card shadow-2xl shadow-brand/15 ring-1 ring-brand/25"
+          "relative z-10 rounded-xl bg-card shadow-lg ring-1 ring-border"
       )}
     >
       {/* Priority accent bar */}
       <span
         className="absolute inset-y-2 left-0 w-1 rounded-r-full opacity-70 transition-all duration-300 group-hover:opacity-100"
-        style={{ backgroundColor: meta.color, boxShadow: `0 0 16px ${meta.color}` }}
+        style={{ backgroundColor: meta.color }}
         aria-hidden
       />
 

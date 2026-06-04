@@ -161,7 +161,7 @@ export function MoodCorrelation({ habits, logs, moods, dates }: MoodCorrelationP
                   Let&apos;s see which habits lift your mood the most when completed.
                 </p>
               </div>
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-brand/20 bg-brand/10 shadow-[0_0_24px_color-mix(in_oklch,var(--brand)_22%,transparent)]">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-brand/20 bg-brand/10">
                 {getMoodEmoji(overallAvgMood)}
               </div>
             </div>
@@ -181,8 +181,8 @@ export function MoodCorrelation({ habits, logs, moods, dates }: MoodCorrelationP
                     {/* Habit Info */}
                     <div className="flex items-center gap-2.5">
                       <span
-                        className="h-3 w-3 rounded-full shrink-0 ring-2 ring-white/10"
-                        style={{ backgroundColor: data.color }}
+                        className="h-3 w-3 rounded-full shrink-0"
+                        style={{ backgroundColor: "var(--habit)" }}
                       />
                       {data.emoji && <span className="text-base">{data.emoji}</span>}
                       <span className="text-sm font-semibold text-foreground/95">

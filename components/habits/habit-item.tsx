@@ -39,12 +39,11 @@ export function HabitItem({ habit }: HabitItemProps) {
       className={cn(
         "group relative flex items-center gap-3 overflow-hidden px-4 py-3.5 transition-all duration-300 hover:bg-accent/45",
         isDragging &&
-          "relative z-10 rounded-xl bg-card shadow-2xl shadow-brand/15 ring-1 ring-brand/25"
+          "relative z-10 rounded-xl bg-card shadow-lg ring-1 ring-border"
       )}
     >
       <span
-        className="absolute inset-y-2 left-0 w-1 rounded-r-full opacity-70 transition-all duration-300 group-hover:opacity-100"
-        style={{ backgroundColor: habit.color, boxShadow: `0 0 18px ${habit.color}` }}
+        className="absolute inset-y-2 left-0 w-0.5 rounded-r-full bg-foreground/30 opacity-70 transition-all duration-300 group-hover:opacity-100"
       />
       {/* Drag handle */}
       <button
@@ -57,13 +56,9 @@ export function HabitItem({ habit }: HabitItemProps) {
         <GripVertical className="h-4 w-4" />
       </button>
 
-      {/* Colour dot */}
+      {/* Subtle marker dot */}
       <span
-        className="h-4 w-4 shrink-0 rounded-full ring-2 ring-inset ring-white/20 transition-transform duration-300 group-hover:scale-125"
-        style={{
-          backgroundColor: habit.color,
-          boxShadow: `0 0 14px -1px ${habit.color}a0`,
-        }}
+        className="h-1.5 w-1.5 shrink-0 rounded-full bg-muted-foreground/30"
         aria-hidden
       />
 

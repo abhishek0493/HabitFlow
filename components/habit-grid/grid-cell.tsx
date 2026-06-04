@@ -7,7 +7,6 @@ interface GridCellProps {
   isCompleted: boolean
   isToday: boolean // date is today
   isFuture: boolean // date is in the future
-  color: string // habit hex color, used as fill when completed
   onClick: () => void
 }
 
@@ -15,7 +14,6 @@ export function GridCell({
   isCompleted,
   isToday,
   isFuture,
-  color,
   onClick,
 }: GridCellProps) {
   return (
@@ -31,15 +29,15 @@ export function GridCell({
     >
       {/* today marker on empty cells */}
       {!isCompleted && !isFuture && isToday && (
-        <span className="absolute inset-[3px] rounded-md bg-brand/10 ring-1 ring-inset ring-brand/40 shadow-[0_0_16px_var(--brand)]" />
+        <span className="absolute inset-[3px] rounded-md bg-foreground/[0.06] ring-1 ring-inset ring-foreground/25" />
       )}
 
       {/* hover hint on empty, non-future cells */}
       {!isCompleted && !isFuture && (
-        <span className="absolute inset-[3px] rounded-md bg-foreground/0 transition-all duration-200 group-hover:scale-90 group-hover:bg-foreground/10 group-hover:ring-1 group-hover:ring-brand/20" />
+        <span className="absolute inset-[3px] rounded-md bg-foreground/0 transition-all duration-200 group-hover:scale-90 group-hover:bg-foreground/10 group-hover:ring-1 group-hover:ring-foreground/20" />
       )}
 
-      {/* completed fill — springs in/out */}
+      {/* completed fill — springs in/out, uniform accent */}
       <AnimatePresence initial={false}>
         {isCompleted && (
           <motion.span
@@ -49,10 +47,7 @@ export function GridCell({
             exit={{ scale: 0.3, opacity: 0 }}
             transition={{ type: "spring", stiffness: 520, damping: 26 }}
             className="absolute inset-[3px] rounded-md shadow-sm"
-            style={{
-              backgroundColor: color,
-              boxShadow: `0 0 18px -2px ${color}b0, inset 0 1px 0 rgba(255,255,255,0.35)`,
-            }}
+            style={{ backgroundColor: "var(--habit)" }}
           />
         )}
       </AnimatePresence>
@@ -66,7 +61,7 @@ export function GridCell({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.48, ease: "easeOut" }}
             className="absolute inset-[5px] rounded-md border"
-            style={{ borderColor: color }}
+            style={{ borderColor: "var(--habit)" }}
           />
         )}
       </AnimatePresence>

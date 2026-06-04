@@ -72,7 +72,6 @@ export function MoodPicker({
                     ? {
                         backgroundColor: `${color}20`,
                         border: `2px solid ${color}`,
-                        boxShadow: `0 0 0 4px ${color}15`,
                       }
                     : undefined
                 }

@@ -88,8 +88,8 @@ export function ComparisonChart({ habits, logs, dates }: ComparisonChartProps) {
                 <div className="flex items-center justify-between text-xs font-semibold">
                   <div className="flex items-center gap-2">
                     <span
-                      className="h-2.5 w-2.5 rounded-full ring-2 ring-white/10 shrink-0"
-                      style={{ backgroundColor: data.color }}
+                      className="h-2.5 w-2.5 rounded-full shrink-0"
+                      style={{ backgroundColor: "var(--habit)" }}
                     />
                     {data.emoji && <span className="text-sm leading-none">{data.emoji}</span>}
                     <span className="text-foreground/90 truncate max-w-[150px] sm:max-w-[250px]">
@@ -112,10 +112,7 @@ export function ComparisonChart({ habits, logs, dates }: ComparisonChartProps) {
                     animate={{ width: `${data.completionRate}%` }}
                     transition={{ duration: 0.6, delay: index * 0.04, ease: "easeOut" }}
                     className="h-full rounded-full shadow-inner relative"
-                    style={{
-                      backgroundColor: data.color,
-                      boxShadow: `0 0 12px ${data.color}35`,
-                    }}
+                    style={{ backgroundColor: "var(--habit)" }}
                   />
                 </div>
               </div>

@@ -1,12 +1,11 @@
 "use client"
 
-import { useForm, Controller } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { habitSchema, type HabitFormValues } from "@/lib/validations"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { ColorPicker } from "@/components/habits/color-picker"
 
 interface HabitFormProps {
   defaultValues?: HabitFormValues
@@ -17,7 +16,6 @@ interface HabitFormProps {
 
 const NEW_HABIT_DEFAULTS: HabitFormValues = {
   name: "",
-  color: "#6366f1",
   emoji: "",
 }
 
@@ -30,7 +28,6 @@ export function HabitForm({
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors },
   } = useForm<HabitFormValues>({
     resolver: zodResolver(habitSchema),
@@ -52,21 +49,6 @@ export function HabitForm({
         )}
       </div>
 
-      {/* Colour */}
-      <div className="flex flex-col gap-2 rounded-xl border border-border/60 bg-muted/25 p-3">
-        <Label>Colour</Label>
-        <Controller
-          control={control}
-          name="color"
-          render={({ field }) => (
-            <ColorPicker value={field.value} onChange={field.onChange} />
-          )}
-        />
-        {errors.color && (
-          <p className="text-sm text-destructive">{errors.color.message}</p>
-        )}
-      </div>
-
       {/* Emoji */}
       <div className="flex flex-col gap-2 rounded-xl border border-border/60 bg-muted/25 p-3">
         <Label htmlFor="habit-emoji">Emoji (optional)</Label>
@@ -77,7 +59,7 @@ export function HabitForm({
         )}
       </div>
 
-      <Button type="submit" className="w-full shadow-lg shadow-brand/20" disabled={isPending}>
+      <Button type="submit" className="w-full" disabled={isPending}>
         {isPending ? "Saving…" : submitLabel}
       </Button>
     </form>

@@ -260,8 +260,8 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
             onClick={() => setTimeRange(range)}
             className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
               timeRange === range
-                ? "bg-brand-gradient text-white shadow-lg shadow-brand/25"
-                : "text-muted-foreground hover:-translate-y-0.5 hover:text-foreground"
+                ? "bg-brand text-primary-foreground"
+                : "text-muted-foreground hover:text-foreground"
             }`}
           >
             {range} Days
@@ -278,7 +278,7 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
           transition={{ duration: 0.35 }}
           className="premium-panel kinetic-card flex items-center gap-4 rounded-xl p-4.5"
         >
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand shadow-[0_0_24px_color-mix(in_oklch,var(--brand)_24%,transparent)]">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
             <Activity className="h-5 w-5" />
           </div>
           <div className="min-w-0 flex-1">
@@ -298,7 +298,7 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
           transition={{ duration: 0.35, delay: 0.05 }}
           className="premium-panel kinetic-card flex items-center gap-4 rounded-xl p-4.5"
         >
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/10 text-amber-500 shadow-[0_0_24px_rgba(245,158,11,0.18)]">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/10 text-amber-500">
             <Flame className="h-5 w-5" />
           </div>
           <div className="min-w-0 flex-1">
@@ -318,7 +318,7 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
           transition={{ duration: 0.35, delay: 0.1 }}
           className="premium-panel kinetic-card flex items-center gap-4 rounded-xl p-4.5"
         >
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-500 shadow-[0_0_24px_rgba(16,185,129,0.18)]">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-500">
             <CheckCircle2 className="h-5 w-5" />
           </div>
           <div className="min-w-0 flex-1">
@@ -348,7 +348,7 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
           transition={{ duration: 0.35, delay: 0.15 }}
           className="premium-panel kinetic-card flex items-center gap-4 rounded-xl p-4.5"
         >
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-rose-500/10 text-rose-500 shadow-[0_0_24px_rgba(244,63,94,0.18)]">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-rose-500/10 text-rose-500">
             <AlertTriangle className="h-5 w-5" />
           </div>
           <div className="min-w-0 flex-1">

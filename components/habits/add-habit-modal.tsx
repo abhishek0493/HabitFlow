@@ -37,7 +37,7 @@ export function AddHabitModal() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger render={<Button className="shadow-lg shadow-brand/25" />}>
+      <DialogTrigger render={<Button />}>
         <Plus className="h-4 w-4" />
         Add habit
       </DialogTrigger>
@@ -45,7 +45,7 @@ export function AddHabitModal() {
         <DialogHeader>
           <DialogTitle>Add a new habit</DialogTitle>
           <DialogDescription>
-            Choose a name, colour, and optional emoji.
+            Choose a name and an optional emoji.
           </DialogDescription>
         </DialogHeader>
         {error && <p className="text-sm text-destructive">{error}</p>}

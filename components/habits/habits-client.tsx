@@ -81,8 +81,8 @@ export function HabitsClient({ initialHabits }: HabitsClientProps) {
             Habits
           </h1>
           <p className="mt-2 max-w-lg text-sm leading-6 text-muted-foreground">
-            Create rituals, tune their color signatures, and drag the order until
-            the tracker feels right.
+            Create habits, add an emoji, and drag to reorder them until the
+            tracker feels right.
           </p>
         </div>
         <AddHabitModal />

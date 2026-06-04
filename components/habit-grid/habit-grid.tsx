@@ -297,7 +297,7 @@ export function HabitGrid({
                 )}
               >
                 {col.isToday && (
-                  <span className="absolute inset-x-2 top-1 h-px bg-brand-gradient shadow-[0_0_14px_var(--brand)]" />
+                  <span className="absolute inset-x-2 top-1 h-px bg-brand" />
                 )}
                 {col.dayName && (
                   <span
@@ -312,7 +312,7 @@ export function HabitGrid({
                   </span>
                 )}
                 {col.isToday && view === "week" && (
-                  <span className="mb-1 h-1.5 w-1.5 rounded-full bg-brand shadow-[0_0_10px_var(--brand)]" />
+                  <span className="mb-1 h-1.5 w-1.5 rounded-full bg-brand" />
                 )}
                 <span
                   className={cn(
@@ -339,13 +339,7 @@ export function HabitGrid({
                   }}
                   className="sticky left-0 z-10 flex h-10 items-center gap-2 border-b border-r border-border/70 bg-card/82 px-3 backdrop-blur-xl"
                 >
-                  <span
-                    className="h-3.5 w-3.5 flex-shrink-0 rounded-full ring-2 ring-inset ring-white/20"
-                    style={{
-                      backgroundColor: habit.color,
-                      boxShadow: `0 0 14px ${habit.color}80`,
-                    }}
-                  />
+                  <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-muted-foreground/30" />
                   {habit.emoji && (
                     <span className="text-sm leading-none">{habit.emoji}</span>
                   )}
@@ -366,7 +360,6 @@ export function HabitGrid({
                       isCompleted={isCompleted}
                       isFuture={isFuture}
                       isToday={isToday}
-                      color={habit.color}
                       onClick={() =>
                         toggleLog({ habitId: habit.id, date: col.date })
                       }
