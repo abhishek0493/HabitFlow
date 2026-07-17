@@ -71,7 +71,7 @@ export function TodoCalendar({
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1)
 
   return (
-    <div className="premium-panel mt-8 rounded-2xl p-5">
+    <div className="premium-panel mt-8 rounded-lg p-5 xl:mt-0">
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-sm font-medium text-muted-foreground">
           Task calendar
@@ -79,7 +79,7 @@ export function TodoCalendar({
         <div className="flex items-center gap-1">
           <button
             onClick={goPrev}
-            className="rounded-lg p-1 text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent hover:text-foreground"
+            className="rounded-md p-1 text-muted-foreground transition-all duration-150 hover:-translate-x-px hover:-translate-y-px hover:bg-secondary hover:text-foreground"
             aria-label="Previous month"
           >
             <ChevronLeft className="h-4 w-4" />
@@ -89,7 +89,7 @@ export function TodoCalendar({
           </span>
           <button
             onClick={goNext}
-            className="rounded-lg p-1 text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent hover:text-foreground"
+            className="rounded-md p-1 text-muted-foreground transition-all duration-150 hover:-translate-x-px hover:-translate-y-px hover:bg-secondary hover:text-foreground"
             aria-label="Next month"
           >
             <ChevronRight className="h-4 w-4" />
@@ -127,12 +127,12 @@ export function TodoCalendar({
               type="button"
               onClick={() => onDateSelect(dateString)}
               className={cn(
-                "relative flex h-9 flex-col items-center justify-center rounded-lg text-xs transition-all duration-300",
+                "relative flex h-9 flex-col items-center justify-center rounded-md text-xs transition-all duration-150",
                 isSelected &&
-                  "bg-brand-gradient font-bold text-white shadow-lg shadow-brand/20",
-                !isSelected && isToday && "font-bold text-foreground ring-1 ring-inset ring-brand/40",
+                  "-rotate-3 border-2 border-foreground/75 bg-brand font-bold text-white shadow-[2px_2px_0_color-mix(in_oklch,var(--foreground)_25%,transparent)]",
+                !isSelected && isToday && "font-bold text-foreground ring-2 ring-inset ring-brand/40",
                 !isSelected &&
-                  "text-foreground/80 hover:-translate-y-0.5 hover:bg-accent"
+                  "text-foreground/80 hover:-translate-x-px hover:-translate-y-px hover:bg-secondary"
               )}
             >
               {day}

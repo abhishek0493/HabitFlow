@@ -39,31 +39,23 @@ export function HabitItem({ habit }: HabitItemProps) {
       className={cn(
         "group relative flex items-center gap-3 overflow-hidden px-4 py-3.5 transition-all duration-300 hover:bg-accent/45",
         isDragging &&
-          "relative z-10 rounded-xl bg-card shadow-2xl shadow-brand/15 ring-1 ring-brand/25"
+          "relative z-10 rounded-md border-2 border-brand bg-card shadow-[4px_4px_0_color-mix(in_oklch,var(--foreground)_20%,transparent)]"
       )}
     >
-      <span
-        className="absolute inset-y-2 left-0 w-1 rounded-r-full opacity-70 transition-all duration-300 group-hover:opacity-100"
-        style={{ backgroundColor: habit.color, boxShadow: `0 0 18px ${habit.color}` }}
-      />
+      <span className="absolute inset-y-2 left-0 w-1 rounded-r-full bg-brand opacity-70 transition-all duration-150 group-hover:opacity-100" />
       {/* Drag handle */}
       <button
         type="button"
         aria-label="Drag to reorder"
-        className="cursor-grab touch-none rounded-lg p-1 text-muted-foreground/50 transition-all duration-300 hover:-translate-y-0.5 hover:bg-muted hover:text-muted-foreground active:cursor-grabbing"
+        className="cursor-grab touch-none rounded-md p-1 text-muted-foreground/50 transition-all duration-150 hover:-translate-x-px hover:-translate-y-px hover:bg-secondary hover:text-muted-foreground active:cursor-grabbing"
         {...attributes}
         {...listeners}
       >
         <GripVertical className="h-4 w-4" />
       </button>
 
-      {/* Colour dot */}
       <span
-        className="h-4 w-4 shrink-0 rounded-full ring-2 ring-inset ring-white/20 transition-transform duration-300 group-hover:scale-125"
-        style={{
-          backgroundColor: habit.color,
-          boxShadow: `0 0 14px -1px ${habit.color}a0`,
-        }}
+        className="h-3.5 w-3.5 shrink-0 rounded-sm border-2 border-brand bg-brand/15 transition-transform duration-150 group-hover:rotate-6"
         aria-hidden
       />
 

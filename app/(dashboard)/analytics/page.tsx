@@ -16,20 +16,19 @@ export default async function AnalyticsPage() {
   const data = await getAnalyticsData(90)
 
   return (
-    <div className="animate-fade-in p-4 sm:p-6 lg:p-8">
+    <div className="page-frame animate-fade-in p-3 sm:p-5 lg:p-6">
       <div className="mx-auto max-w-7xl space-y-8">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.24em] text-brand">
-              Signal room
+            <p className="doodle-label">
+              Tiny patterns
             </p>
             <h1 className="mt-2 text-3xl font-black tracking-tight text-brand-gradient sm:text-4xl">
               Analytics
             </h1>
           </div>
           <p className="max-w-md text-sm leading-6 text-muted-foreground">
-            Watch consistency patterns, streak heat, and journal signals move in
-            one polished dashboard.
+            See the small patterns that show up when you keep coming back.
           </p>
         </div>
         <AnalyticsDashboard initialData={data} />

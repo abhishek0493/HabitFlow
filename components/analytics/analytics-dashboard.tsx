@@ -21,7 +21,6 @@ import type { Priority } from "@/lib/validations"
 interface Habit {
   id: string
   name: string
-  color: string
   emoji?: string | null
   createdAt: string
 }
@@ -228,18 +227,17 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
   if (habits.length === 0) {
     return (
       <div className="space-y-10">
-        <div className="premium-panel flex min-h-[350px] flex-col items-center justify-center rounded-2xl p-12 text-center">
-          <div className="relative mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand/10 ring-1 ring-inset ring-brand/20">
-            <span className="absolute inset-0 animate-glow-pulse rounded-2xl bg-brand-gradient opacity-30 blur-xl" />
+        <div className="premium-panel flex min-h-[350px] flex-col items-center justify-center rounded-lg p-12 text-center">
+          <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-md border-2 border-brand/45 bg-brand/10">
             <ListTodo className="h-8 w-8 text-brand" />
           </div>
-          <h3 className="text-lg font-bold text-foreground">No habit analytics yet</h3>
+          <h3 className="text-2xl font-bold text-foreground">No habit analytics yet</h3>
           <p className="mt-2 text-sm text-muted-foreground max-w-sm">
             Habit insights require active habits to track. Create a habit on the habits page and log some entries to view them.
           </p>
           <a
             href="/habits"
-            className="mt-6 inline-flex items-center gap-1.5 rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand-2 shadow-md transition-colors"
+            className="mt-6 inline-flex items-center gap-1.5 rounded-md border-2 border-foreground/80 bg-brand px-4 py-2 text-sm font-bold text-white shadow-[3px_3px_0_color-mix(in_oklch,var(--foreground)_28%,transparent)] transition-transform hover:-translate-x-px hover:-translate-y-px"
           >
             Manage Habits <ArrowUpRight className="h-4 w-4" />
           </a>
@@ -254,14 +252,14 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
   return (
     <div className="space-y-6">
       {/* Time Range Filter Header */}
-      <div className="premium-panel ml-auto flex w-fit rounded-2xl p-1.5">
+      <div className="premium-panel ml-auto flex w-fit rounded-lg p-1.5">
         {([7, 30, 90] as const).map((range) => (
           <button
             key={range}
             onClick={() => setTimeRange(range)}
-            className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
+            className={`rounded-md px-4 py-1.5 text-xs font-bold transition-all ${
               timeRange === range
-                ? "bg-brand-gradient text-white shadow-lg shadow-brand/25"
+                ? "bg-brand-gradient text-white shadow-[2px_2px_0_color-mix(in_oklch,var(--foreground)_22%,transparent)]"
                 : "text-muted-foreground hover:-translate-y-0.5 hover:text-foreground"
             }`}
           >
@@ -277,9 +275,9 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="premium-panel kinetic-card flex items-center gap-4 rounded-xl p-4.5"
+          className="premium-panel kinetic-card flex items-center gap-4 rounded-md p-4.5"
         >
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand shadow-[0_0_24px_color-mix(in_oklch,var(--brand)_24%,transparent)]">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border-2 border-brand/30 bg-brand/10 text-brand">
             <Activity className="h-5 w-5" />
           </div>
           <div className="min-w-0 flex-1">
@@ -297,9 +295,9 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, delay: 0.05 }}
-          className="premium-panel kinetic-card flex items-center gap-4 rounded-xl p-4.5"
+          className="premium-panel kinetic-card flex items-center gap-4 rounded-md p-4.5"
         >
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/10 text-amber-500 shadow-[0_0_24px_rgba(245,158,11,0.18)]">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border-2 border-amber-500/30 bg-amber-500/10 text-amber-500">
             <Flame className="h-5 w-5" />
           </div>
           <div className="min-w-0 flex-1">
@@ -317,9 +315,9 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, delay: 0.1 }}
-          className="premium-panel kinetic-card flex items-center gap-4 rounded-xl p-4.5"
+          className="premium-panel kinetic-card flex items-center gap-4 rounded-md p-4.5"
         >
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-500 shadow-[0_0_24px_rgba(16,185,129,0.18)]">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border-2 border-emerald-500/30 bg-emerald-500/10 text-emerald-500">
             <CheckCircle2 className="h-5 w-5" />
           </div>
           <div className="min-w-0 flex-1">
@@ -347,9 +345,9 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, delay: 0.15 }}
-          className="premium-panel kinetic-card flex items-center gap-4 rounded-xl p-4.5"
+          className="premium-panel kinetic-card flex items-center gap-4 rounded-md p-4.5"
         >
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-rose-500/10 text-rose-500 shadow-[0_0_24px_rgba(244,63,94,0.18)]">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border-2 border-rose-500/30 bg-rose-500/10 text-rose-500">
             <AlertTriangle className="h-5 w-5" />
           </div>
           <div className="min-w-0 flex-1">

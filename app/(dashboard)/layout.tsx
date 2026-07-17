@@ -2,6 +2,7 @@ import { SessionProvider } from "next-auth/react"
 import { auth } from "@/lib/auth"
 import { Sidebar } from "@/components/sidebar"
 import { MobileNav } from "@/components/mobile-nav"
+import { PageTransition } from "@/components/page-transition"
 
 export default async function DashboardLayout({
   children,
@@ -15,15 +16,29 @@ export default async function DashboardLayout({
 
   return (
     <SessionProvider session={session}>
-      <div className="ambient-shell flex h-screen bg-background">
+      <div className="ambient-shell dashboard-shell bg-background">
         <div className="noise-overlay" aria-hidden />
-        {/* Desktop sidebar (hidden on mobile via class inside Sidebar) */}
-        <Sidebar />
+        <header className="dashboard-masthead">
+          <div className="flex items-center gap-3">
+            <span className="masthead-mark">hf</span>
+            <div>
+              <p className="doodle-label">Habitflow</p>
+              <p className="masthead-note">A small practice, kept close.</p>
+            </div>
+          </div>
+          <p className="hidden text-right text-sm text-muted-foreground lg:block">
+            Give ordinary days a little shape.
+          </p>
+        </header>
 
-        {/* Right side: MobileNav stacks on top, then the page */}
-        <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-          <MobileNav />
-          <main className="relative flex-1 overflow-auto">{children}</main>
+        <div className="dashboard-workspace">
+          <Sidebar />
+          <div className="min-w-0">
+            <MobileNav />
+            <main className="workspace-main">
+              <PageTransition>{children}</PageTransition>
+            </main>
+          </div>
         </div>
       </div>
     </SessionProvider>

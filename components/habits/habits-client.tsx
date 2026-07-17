@@ -70,34 +70,34 @@ export function HabitsClient({ initialHabits }: HabitsClientProps) {
   }
 
   return (
-    <div className="animate-fade-in mx-auto max-w-4xl p-4 sm:p-8">
+    <div className="page-frame mx-auto max-w-6xl animate-fade-in p-3 sm:p-5 lg:p-6">
       {/* Page header */}
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.24em] text-brand">
-            Habit studio
+          <p className="doodle-label">
+            Habit shelf
           </p>
           <h1 className="mt-2 text-3xl font-black tracking-tight text-brand-gradient sm:text-4xl">
             Habits
           </h1>
           <p className="mt-2 max-w-lg text-sm leading-6 text-muted-foreground">
-            Create rituals, tune their color signatures, and drag the order until
-            the tracker feels right.
+            Keep your little rituals together, then arrange them until the page
+            feels just right.
           </p>
         </div>
         <AddHabitModal />
       </div>
 
       {/* List card */}
-      <div className="premium-panel overflow-hidden rounded-2xl">
+      <div className="premium-panel overflow-hidden rounded-lg">
         <div className="flex items-center justify-between border-b border-border/70 bg-card/35 px-5 py-3 text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
           <span className="flex items-center gap-2">
             <Sparkles className="h-3.5 w-3.5 text-brand" />
-            Active stack
+            Your habits
           </span>
           <span className="flex items-center gap-2">
             <GripVertical className="h-3.5 w-3.5" />
-            Drag to remix
+            Rearrange freely
           </span>
         </div>
         {habits.length === 0 ? (

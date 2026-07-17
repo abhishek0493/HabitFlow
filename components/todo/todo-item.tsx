@@ -43,13 +43,13 @@ export function TodoItem({ todo, onToggle, onUpdate, onDelete }: TodoItemProps) 
       className={cn(
         "group relative flex items-start gap-3 overflow-hidden px-4 py-3 transition-all duration-300 hover:bg-accent/45",
         isDragging &&
-          "relative z-10 rounded-xl bg-card shadow-2xl shadow-brand/15 ring-1 ring-brand/25"
+          "relative z-10 rounded-md border-2 border-brand bg-card shadow-[4px_4px_0_color-mix(in_oklch,var(--foreground)_20%,transparent)]"
       )}
     >
       {/* Priority accent bar */}
       <span
-        className="absolute inset-y-2 left-0 w-1 rounded-r-full opacity-70 transition-all duration-300 group-hover:opacity-100"
-        style={{ backgroundColor: meta.color, boxShadow: `0 0 16px ${meta.color}` }}
+        className="absolute inset-y-2 left-0 w-1 rounded-r-full opacity-70 transition-all duration-150 group-hover:opacity-100"
+        style={{ backgroundColor: meta.color }}
         aria-hidden
       />
 
@@ -57,7 +57,7 @@ export function TodoItem({ todo, onToggle, onUpdate, onDelete }: TodoItemProps) 
       <button
         type="button"
         aria-label="Drag to reorder"
-        className="mt-0.5 cursor-grab touch-none rounded-lg p-1 text-muted-foreground/40 transition-all duration-300 hover:bg-muted hover:text-muted-foreground active:cursor-grabbing"
+        className="mt-0.5 cursor-grab touch-none rounded-md p-1 text-muted-foreground/40 transition-all duration-150 hover:-translate-x-px hover:-translate-y-px hover:bg-secondary hover:text-muted-foreground active:cursor-grabbing"
         {...attributes}
         {...listeners}
       >

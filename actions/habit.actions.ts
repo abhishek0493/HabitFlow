@@ -20,7 +20,6 @@ export async function getHabits() {
 
 export async function createHabit(data: {
   name: string
-  color: string
   emoji?: string
 }) {
   const session = await auth()
@@ -34,7 +33,6 @@ export async function createHabit(data: {
     data: {
       userId: session.user.id,
       name: data.name.trim(),
-      color: data.color,
       emoji: data.emoji?.trim() || null,
       order: existingCount, // append to end of list
     },
@@ -48,7 +46,7 @@ export async function createHabit(data: {
 
 export async function updateHabit(
   id: string,
-  data: { name: string; color: string; emoji?: string }
+  data: { name: string; emoji?: string }
 ) {
   const session = await auth()
   if (!session?.user?.id) return { error: "Unauthorised" }
@@ -63,7 +61,6 @@ export async function updateHabit(
     where: { id },
     data: {
       name: data.name.trim(),
-      color: data.color,
       emoji: data.emoji?.trim() || null,
     },
   })

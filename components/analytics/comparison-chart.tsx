@@ -6,7 +6,6 @@ import { motion } from "motion/react"
 interface Habit {
   id: string
   name: string
-  color: string
   emoji?: string | null
 }
 
@@ -26,7 +25,6 @@ interface HabitComparisonData {
   id: string
   name: string
   emoji?: string | null
-  color: string
   completionRate: number
   completionsCount: number
   totalDays: number
@@ -56,7 +54,6 @@ export function ComparisonChart({ habits, logs, dates }: ComparisonChartProps) {
         id: habit.id,
         name: habit.name,
         emoji: habit.emoji,
-        color: habit.color,
         completionRate,
         completionsCount,
         totalDays,
@@ -88,8 +85,7 @@ export function ComparisonChart({ habits, logs, dates }: ComparisonChartProps) {
                 <div className="flex items-center justify-between text-xs font-semibold">
                   <div className="flex items-center gap-2">
                     <span
-                      className="h-2.5 w-2.5 rounded-full ring-2 ring-white/10 shrink-0"
-                      style={{ backgroundColor: data.color }}
+                      className="h-2.5 w-2.5 shrink-0 rounded-sm bg-brand"
                     />
                     {data.emoji && <span className="text-sm leading-none">{data.emoji}</span>}
                     <span className="text-foreground/90 truncate max-w-[150px] sm:max-w-[250px]">
@@ -113,8 +109,8 @@ export function ComparisonChart({ habits, logs, dates }: ComparisonChartProps) {
                     transition={{ duration: 0.6, delay: index * 0.04, ease: "easeOut" }}
                     className="h-full rounded-full shadow-inner relative"
                     style={{
-                      backgroundColor: data.color,
-                      boxShadow: `0 0 12px ${data.color}35`,
+                      backgroundColor: "var(--brand)",
+                      boxShadow: "0 0 12px color-mix(in oklch, var(--brand) 22%, transparent)",
                     }}
                   />
                 </div>

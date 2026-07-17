@@ -69,7 +69,6 @@ export async function getAnalyticsData(daysLimit = 90) {
     habits: habits.map(h => ({
       id: h.id,
       name: h.name,
-      color: h.color,
       emoji: h.emoji,
       createdAt: h.createdAt.toISOString(),
     })),
