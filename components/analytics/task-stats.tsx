@@ -92,7 +92,7 @@ export function TaskStats({ todos, dates }: TaskStatsProps) {
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand/10 text-brand">
           <ListChecks className="h-4.5 w-4.5" />
         </div>
-        <h2 className="text-lg font-bold tracking-tight text-foreground">
+        <h2 className="text-3xl tracking-tight text-foreground">
           Task focus
         </h2>
         <a
@@ -105,11 +105,11 @@ export function TaskStats({ todos, dates }: TaskStatsProps) {
 
       {stats.total === 0 ? (
         <div className="premium-panel flex min-h-[180px] flex-col items-center justify-center rounded-2xl p-10 text-center">
-          <div className="relative mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand/10 ring-1 ring-inset ring-brand/20">
-            <span className="absolute inset-0 animate-glow-pulse rounded-2xl bg-brand-gradient opacity-30 blur-xl" />
+          <div className="relative mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-brand/10 ring-1 ring-inset ring-brand/20">
+            <span className="absolute inset-0 animate-glow-pulse rounded-full bg-brand-gradient opacity-30 blur-xl" />
             <ListChecks className="h-7 w-7 text-brand" />
           </div>
-          <h3 className="text-base font-bold text-foreground">
+          <h3 className="text-3xl text-foreground">
             No tasks in this range
           </h3>
           <p className="mt-1.5 max-w-sm text-sm text-muted-foreground">
@@ -126,10 +126,10 @@ export function TaskStats({ todos, dates }: TaskStatsProps) {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.35, delay: i * 0.05 }}
-                className="premium-panel kinetic-card flex items-center gap-4 rounded-xl p-4.5"
+                className="premium-panel kinetic-card flex items-center gap-4 rounded-[1.5rem] p-5"
               >
                 <div
-                  className={`flex h-10 w-10 shrink-0 -rotate-3 items-center justify-center rounded-md border-2 border-current/30 ${kpi.tint}`}
+                  className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-current/25 ${kpi.tint}`}
                 >
                   <kpi.icon className="h-5 w-5" />
                 </div>
@@ -149,7 +149,7 @@ export function TaskStats({ todos, dates }: TaskStatsProps) {
           {/* Two-up: daily bars + priority mix */}
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
             {/* Daily completion bars */}
-            <div className="premium-panel kinetic-card rounded-xl p-4 lg:col-span-3">
+            <div className="premium-panel kinetic-card rounded-[1.5rem] p-5 lg:col-span-3">
               <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
                 Tasks per day
               </h3>
@@ -196,7 +196,7 @@ export function TaskStats({ todos, dates }: TaskStatsProps) {
             </div>
 
             {/* Priority mix */}
-            <div className="premium-panel kinetic-card rounded-xl p-4 lg:col-span-2">
+            <div className="premium-panel kinetic-card rounded-[1.5rem] p-5 lg:col-span-2">
               <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
                 Priority mix
               </h3>

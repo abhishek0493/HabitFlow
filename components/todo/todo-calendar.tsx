@@ -30,9 +30,9 @@ interface TodoCalendarProps {
 //  - all done → emerald, partially done → amber, none done → muted brand.
 function dotColor(day: DayCount): string {
   if (day.total === 0) return "transparent"
-  if (day.completed >= day.total) return "#10b981"
-  if (day.completed > 0) return "#f59e0b"
-  return "#94a3b8"
+  if (day.completed >= day.total) return "var(--chart-3)"
+  if (day.completed > 0) return "var(--chart-2)"
+  return "var(--muted-foreground)"
 }
 
 export function TodoCalendar({
@@ -71,7 +71,7 @@ export function TodoCalendar({
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1)
 
   return (
-    <div className="premium-panel mt-8 rounded-lg p-5 xl:mt-0">
+    <div className="premium-panel mt-8 rounded-[1.5rem] p-5 xl:mt-0">
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-sm font-medium text-muted-foreground">
           Task calendar
@@ -79,7 +79,7 @@ export function TodoCalendar({
         <div className="flex items-center gap-1">
           <button
             onClick={goPrev}
-            className="rounded-md p-1 text-muted-foreground transition-all duration-150 hover:-translate-x-px hover:-translate-y-px hover:bg-secondary hover:text-foreground"
+            className="rounded-full p-1.5 text-muted-foreground transition-all duration-200 hover:bg-secondary hover:text-foreground"
             aria-label="Previous month"
           >
             <ChevronLeft className="h-4 w-4" />
@@ -89,7 +89,7 @@ export function TodoCalendar({
           </span>
           <button
             onClick={goNext}
-            className="rounded-md p-1 text-muted-foreground transition-all duration-150 hover:-translate-x-px hover:-translate-y-px hover:bg-secondary hover:text-foreground"
+            className="rounded-full p-1.5 text-muted-foreground transition-all duration-200 hover:bg-secondary hover:text-foreground"
             aria-label="Next month"
           >
             <ChevronRight className="h-4 w-4" />
@@ -127,12 +127,12 @@ export function TodoCalendar({
               type="button"
               onClick={() => onDateSelect(dateString)}
               className={cn(
-                "relative flex h-9 flex-col items-center justify-center rounded-md text-xs transition-all duration-150",
+                "relative flex h-9 flex-col items-center justify-center rounded-full text-xs transition-all duration-200",
                 isSelected &&
-                  "-rotate-3 border-2 border-foreground/75 bg-brand font-bold text-white shadow-[2px_2px_0_color-mix(in_oklch,var(--foreground)_25%,transparent)]",
-                !isSelected && isToday && "font-bold text-foreground ring-2 ring-inset ring-brand/40",
+                  "bg-brand font-bold text-brand-foreground shadow-[0_8px_20px_color-mix(in_oklch,var(--brand)_20%,transparent)]",
+                !isSelected && isToday && "font-bold text-foreground ring-1 ring-inset ring-brand/50",
                 !isSelected &&
-                  "text-foreground/80 hover:-translate-x-px hover:-translate-y-px hover:bg-secondary"
+                  "text-foreground/80 hover:bg-secondary"
               )}
             >
               {day}
@@ -141,7 +141,7 @@ export function TodoCalendar({
                   className="absolute bottom-1 h-1.5 w-1.5 rounded-full"
                   style={{
                     backgroundColor: isSelected
-                      ? "rgba(255,255,255,0.8)"
+                      ? "var(--brand-foreground)"
                       : dotColor(dayCount),
                   }}
                 />
@@ -155,15 +155,15 @@ export function TodoCalendar({
       <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-border/50 pt-3">
         <span className="text-xs text-muted-foreground/70">Progress:</span>
         <div className="flex items-center gap-1">
-          <span className="h-2 w-2 rounded-full bg-[#10b981]" />
+          <span className="h-2 w-2 rounded-full bg-chart-3" />
           <span className="text-xs text-muted-foreground/70">All done</span>
         </div>
         <div className="flex items-center gap-1">
-          <span className="h-2 w-2 rounded-full bg-[#f59e0b]" />
+          <span className="h-2 w-2 rounded-full bg-chart-2" />
           <span className="text-xs text-muted-foreground/70">In progress</span>
         </div>
         <div className="flex items-center gap-1">
-          <span className="h-2 w-2 rounded-full bg-[#94a3b8]" />
+          <span className="h-2 w-2 rounded-full bg-muted-foreground" />
           <span className="text-xs text-muted-foreground/70">Not started</span>
         </div>
       </div>

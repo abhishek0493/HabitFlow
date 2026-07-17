@@ -11,25 +11,19 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
 import { ThemeToggle } from "@/components/theme-toggle"
 import {
   Menu,
-  BarChart3,
-  BookOpen,
-  LayoutDashboard,
-  ListChecks,
-  ListTodo,
   LogOut,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const NAV_LINKS = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/todos", label: "To-do", icon: ListChecks },
-  { href: "/analytics", label: "Analytics", icon: BarChart3 },
-  { href: "/journal", label: "Journal", icon: BookOpen },
-  { href: "/habits", label: "Habits", icon: ListTodo },
+  { href: "/dashboard", label: "Dashboard" },
+  { href: "/todos", label: "Tasks" },
+  { href: "/journal", label: "Journal" },
+  { href: "/analytics", label: "Insights" },
+  { href: "/habits", label: "Habits" },
 ]
 
 export function MobileNav() {
@@ -41,11 +35,11 @@ export function MobileNav() {
     .toUpperCase()
 
   return (
-    <div className="flex h-14 flex-shrink-0 items-center justify-between border-b-2 border-border bg-card/95 px-4 md:hidden">
-      <div className="flex items-center gap-2.5">
-        <span className="masthead-mark h-8 w-8 text-base">hf</span>
-        <span className="doodle-label">Habitflow</span>
-      </div>
+    <div className="mobile-masthead md:hidden">
+      <Link href="/dashboard" className="brand-lockup">
+        <span className="masthead-mark">H</span>
+        <span className="brand-name">HabitFlow</span>
+      </Link>
 
       <div className="flex items-center gap-1.5">
         <ThemeToggle />
@@ -55,22 +49,24 @@ export function MobileNav() {
             size="icon"
             onClick={() => setOpen(true)}
             aria-label="Open navigation"
+            className="masthead-icon-button"
           >
             <Menu className="h-5 w-5" />
           </Button>
 
-          <SheetContent side="left" className="flex w-72 flex-col overflow-hidden bg-card p-0">
-            <SheetHeader className="px-5 pb-3 pt-5">
-              <SheetTitle className="flex items-center gap-2.5 text-base font-semibold">
-                <span className="masthead-mark h-8 w-8 text-base">hf</span>
-                <span className="doodle-label">Page index</span>
+          <SheetContent side="left" className="flex w-[88vw] max-w-sm flex-col overflow-hidden p-0">
+            <SheetHeader className="border-b border-border px-6 pb-5 pt-7 text-left">
+              <SheetTitle className="flex items-center gap-3 text-base font-semibold">
+                <span className="masthead-mark">H</span>
+                <span>
+                  <span className="block font-heading text-2xl font-normal">HabitFlow</span>
+                  <span className="block text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Your daily practice</span>
+                </span>
               </SheetTitle>
             </SheetHeader>
 
-            <Separator />
-
-            <nav className="flex-1 space-y-1 px-3 py-4">
-              {NAV_LINKS.map(({ href, label, icon: Icon }) => {
+            <nav className="flex-1 space-y-0 px-6 py-6" aria-label="Mobile navigation">
+              {NAV_LINKS.map(({ href, label }, index) => {
                 const isActive =
                   pathname === href || pathname.startsWith(href)
                 return (
@@ -79,31 +75,29 @@ export function MobileNav() {
                     href={href}
                     onClick={() => setOpen(false)}
                     className={cn(
-                      "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-bold transition-all duration-150",
+                      "group flex items-center justify-between border-b border-border/70 py-4 text-xl transition-colors",
                       isActive
-                        ? "border-2 border-foreground/70 bg-sidebar-accent text-foreground shadow-[2px_2px_0_color-mix(in_oklch,var(--foreground)_16%,transparent)]"
-                        : "border-2 border-transparent text-muted-foreground hover:bg-secondary hover:text-foreground"
+                        ? "font-heading text-3xl text-foreground"
+                        : "text-muted-foreground hover:text-foreground"
                     )}
                   >
-                    <Icon
-                      className={cn("h-4 w-4", isActive && "text-brand")}
-                    />
-                    {label}
+                    <span>{label}</span>
+                    <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
                   </Link>
                 )
               })}
             </nav>
 
-            <Separator />
-
-            <div className="space-y-3 px-5 py-4">
+            <div className="border-t border-border px-6 py-5">
               {session?.user && (
-                <div className="flex items-center gap-3 px-1 py-1">
-                  <div className="flex h-9 w-9 shrink-0 -rotate-2 items-center justify-center rounded-md border-2 border-foreground/70 bg-brand text-sm font-bold text-white">
+                <div className="mb-5 flex items-center gap-3">
+                  <div className="session-avatar h-10 w-10">
                     {initial}
                   </div>
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-bold">
+                    <p className="truncate text-sm font-semibold">
                       {session.user.name}
                     </p>
                     <p className="truncate text-xs text-muted-foreground">
@@ -115,7 +109,7 @@ export function MobileNav() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="w-full justify-start gap-2 px-3 text-muted-foreground hover:text-foreground"
+                className="w-full justify-start gap-2 px-0 text-muted-foreground hover:bg-transparent hover:text-foreground"
                 onClick={() => signOut({ callbackUrl: "/login" })}
               >
                 <LogOut className="h-4 w-4" />

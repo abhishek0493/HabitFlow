@@ -29,20 +29,20 @@ export default function RegisterPage() {
       initial={{ opacity: 0, y: 16, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="w-full max-w-[30rem]"
+      className="w-full max-w-[29rem]"
     >
-      <div className="mb-8">
-        <p className="doodle-label mb-3">Make room for good loops</p>
-        <h1 className="text-5xl font-black leading-none tracking-tight text-brand-gradient">
+      <div className="mb-10">
+        <p className="doodle-label mb-4">Begin with intention</p>
+        <h1 className="text-5xl leading-[0.95] tracking-[-0.04em] text-foreground sm:text-6xl">
           Create your account
         </h1>
-        <p className="mt-2 text-sm leading-6 text-muted-foreground">
-          A simple little place for your future self.
+        <p className="mt-4 max-w-sm text-sm leading-6 text-muted-foreground">
+          Build a calm record of the practices you want to return to.
         </p>
       </div>
 
-      <div className="premium-panel rounded-lg p-6 sm:p-7">
-        <form onSubmit={onSubmit} className="flex flex-col gap-4">
+      <div className="auth-form-panel">
+        <form onSubmit={onSubmit} className="flex flex-col gap-5">
           <div className="flex flex-col gap-2">
             <Label htmlFor="name">Name</Label>
             <Input
@@ -91,14 +91,14 @@ export default function RegisterPage() {
           <Button
             type="submit"
             size="lg"
-            className="mt-1 w-full"
+            className="mt-2 h-12 w-full"
             disabled={isPending}
           >
             {isPending ? "Creating account…" : "Create account"}
           </Button>
         </form>
 
-        <p className="mt-5 text-center text-sm text-muted-foreground">
+        <p className="mt-7 text-center text-sm text-muted-foreground">
           Already have an account?{" "}
           <Link
             href="/login"

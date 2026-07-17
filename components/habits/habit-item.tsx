@@ -37,9 +37,9 @@ export function HabitItem({ habit }: HabitItemProps) {
       ref={setNodeRef}
       style={style}
       className={cn(
-        "group relative flex items-center gap-3 overflow-hidden px-4 py-3.5 transition-all duration-300 hover:bg-accent/45",
+        "group relative flex items-center gap-3 overflow-hidden px-5 py-4.5 transition-all duration-300 hover:bg-accent/25",
         isDragging &&
-          "relative z-10 rounded-md border-2 border-brand bg-card shadow-[4px_4px_0_color-mix(in_oklch,var(--foreground)_20%,transparent)]"
+          "relative z-10 rounded-2xl border border-brand bg-card shadow-[0_18px_48px_color-mix(in_oklch,var(--foreground)_16%,transparent)]"
       )}
     >
       <span className="absolute inset-y-2 left-0 w-1 rounded-r-full bg-brand opacity-70 transition-all duration-150 group-hover:opacity-100" />
@@ -47,7 +47,7 @@ export function HabitItem({ habit }: HabitItemProps) {
       <button
         type="button"
         aria-label="Drag to reorder"
-        className="cursor-grab touch-none rounded-md p-1 text-muted-foreground/50 transition-all duration-150 hover:-translate-x-px hover:-translate-y-px hover:bg-secondary hover:text-muted-foreground active:cursor-grabbing"
+        className="cursor-grab touch-none rounded-full p-1 text-muted-foreground/50 transition-all duration-200 hover:bg-secondary hover:text-muted-foreground active:cursor-grabbing"
         {...attributes}
         {...listeners}
       >
@@ -55,7 +55,7 @@ export function HabitItem({ habit }: HabitItemProps) {
       </button>
 
       <span
-        className="h-3.5 w-3.5 shrink-0 rounded-sm border-2 border-brand bg-brand/15 transition-transform duration-150 group-hover:rotate-6"
+        className="h-3.5 w-3.5 shrink-0 rounded-full border border-brand bg-brand/15 transition-transform duration-300 group-hover:scale-125"
         aria-hidden
       />
 
@@ -67,7 +67,7 @@ export function HabitItem({ habit }: HabitItemProps) {
       )}
 
       {/* Name */}
-      <span className="text-sm font-bold text-foreground">{habit.name}</span>
+      <span className="font-heading text-xl text-foreground">{habit.name}</span>
 
       {/* Spacer */}
       <span className="flex-1" />

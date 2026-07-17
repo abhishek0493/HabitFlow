@@ -28,20 +28,20 @@ export default function LoginPage() {
       initial={{ opacity: 0, y: 16, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="w-full max-w-[30rem]"
+      className="w-full max-w-[29rem]"
     >
-      <div className="mb-8">
-        <p className="doodle-label mb-3">Back to your page</p>
-        <h1 className="text-5xl font-black leading-none tracking-tight text-brand-gradient">
+      <div className="mb-10">
+        <p className="doodle-label mb-4">Welcome to your space</p>
+        <h1 className="text-5xl leading-[0.95] tracking-[-0.04em] text-foreground sm:text-6xl">
           Welcome back
         </h1>
-        <p className="mt-2 text-sm leading-6 text-muted-foreground">
-          Back to the tiny things that add up.
+        <p className="mt-4 max-w-sm text-sm leading-6 text-muted-foreground">
+          Return to the practices and reflections that keep you grounded.
         </p>
       </div>
 
-      <div className="premium-panel rounded-lg p-6 sm:p-7">
-        <form onSubmit={onSubmit} className="flex flex-col gap-4">
+      <div className="auth-form-panel">
+        <form onSubmit={onSubmit} className="flex flex-col gap-5">
           <div className="flex flex-col gap-2">
             <Label htmlFor="email">Email</Label>
             <Input
@@ -78,14 +78,14 @@ export default function LoginPage() {
           <Button
             type="submit"
             size="lg"
-            className="mt-1 w-full"
+            className="mt-2 h-12 w-full"
             disabled={isPending}
           >
             {isPending ? "Signing in…" : "Sign in"}
           </Button>
         </form>
 
-        <p className="mt-5 text-center text-sm text-muted-foreground">
+        <p className="mt-7 text-center text-sm text-muted-foreground">
           Don&apos;t have an account?{" "}
           <Link
             href="/register"

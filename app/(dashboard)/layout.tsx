@@ -1,4 +1,5 @@
 import { SessionProvider } from "next-auth/react"
+import Link from "next/link"
 import { auth } from "@/lib/auth"
 import { Sidebar } from "@/components/sidebar"
 import { MobileNav } from "@/components/mobile-nav"
@@ -16,30 +17,26 @@ export default async function DashboardLayout({
 
   return (
     <SessionProvider session={session}>
-      <div className="ambient-shell dashboard-shell bg-background">
-        <div className="noise-overlay" aria-hidden />
+      <div className="ambient-shell dashboard-shell">
+        <div className="quiet-grid" aria-hidden />
         <header className="dashboard-masthead">
-          <div className="flex items-center gap-3">
-            <span className="masthead-mark">hf</span>
-            <div>
-              <p className="doodle-label">Habitflow</p>
-              <p className="masthead-note">A small practice, kept close.</p>
-            </div>
+          <div className="masthead-inner">
+            <Link href="/dashboard" className="brand-lockup" aria-label="HabitFlow dashboard">
+              <span className="masthead-mark">H</span>
+              <div>
+                <p className="brand-name">HabitFlow</p>
+                <p className="masthead-note">Daily practice</p>
+              </div>
+            </Link>
+            <Sidebar />
           </div>
-          <p className="hidden text-right text-sm text-muted-foreground lg:block">
-            Give ordinary days a little shape.
-          </p>
         </header>
 
-        <div className="dashboard-workspace">
-          <Sidebar />
-          <div className="min-w-0">
-            <MobileNav />
-            <main className="workspace-main">
-              <PageTransition>{children}</PageTransition>
-            </main>
-          </div>
-        </div>
+        <MobileNav />
+
+        <main className="workspace-main">
+          <PageTransition>{children}</PageTransition>
+        </main>
       </div>
     </SessionProvider>
   )

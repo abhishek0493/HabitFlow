@@ -70,26 +70,24 @@ export function HabitsClient({ initialHabits }: HabitsClientProps) {
   }
 
   return (
-    <div className="page-frame mx-auto max-w-6xl animate-fade-in p-3 sm:p-5 lg:p-6">
+    <div className="page-frame animate-fade-in">
       {/* Page header */}
-      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div className="page-intro">
         <div>
-          <p className="doodle-label">
-            Habit shelf
-          </p>
-          <h1 className="mt-2 text-3xl font-black tracking-tight text-brand-gradient sm:text-4xl">
-            Habits
-          </h1>
-          <p className="mt-2 max-w-lg text-sm leading-6 text-muted-foreground">
-            Keep your little rituals together, then arrange them until the page
-            feels just right.
-          </p>
+          <p className="doodle-label">04 · Shape your rhythm</p>
+          <h1 className="page-title">Habits</h1>
         </div>
-        <AddHabitModal />
+        <div>
+          <p className="page-deck mb-5">
+            Keep the rituals that matter in one considered collection. Arrange
+            them until the rhythm feels like yours.
+          </p>
+          <AddHabitModal />
+        </div>
       </div>
 
       {/* List card */}
-      <div className="premium-panel overflow-hidden rounded-lg">
+      <div className="premium-panel overflow-hidden rounded-[1.5rem]">
         <div className="flex items-center justify-between border-b border-border/70 bg-card/35 px-5 py-3 text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
           <span className="flex items-center gap-2">
             <Sparkles className="h-3.5 w-3.5 text-brand" />
@@ -102,11 +100,11 @@ export function HabitsClient({ initialHabits }: HabitsClientProps) {
         </div>
         {habits.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-3 px-6 py-16 text-center">
-            <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-brand/10 ring-1 ring-inset ring-brand/20">
+            <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-brand/10 ring-1 ring-inset ring-brand/20">
               <span className="absolute inset-0 animate-glow-pulse rounded-2xl bg-brand-gradient opacity-30 blur-xl" />
               <CalendarCheck2 className="h-8 w-8 text-brand" />
             </div>
-            <h2 className="text-lg font-bold text-foreground">
+            <h2 className="text-3xl text-foreground">
               No habits yet
             </h2>
             <p className="max-w-sm text-sm text-muted-foreground">

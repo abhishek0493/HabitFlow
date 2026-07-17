@@ -127,7 +127,7 @@ export function WeekdayMissChart({ habits, logs, dates }: WeekdayMissChartProps)
             id="habit-filter"
             value={selectedHabitId}
             onChange={(e) => setSelectedHabitId(e.target.value)}
-            className="h-8 flex-1 rounded-md border-2 border-border bg-card px-2.5 py-1 text-xs font-semibold shadow-[2px_2px_0_color-mix(in_oklch,var(--foreground)_10%,transparent)] transition-all focus:outline-none focus:ring-2 focus:ring-brand/35 sm:flex-initial"
+            className="h-9 flex-1 rounded-full border border-border bg-card px-3 py-1 text-xs font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-brand/25 sm:flex-initial"
           >
             <option value="all">All Habits (Combined)</option>
             {habits.map((h) => (
@@ -139,7 +139,7 @@ export function WeekdayMissChart({ habits, logs, dates }: WeekdayMissChartProps)
         </div>
       </div>
 
-      <div className="premium-panel kinetic-card flex flex-col gap-4 rounded-xl p-4">
+      <div className="premium-panel kinetic-card flex flex-col gap-4 rounded-[1.5rem] p-5">
         {/* Insight callout */}
         {worstDay && worstDay.missRate > 20 && (
           <div className="flex items-start gap-2.5 rounded-xl border border-destructive/20 bg-destructive/10 p-3 text-xs text-destructive">

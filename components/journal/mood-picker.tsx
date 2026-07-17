@@ -33,7 +33,7 @@ export function MoodPicker({
   return (
     <div className="px-6 pb-5 pt-5">
       {/* Label */}
-      <p className="mb-4 text-sm font-bold text-muted-foreground">
+      <p className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
         How are you feeling today?
       </p>
 
@@ -52,7 +52,7 @@ export function MoodPicker({
               data-no-theme-tx
               className={cn(
                 "group flex flex-col items-center gap-1.5 transition-all duration-150 focus-visible:outline-none",
-                "rounded-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card",
+                "rounded-full focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card",
                 disabled && "cursor-not-allowed opacity-50"
               )}
               aria-label={`Mood: ${label}`}
@@ -61,9 +61,9 @@ export function MoodPicker({
               {/* Circle */}
               <div
                 className={cn(
-                  "flex h-14 w-14 items-center justify-center rounded-md border-2 border-foreground/35 transition-all duration-150",
-                  "group-hover:-translate-x-px group-hover:-translate-y-px group-hover:rotate-3",
-                  isSelected ? "scale-105 -rotate-3" : "scale-100",
+                  "flex h-14 w-14 items-center justify-center rounded-full border border-foreground/25 transition-all duration-300",
+                  "group-hover:-translate-y-1 group-hover:scale-105",
+                  isSelected ? "scale-105" : "scale-100",
                   isPopping && "mood-pop",
                   !isSelected && "bg-muted group-hover:bg-secondary"
                 )}
@@ -71,8 +71,8 @@ export function MoodPicker({
                   isSelected
                     ? {
                         backgroundColor: `${color}20`,
-                        border: `2px solid ${color}`,
-                        boxShadow: `3px 3px 0 ${color}55`,
+                        border: `1px solid ${color}`,
+                        boxShadow: `0 12px 30px ${color}33`,
                       }
                     : undefined
                 }

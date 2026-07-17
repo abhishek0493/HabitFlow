@@ -255,9 +255,9 @@ export function HabitGrid({
   }
 
   // ── Grid geometry ─────────────────────────────────────────────────────────
-  const colWidth = view === "week" ? "80px" : "34px"
-  const gridTemplateColumns = `clamp(190px, 18vw, 240px) repeat(${displayColumns.length}, ${colWidth})`
-  const headerHeight = view === "week" ? "h-14" : "h-10"
+  const colWidth = view === "week" ? "92px" : "38px"
+  const gridTemplateColumns = `clamp(210px, 19vw, 260px) repeat(${displayColumns.length}, ${colWidth})`
+  const headerHeight = view === "week" ? "h-16" : "h-12"
 
   return (
     <TooltipProvider delay={250}>
@@ -279,11 +279,11 @@ export function HabitGrid({
         <div className="overflow-x-auto">
           {/* w-max sizes the grid box to its content (sum of tracks) so the
               sticky name column pins across the full scroll width. */}
-          <div className="grid w-max bg-card/25" style={{ gridTemplateColumns }}>
+          <div className="grid w-max bg-card/15" style={{ gridTemplateColumns }}>
             {/* ── Date header row ── */}
             <div
               className={cn(
-                "sticky left-0 z-20 border-b border-r border-border/70 bg-card",
+                "sticky left-0 z-20 border-b border-r border-border/70 bg-card/95 backdrop-blur-xl",
                 headerHeight
               )}
             />
@@ -291,13 +291,13 @@ export function HabitGrid({
               <div
                 key={col.date}
                 className={cn(
-                  "relative flex select-none flex-col items-center justify-center border-b border-r border-border/60 bg-card",
+                  "relative flex select-none flex-col items-center justify-center border-b border-r border-border/45 bg-card/70",
                   headerHeight,
-                  col.isToday && "bg-brand/10"
+                  col.isToday && "bg-accent/35"
                 )}
               >
                 {col.isToday && (
-                  <span className="absolute inset-x-2 top-1 h-0.5 bg-brand" />
+                  <span className="absolute inset-x-2 top-0 h-0.5 bg-brand-2" />
                 )}
                 {col.dayName && (
                   <span
@@ -337,14 +337,14 @@ export function HabitGrid({
                     duration: 0.32,
                     delay: Math.min(rowIndex * 0.035, 0.4),
                   }}
-                  className="sticky left-0 z-10 flex h-10 items-center gap-2.5 border-b border-r-2 border-border/75 bg-card px-3.5 shadow-[3px_0_0_color-mix(in_oklch,var(--foreground)_5%,transparent)]"
+                  className="sticky left-0 z-10 flex h-12 items-center gap-2.5 border-b border-r border-border/70 bg-card/95 px-4 shadow-[8px_0_22px_color-mix(in_oklch,var(--foreground)_4%,transparent)] backdrop-blur-xl"
                 >
                   {habit.emoji && (
                     <span className="text-base leading-none">{habit.emoji}</span>
                   )}
                   <HabitNameLabel
                     name={habit.name}
-                    className="text-sm font-extrabold text-foreground"
+                    className="font-heading text-lg text-foreground"
                   />
                 </motion.div>
 
@@ -374,11 +374,11 @@ export function HabitGrid({
       {/* Empty state */}
       {habits.length === 0 && (
         <div className="flex flex-col items-center justify-center px-6 py-20 text-center">
-          <div className="relative mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand/10 ring-1 ring-inset ring-brand/20">
-            <span className="absolute inset-0 animate-glow-pulse rounded-2xl bg-brand-gradient opacity-30 blur-xl" />
+          <div className="relative mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-brand/10 ring-1 ring-inset ring-brand/20">
+            <span className="absolute inset-0 animate-glow-pulse rounded-full bg-brand-gradient opacity-30 blur-xl" />
             <CalendarCheck2 className="h-8 w-8 text-brand" />
           </div>
-          <p className="text-base font-bold text-foreground">
+          <p className="font-heading text-3xl text-foreground">
             No habits to track yet
           </p>
           <p className="mt-1 text-sm text-muted-foreground">

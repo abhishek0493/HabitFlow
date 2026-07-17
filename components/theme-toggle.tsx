@@ -18,7 +18,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
       data-no-theme-tx
       className={cn(
-        "group relative inline-flex h-9 w-9 -rotate-2 items-center justify-center overflow-hidden rounded-md border-2 border-border bg-card text-muted-foreground shadow-[2px_2px_0_color-mix(in_oklch,var(--foreground)_12%,transparent)] transition-all duration-150 hover:rotate-0 hover:bg-secondary hover:text-foreground",
+        "masthead-icon-button group relative overflow-hidden",
         className
       )}
     >

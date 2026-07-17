@@ -41,9 +41,9 @@ export function TodoItem({ todo, onToggle, onUpdate, onDelete }: TodoItemProps) 
       ref={setNodeRef}
       style={style}
       className={cn(
-        "group relative flex items-start gap-3 overflow-hidden px-4 py-3 transition-all duration-300 hover:bg-accent/45",
+        "group relative flex items-start gap-3 overflow-hidden px-5 py-4 transition-all duration-300 hover:bg-accent/25",
         isDragging &&
-          "relative z-10 rounded-md border-2 border-brand bg-card shadow-[4px_4px_0_color-mix(in_oklch,var(--foreground)_20%,transparent)]"
+          "relative z-10 rounded-2xl border border-brand bg-card shadow-[0_18px_48px_color-mix(in_oklch,var(--foreground)_16%,transparent)]"
       )}
     >
       {/* Priority accent bar */}
@@ -57,7 +57,7 @@ export function TodoItem({ todo, onToggle, onUpdate, onDelete }: TodoItemProps) 
       <button
         type="button"
         aria-label="Drag to reorder"
-        className="mt-0.5 cursor-grab touch-none rounded-md p-1 text-muted-foreground/40 transition-all duration-150 hover:-translate-x-px hover:-translate-y-px hover:bg-secondary hover:text-muted-foreground active:cursor-grabbing"
+        className="mt-0.5 cursor-grab touch-none rounded-full p-1 text-muted-foreground/40 transition-all duration-200 hover:bg-secondary hover:text-muted-foreground active:cursor-grabbing"
         {...attributes}
         {...listeners}
       >

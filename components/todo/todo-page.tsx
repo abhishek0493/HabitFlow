@@ -181,28 +181,27 @@ export function TodoPage({ initialDate, initialTodos }: TodoPageProps) {
   }
 
   return (
-    <div className="page-frame mx-auto max-w-6xl animate-fade-in p-3 sm:p-5 lg:p-6">
-      <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+    <div className="page-frame animate-fade-in">
+      <div className="page-intro">
         <div>
-          <p className="doodle-label">One small list</p>
-          <h1 className="mt-2 text-3xl font-black tracking-tight text-brand-gradient sm:text-4xl">
-            To-do
-          </h1>
+          <p className="doodle-label">01 · Make room for focus</p>
+          <h1 className="page-title">Tasks</h1>
         </div>
-        <p className="max-w-md text-sm leading-6 text-muted-foreground">
-          A short list for the things that deserve your attention today.
+        <p className="page-deck">
+          A clear, considered list for the things that deserve your attention
+          today—and nothing more.
         </p>
       </div>
 
-      <div className="grid gap-7 xl:grid-cols-[minmax(0,1fr)_18rem]">
+      <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_20rem]">
         <div>
           <TodoDateNav currentDate={currentDate} onDateChange={handleDateChange} />
           <div
             className="mt-6 space-y-4 transition-opacity duration-300"
             style={{ opacity: isLoading ? 0.5 : 1 }}
           >
-            <div className="premium-panel flex items-center gap-4 rounded-lg p-4">
-              <div className="flex h-11 w-11 shrink-0 -rotate-3 items-center justify-center rounded-md border-2 border-brand/45 bg-brand/10 text-brand">
+            <div className="premium-panel flex items-center gap-5 rounded-[1.5rem] p-5">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand text-brand-foreground">
                 <CheckCircle2 className="h-5 w-5" />
               </div>
               <div className="min-w-0 flex-1">
@@ -229,7 +228,7 @@ export function TodoPage({ initialDate, initialTodos }: TodoPageProps) {
 
             <AddTodoForm onAdd={handleAdd} />
 
-            <div className="premium-panel overflow-hidden rounded-lg">
+            <div className="premium-panel overflow-hidden rounded-[1.5rem]">
               <div className="flex items-center justify-between border-b border-border/70 bg-card/35 px-5 py-3 text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
                 <span className="flex items-center gap-2">
                   <Sparkles className="h-3.5 w-3.5 text-brand" />
@@ -248,10 +247,10 @@ export function TodoPage({ initialDate, initialTodos }: TodoPageProps) {
 
               {total === 0 ? (
                 <div className="flex flex-col items-center justify-center gap-3 px-6 py-16 text-center">
-                  <div className="relative flex h-16 w-16 items-center justify-center rounded-md border-2 border-brand/45 bg-brand/10 text-brand">
+                  <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-brand/10 text-brand ring-1 ring-brand/20">
                     <ListChecks className="h-8 w-8" />
                   </div>
-                  <h2 className="text-2xl font-bold text-foreground">
+                  <h2 className="text-3xl text-foreground">
                     A clear plate
                   </h2>
                   <p className="max-w-sm text-sm text-muted-foreground">

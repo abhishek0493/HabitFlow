@@ -83,24 +83,23 @@ export function JournalPage({ initialDate, initialEntry }: JournalPageProps) {
   }
 
   return (
-    <div className="page-frame mx-auto max-w-6xl animate-fade-in p-3 sm:p-5 lg:p-6">
-      <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+    <div className="page-frame animate-fade-in">
+      <div className="page-intro">
         <div>
-          <p className="doodle-label">Notes in the margin</p>
-          <h1 className="mt-2 text-3xl font-black tracking-tight text-brand-gradient sm:text-4xl">
-            Journal
-          </h1>
+          <p className="doodle-label">02 · A private record</p>
+          <h1 className="page-title">Journal</h1>
         </div>
-        <p className="max-w-md text-sm leading-6 text-muted-foreground">
+        <p className="page-deck">
           Leave a few honest lines for the version of you that comes next.
+          Reflection turns ordinary days into a life you can notice.
         </p>
       </div>
 
-      <div className="grid gap-7 xl:grid-cols-[minmax(0,1fr)_18rem]">
+      <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_20rem]">
         <div>
           <DateNav currentDate={currentDate} onDateChange={handleDateChange} />
           <div
-            className="premium-panel mt-6 overflow-hidden rounded-lg transition-opacity duration-300"
+            className="premium-panel mt-6 overflow-hidden rounded-[1.5rem] transition-opacity duration-300"
             style={{ opacity: isLoading ? 0.5 : 1 }}
           >
             <div

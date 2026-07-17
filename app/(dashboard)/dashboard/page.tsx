@@ -1,4 +1,5 @@
 import { cookies } from "next/headers"
+import type { CSSProperties } from "react"
 import { getHabits } from "@/actions/habit.actions"
 import { getHabitLogs } from "@/actions/log.actions"
 import { HabitGrid } from "@/components/habit-grid/habit-grid"
@@ -6,6 +7,7 @@ import {
   getDaysInMonth,
   buildDateString,
   getWeekStart,
+  getTodayString,
   toDateString,
 } from "@/lib/date-utils"
 
@@ -58,35 +60,78 @@ export default async function DashboardPage({
     endDate = buildDateString(year, month, getDaysInMonth(year, month))
   }
 
-  const [habits, logs] = await Promise.all([
+  const todayString = getTodayString()
+  const [habits, logs, todayLogs] = await Promise.all([
     getHabits(),
     getHabitLogs(startDate, endDate),
+    getHabitLogs(todayString, todayString),
   ])
 
+  const completedToday = new Set(
+    todayLogs.filter((log) => log.completed).map((log) => log.habitId)
+  ).size
+  const todayProgress =
+    habits.length > 0 ? Math.round((completedToday / habits.length) * 100) : 0
+  const dateLabel = new Intl.DateTimeFormat("en", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  }).format(today)
+
   return (
-    <div className="page-frame animate-fade-in p-3 sm:p-5 lg:p-6">
-      <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <p className="doodle-label">
-            Habit sketchbook
+    <div className="page-frame animate-fade-in">
+      <section className="hero-gallery" aria-labelledby="dashboard-heading">
+        <div className="hero-copy">
+          <div>
+            <p className="doodle-label">{dateLabel}</p>
+            <h1 id="dashboard-heading" className="hero-title mt-5">
+              Make space for the life you want to <em>repeat.</em>
+            </h1>
+          </div>
+          <p className="hero-subcopy">
+            A gentle rhythm is taking shape. Keep today spacious enough to
+            notice it.
           </p>
-          <h1 className="mt-2 text-3xl font-black tracking-tight text-brand-gradient sm:text-4xl">
-            Daily flow
-          </h1>
         </div>
-        <p className="max-w-md text-sm leading-6 text-muted-foreground">
-          A tiny collection of daily checkmarks. Tap one, make the page yours.
-        </p>
-      </div>
-      <div className="premium-panel scanline overflow-hidden rounded-lg">
-        <HabitGrid
-          initialHabits={habits}
-          initialLogs={logs}
-          initialView={view}
-          initialStartDate={startDate}
-          initialEndDate={endDate}
-        />
-      </div>
+        <aside className="hero-progress" aria-label={`${todayProgress}% of today's habits complete`}>
+          <div
+            className="progress-sculpture"
+            style={{ "--progress": todayProgress } as CSSProperties}
+          >
+            <strong>{todayProgress}%</strong>
+          </div>
+          <div className="progress-caption">
+            <strong>
+              {completedToday} of {habits.length} rituals
+            </strong>
+            <span>{habits.length - completedToday > 0 ? `${habits.length - completedToday} gentle moments remain` : "Today is complete"}</span>
+          </div>
+        </aside>
+      </section>
+
+      <section aria-labelledby="rhythm-heading">
+        <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="doodle-label">Your practice</p>
+            <h2 id="rhythm-heading" className="mt-2 text-4xl sm:text-5xl">
+              Daily rhythm
+            </h2>
+          </div>
+          <p className="max-w-md text-sm leading-6 text-muted-foreground">
+            Move between a focused week and the wider month. Every mark is a
+            quiet vote for what matters.
+          </p>
+        </div>
+        <div className="premium-panel scanline overflow-hidden rounded-[1.75rem]">
+          <HabitGrid
+            initialHabits={habits}
+            initialLogs={logs}
+            initialView={view}
+            initialStartDate={startDate}
+            initialEndDate={endDate}
+          />
+        </div>
+      </section>
     </div>
   )
 }

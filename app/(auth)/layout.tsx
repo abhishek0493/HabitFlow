@@ -1,5 +1,4 @@
 import { ThemeToggle } from "@/components/theme-toggle"
-import { CalendarCheck2, PencilLine, Sparkles } from "lucide-react"
 
 export default function AuthLayout({
   children,
@@ -7,24 +6,29 @@ export default function AuthLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="ambient-shell auth-shell bg-aurora bg-background">
-      <div className="noise-overlay" aria-hidden />
+    <div className="ambient-shell auth-shell">
       <aside className="auth-story">
         <div className="auth-story-brand">
-          <span className="masthead-mark">hf</span>
-          <span className="doodle-label">Habitflow</span>
+          <span className="masthead-mark">H</span>
+          <span className="brand-name text-[color:inherit]">HabitFlow</span>
         </div>
         <div className="auth-story-copy">
-          <p className="doodle-label">Daily things, gently held</p>
-          <h2>A little notebook for the life you are making.</h2>
+          <p className="doodle-label">A quieter way forward</p>
+          <h2>Make space for the life you want to <em>repeat.</em></h2>
           <p>
-            Keep the promises that matter, one small checkmark at a time.
+            A thoughtful home for daily rituals, clear intentions, and the small
+            patterns that become a life.
           </p>
         </div>
-        <div className="auth-story-doodles" aria-hidden>
-          <span className="auth-doodle auth-doodle-one"><CalendarCheck2 /></span>
-          <span className="auth-doodle auth-doodle-two"><PencilLine /></span>
-          <span className="auth-doodle auth-doodle-three"><Sparkles /></span>
+        <div className="auth-story-progress" aria-hidden>
+          <div className="auth-progress-ring">
+            <span>68</span>
+            <small>%</small>
+          </div>
+          <div>
+            <p className="auth-progress-title">A gentle rhythm</p>
+            <p className="auth-progress-note">No rush. No performance.</p>
+          </div>
         </div>
       </aside>
       <div className="auth-form-stage">

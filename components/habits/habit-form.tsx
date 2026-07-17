@@ -37,7 +37,7 @@ export function HabitForm({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       {/* Name */}
-      <div className="flex flex-col gap-2 rounded-xl border border-border/60 bg-muted/25 p-3">
+      <div className="flex flex-col gap-2 border-b border-border/70 pb-4">
         <Label htmlFor="habit-name">Habit name</Label>
         <Input
           id="habit-name"
@@ -50,7 +50,7 @@ export function HabitForm({
       </div>
 
       {/* Emoji */}
-      <div className="flex flex-col gap-2 rounded-xl border border-border/60 bg-muted/25 p-3">
+      <div className="flex flex-col gap-2 border-b border-border/70 pb-4">
         <Label htmlFor="habit-emoji">Emoji (optional)</Label>
         <Input id="habit-emoji" placeholder="e.g. 🏋️" {...register("emoji")} />
         <p className="text-xs text-muted-foreground">Paste or type a single emoji</p>

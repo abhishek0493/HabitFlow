@@ -1,23 +1,26 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { CalendarCheck2 } from "lucide-react"
 
 export default function NotFound() {
   return (
-    <div className="bg-aurora flex min-h-screen flex-col items-center justify-center bg-background px-6 text-center">
-      <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-gradient shadow-lg shadow-brand/30">
-        <CalendarCheck2 className="h-8 w-8 text-white" />
+    <div className="ambient-shell flex min-h-screen flex-col items-center justify-center overflow-hidden bg-background px-6 text-center">
+      <div className="quiet-grid" aria-hidden />
+      <div className="mb-8 flex items-center gap-3">
+        <span className="masthead-mark">H</span>
+        <span className="brand-name">HabitFlow</span>
       </div>
-      <h1 className="mb-2 text-5xl font-bold tracking-tight text-foreground">
+      <p className="doodle-label mb-4">Beyond the page</p>
+      <h1 className="mb-4 text-[clamp(7rem,22vw,16rem)] leading-[0.72] tracking-[-0.08em] text-foreground">
         404
       </h1>
-      <p className="mb-8 text-muted-foreground">
-        This page doesn&apos;t exist or has been moved.
+      <p className="mb-9 max-w-md font-heading text-2xl leading-snug text-muted-foreground">
+        This page has slipped out of the rhythm. Your practice is still right
+        where you left it.
       </p>
       {/* base-nova Button is Base UI — use `render`, not `asChild` */}
       <Button
         size="lg"
-        className="bg-brand-gradient text-white shadow-md shadow-brand/25 transition-all hover:shadow-lg hover:shadow-brand/40 hover:brightness-105"
+        className="bg-brand-gradient text-brand-foreground"
         render={<Link href="/dashboard">Go to dashboard</Link>}
       />
     </div>

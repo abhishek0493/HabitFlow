@@ -23,7 +23,7 @@ interface EntryCalendarProps {
 }
 
 function getMoodColor(mood: number | null): string {
-  if (!mood) return "#9CA3AF" // gray — entry exists but no mood
+  if (!mood) return "var(--muted-foreground)" // entry exists but no mood
   return MOODS[mood - 1].color
 }
 
@@ -67,7 +67,7 @@ export function EntryCalendar({
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1)
 
   return (
-    <div className="premium-panel mt-8 rounded-lg p-5 xl:mt-0">
+    <div className="premium-panel mt-8 rounded-[1.5rem] p-5 xl:mt-0">
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-sm font-medium text-muted-foreground">
           Past entries
@@ -75,7 +75,7 @@ export function EntryCalendar({
         <div className="flex items-center gap-1">
           <button
             onClick={goPrev}
-            className="rounded-md p-1 text-muted-foreground transition-all duration-150 hover:-translate-x-px hover:-translate-y-px hover:bg-secondary hover:text-foreground"
+            className="rounded-full p-1.5 text-muted-foreground transition-all duration-200 hover:bg-secondary hover:text-foreground"
             aria-label="Previous month"
           >
             <ChevronLeft className="h-4 w-4" />
@@ -86,7 +86,7 @@ export function EntryCalendar({
           <button
             onClick={goNext}
             disabled={isCurrentCalMonth}
-            className="rounded-md p-1 text-muted-foreground transition-all duration-150 hover:-translate-x-px hover:-translate-y-px hover:bg-secondary hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
+            className="rounded-full p-1.5 text-muted-foreground transition-all duration-200 hover:bg-secondary hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
             aria-label="Next month"
           >
             <ChevronRight className="h-4 w-4" />
@@ -126,12 +126,12 @@ export function EntryCalendar({
               disabled={isFuture}
               onClick={() => onDateSelect(dateString)}
               className={cn(
-                "relative flex h-9 flex-col items-center justify-center rounded-md text-xs transition-all duration-150",
-                isSelected && "-rotate-3 border-2 border-foreground/75 bg-brand font-bold text-white shadow-[2px_2px_0_color-mix(in_oklch,var(--foreground)_25%,transparent)]",
+                "relative flex h-9 flex-col items-center justify-center rounded-full text-xs transition-all duration-200",
+                isSelected && "bg-brand font-bold text-brand-foreground shadow-[0_8px_20px_color-mix(in_oklch,var(--brand)_20%,transparent)]",
                 !isSelected && isToday && "font-bold text-foreground",
                 !isSelected &&
                   !isFuture &&
-                  "text-foreground/80 hover:-translate-x-px hover:-translate-y-px hover:bg-secondary",
+                  "text-foreground/80 hover:bg-secondary",
                 isFuture && "cursor-default text-muted-foreground/40"
               )}
             >
@@ -143,7 +143,7 @@ export function EntryCalendar({
                 />
               )}
               {entry && isSelected && (
-                <span className="absolute bottom-1 h-1.5 w-1.5 rounded-full bg-white opacity-70" />
+                <span className="absolute bottom-1 h-1.5 w-1.5 rounded-full bg-brand-foreground opacity-70" />
               )}
             </button>
           )
@@ -163,7 +163,7 @@ export function EntryCalendar({
           </div>
         ))}
         <div className="flex items-center gap-1">
-          <span className="h-2 w-2 rounded-full bg-[#9CA3AF]" />
+          <span className="h-2 w-2 rounded-full bg-muted-foreground" />
           <span className="text-xs text-muted-foreground/70">No mood</span>
         </div>
       </div>
