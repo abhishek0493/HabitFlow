@@ -69,7 +69,6 @@ export function TaskStats({ todos, dates }: TaskStatsProps) {
       sub: `of ${stats.total} planned`,
       icon: CheckCircle2,
       tint: "bg-emerald-500/10 text-emerald-500",
-      glow: "shadow-[0_0_24px_rgba(16,185,129,0.18)]",
     },
     {
       label: "Completion Rate",
@@ -77,7 +76,6 @@ export function TaskStats({ todos, dates }: TaskStatsProps) {
       sub: stats.total > 0 ? "tasks done" : "no tasks yet",
       icon: Gauge,
       tint: "bg-brand/10 text-brand",
-      glow: "shadow-[0_0_24px_color-mix(in_oklch,var(--brand)_24%,transparent)]",
     },
     {
       label: "Most Productive",
@@ -85,7 +83,6 @@ export function TaskStats({ todos, dates }: TaskStatsProps) {
       sub: stats.best ? format(parseISO(stats.best.date), "MMM d") : "no completions",
       icon: CalendarRange,
       tint: "bg-violet-500/10 text-violet-500",
-      glow: "shadow-[0_0_24px_rgba(139,92,246,0.18)]",
     },
   ]
 
@@ -132,7 +129,7 @@ export function TaskStats({ todos, dates }: TaskStatsProps) {
                 className="premium-panel kinetic-card flex items-center gap-4 rounded-xl p-4.5"
               >
                 <div
-                  className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${kpi.tint} ${kpi.glow}`}
+                  className={`flex h-10 w-10 shrink-0 -rotate-3 items-center justify-center rounded-md border-2 border-current/30 ${kpi.tint}`}
                 >
                   <kpi.icon className="h-5 w-5" />
                 </div>

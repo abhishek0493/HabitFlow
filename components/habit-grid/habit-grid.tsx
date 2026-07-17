@@ -283,7 +283,7 @@ export function HabitGrid({
             {/* ── Date header row ── */}
             <div
               className={cn(
-                "sticky left-0 z-20 border-b border-r border-border/70 bg-card/80 backdrop-blur-xl",
+                "sticky left-0 z-20 border-b border-r border-border/70 bg-card",
                 headerHeight
               )}
             />
@@ -291,13 +291,13 @@ export function HabitGrid({
               <div
                 key={col.date}
                 className={cn(
-                  "relative flex select-none flex-col items-center justify-center border-b border-r border-border/60 bg-card/35 backdrop-blur-sm",
+                  "relative flex select-none flex-col items-center justify-center border-b border-r border-border/60 bg-card",
                   headerHeight,
                   col.isToday && "bg-brand/10"
                 )}
               >
                 {col.isToday && (
-                  <span className="absolute inset-x-2 top-1 h-px bg-brand-gradient shadow-[0_0_14px_var(--brand)]" />
+                  <span className="absolute inset-x-2 top-1 h-0.5 bg-brand" />
                 )}
                 {col.dayName && (
                   <span
@@ -312,7 +312,7 @@ export function HabitGrid({
                   </span>
                 )}
                 {col.isToday && view === "week" && (
-                  <span className="mb-1 h-1.5 w-1.5 rounded-full bg-brand shadow-[0_0_10px_var(--brand)]" />
+                  <span className="mb-1 h-1.5 w-1.5 rounded-full bg-brand" />
                 )}
                 <span
                   className={cn(
@@ -337,14 +337,11 @@ export function HabitGrid({
                     duration: 0.32,
                     delay: Math.min(rowIndex * 0.035, 0.4),
                   }}
-                  className="sticky left-0 z-10 flex h-10 items-center gap-2 border-b border-r border-border/70 bg-card/82 px-3 backdrop-blur-xl"
+                  className="sticky left-0 z-10 flex h-10 items-center gap-2 border-b border-r border-border/70 bg-card px-3"
                 >
                   <span
-                    className="h-3.5 w-3.5 flex-shrink-0 rounded-full ring-2 ring-inset ring-white/20"
-                    style={{
-                      backgroundColor: habit.color,
-                      boxShadow: `0 0 14px ${habit.color}80`,
-                    }}
+                    className="h-3.5 w-3.5 flex-shrink-0 rounded-full border-2 border-foreground/50"
+                    style={{ backgroundColor: habit.color }}
                   />
                   {habit.emoji && (
                     <span className="text-sm leading-none">{habit.emoji}</span>

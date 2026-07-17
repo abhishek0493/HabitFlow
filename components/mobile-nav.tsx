@@ -17,7 +17,6 @@ import {
   Menu,
   BarChart3,
   BookOpen,
-  CalendarCheck2,
   LayoutDashboard,
   ListChecks,
   ListTodo,
@@ -42,20 +41,14 @@ export function MobileNav() {
     .toUpperCase()
 
   return (
-    // md:hidden ensures this is invisible on desktop
-    <div className="glass flex h-14 flex-shrink-0 items-center justify-between border-b border-border/80 px-4 shadow-lg shadow-black/5 md:hidden">
-      {/* App name */}
+    <div className="flex h-14 flex-shrink-0 items-center justify-between border-b-2 border-border bg-card/95 px-4 md:hidden">
       <div className="flex items-center gap-2.5">
-        <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-brand-gradient shadow-md shadow-brand/30 ring-1 ring-white/25">
-          <span className="absolute inset-0 animate-glow-pulse rounded-lg bg-brand-gradient opacity-40 blur-md" />
-          <CalendarCheck2 className="h-[18px] w-[18px] text-white" />
-        </div>
-        <span className="font-bold tracking-tight text-brand-gradient">Habitflow</span>
+        <span className="masthead-mark h-8 w-8 text-base">hf</span>
+        <span className="doodle-label">Habitflow</span>
       </div>
 
       <div className="flex items-center gap-1.5">
         <ThemeToggle />
-        {/* Hamburger → Sheet */}
         <Sheet open={open} onOpenChange={setOpen}>
           <Button
             variant="ghost"
@@ -66,19 +59,16 @@ export function MobileNav() {
             <Menu className="h-5 w-5" />
           </Button>
 
-          <SheetContent side="left" className="glass flex w-72 flex-col overflow-hidden p-0">
+          <SheetContent side="left" className="flex w-72 flex-col overflow-hidden bg-card p-0">
             <SheetHeader className="px-5 pb-3 pt-5">
               <SheetTitle className="flex items-center gap-2.5 text-base font-semibold">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-gradient shadow-md shadow-brand/25 ring-1 ring-white/25">
-                  <CalendarCheck2 className="h-[18px] w-[18px] text-white" />
-                </div>
-                <span className="text-brand-gradient">Habitflow</span>
+                <span className="masthead-mark h-8 w-8 text-base">hf</span>
+                <span className="doodle-label">Page index</span>
               </SheetTitle>
             </SheetHeader>
 
             <Separator />
 
-            {/* Nav links */}
             <nav className="flex-1 space-y-1 px-3 py-4">
               {NAV_LINKS.map(({ href, label, icon: Icon }) => {
                 const isActive =
@@ -89,10 +79,10 @@ export function MobileNav() {
                     href={href}
                     onClick={() => setOpen(false)}
                     className={cn(
-                      "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all duration-300",
+                      "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-bold transition-all duration-150",
                       isActive
-                        ? "bg-accent text-accent-foreground shadow-sm"
-                        : "text-muted-foreground hover:-translate-y-0.5 hover:bg-accent/60 hover:text-foreground"
+                        ? "border-2 border-foreground/70 bg-sidebar-accent text-foreground shadow-[2px_2px_0_color-mix(in_oklch,var(--foreground)_16%,transparent)]"
+                        : "border-2 border-transparent text-muted-foreground hover:bg-secondary hover:text-foreground"
                     )}
                   >
                     <Icon
@@ -106,15 +96,14 @@ export function MobileNav() {
 
             <Separator />
 
-            {/* User info + sign out */}
             <div className="space-y-3 px-5 py-4">
               {session?.user && (
-                <div className="premium-panel flex items-center gap-3 rounded-xl p-3">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-gradient text-sm font-bold text-white ring-1 ring-white/25">
+                <div className="flex items-center gap-3 px-1 py-1">
+                  <div className="flex h-9 w-9 shrink-0 -rotate-2 items-center justify-center rounded-md border-2 border-foreground/70 bg-brand text-sm font-bold text-white">
                     {initial}
                   </div>
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-medium">
+                    <p className="truncate text-sm font-bold">
                       {session.user.name}
                     </p>
                     <p className="truncate text-xs text-muted-foreground">

@@ -128,7 +128,7 @@ export function WeekdayMissChart({ habits, logs, dates }: WeekdayMissChartProps)
             id="habit-filter"
             value={selectedHabitId}
             onChange={(e) => setSelectedHabitId(e.target.value)}
-            className="h-8 flex-1 rounded-lg border border-border bg-card/60 px-2.5 py-1 text-xs font-semibold shadow-sm backdrop-blur-md transition-all focus:outline-none focus:ring-2 focus:ring-brand/35 sm:flex-initial"
+            className="h-8 flex-1 rounded-md border-2 border-border bg-card px-2.5 py-1 text-xs font-semibold shadow-[2px_2px_0_color-mix(in_oklch,var(--foreground)_10%,transparent)] transition-all focus:outline-none focus:ring-2 focus:ring-brand/35 sm:flex-initial"
           >
             <option value="all">All Habits (Combined)</option>
             {habits.map((h) => (

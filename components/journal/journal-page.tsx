@@ -83,65 +83,67 @@ export function JournalPage({ initialDate, initialEntry }: JournalPageProps) {
   }
 
   return (
-    <div className="animate-fade-in mx-auto max-w-3xl px-4 py-8">
-      <div className="mb-6 text-center">
-        <p className="text-xs font-bold uppercase tracking-[0.24em] text-brand">
-          Daily notes
-        </p>
-        <h1 className="mt-2 text-3xl font-black tracking-tight text-brand-gradient sm:text-4xl">
-          Journal
-        </h1>
-      </div>
-      {/* Date navigation */}
-      <DateNav currentDate={currentDate} onDateChange={handleDateChange} />
-
-      {/* Main journal card — softly fades while a new day's entry loads */}
-      <div
-        className="premium-panel mt-6 overflow-hidden rounded-2xl transition-opacity duration-300"
-        style={{ opacity: isLoading ? 0.5 : 1 }}
-      >
-        {/* Mood section — softly tinted by the selected mood */}
-        <div
-          className="border-b border-border transition-colors duration-700"
-          style={{
-            backgroundColor: selectedMood
-              ? `${MOODS[selectedMood - 1].color}0d` // ~5% opacity
-              : "transparent",
-          }}
-        >
-          <MoodPicker selectedMood={selectedMood} onSelect={handleMoodSelect} />
+    <div className="page-frame mx-auto max-w-6xl animate-fade-in p-3 sm:p-5 lg:p-6">
+      <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="doodle-label">Notes in the margin</p>
+          <h1 className="mt-2 text-3xl font-black tracking-tight text-brand-gradient sm:text-4xl">
+            Journal
+          </h1>
         </div>
-
-        {/* Warm empty-state hint when the day has no saved entry yet */}
-        {!entry && !isLoading && (
-          <div className="px-6 pb-0 pt-5 text-center">
-            <p className="text-sm italic text-muted-foreground/70">
-              {isToday
-                ? "A fresh page. Start whenever you're ready."
-                : "Nothing was written on this day."}
-            </p>
-          </div>
-        )}
-
-        {/* Editor — keyed by date so it remounts with the right content */}
-        <JournalEditor
-          key={currentDate}
-          date={currentDate}
-          initialContent={entry?.content ?? ""}
-          initialMood={selectedMood}
-          onChange={(content, words) => {
-            latestContentRef.current = content
-            latestWordCountRef.current = words
-          }}
-        />
+        <p className="max-w-md text-sm leading-6 text-muted-foreground">
+          Leave a few honest lines for the version of you that comes next.
+        </p>
       </div>
 
-      {/* Entry history calendar */}
-      <EntryCalendar
-        currentDate={currentDate}
-        onDateSelect={handleDateChange}
-        fetchDatesForMonth={getJournalDatesForMonth}
-      />
+      <div className="grid gap-7 xl:grid-cols-[minmax(0,1fr)_18rem]">
+        <div>
+          <DateNav currentDate={currentDate} onDateChange={handleDateChange} />
+          <div
+            className="premium-panel mt-6 overflow-hidden rounded-lg transition-opacity duration-300"
+            style={{ opacity: isLoading ? 0.5 : 1 }}
+          >
+            <div
+              className="border-b border-border transition-colors duration-700"
+              style={{
+                backgroundColor: selectedMood
+                  ? `${MOODS[selectedMood - 1].color}0d`
+                  : "transparent",
+              }}
+            >
+              <MoodPicker selectedMood={selectedMood} onSelect={handleMoodSelect} />
+            </div>
+
+            {!entry && !isLoading && (
+              <div className="px-6 pb-0 pt-5 text-center">
+                <p className="text-sm italic text-muted-foreground/70">
+                  {isToday
+                    ? "A fresh page. Start whenever you're ready."
+                    : "Nothing was written on this day."}
+                </p>
+              </div>
+            )}
+
+            <JournalEditor
+              key={currentDate}
+              date={currentDate}
+              initialContent={entry?.content ?? ""}
+              initialMood={selectedMood}
+              onChange={(content, words) => {
+                latestContentRef.current = content
+                latestWordCountRef.current = words
+              }}
+            />
+          </div>
+        </div>
+        <aside className="xl:pt-1">
+          <EntryCalendar
+            currentDate={currentDate}
+            onDateSelect={handleDateChange}
+            fetchDatesForMonth={getJournalDatesForMonth}
+          />
+        </aside>
+      </div>
     </div>
   )
 }

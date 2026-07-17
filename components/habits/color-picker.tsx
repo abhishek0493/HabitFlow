@@ -40,8 +40,8 @@ export function ColorPicker({ value, onChange }: ColorPickerProps) {
             onClick={() => onChange(color)}
             style={{ backgroundColor: color }}
             className={cn(
-              "flex h-8 w-8 items-center justify-center rounded-xl ring-2 ring-transparent ring-offset-2 ring-offset-card transition-all duration-300 hover:-translate-y-0.5 hover:scale-110",
-              isSelected && "scale-110 ring-foreground shadow-lg"
+              "flex h-8 w-8 items-center justify-center rounded-md border-2 border-foreground/20 ring-2 ring-transparent ring-offset-2 ring-offset-card transition-all duration-150 hover:-translate-x-px hover:-translate-y-px hover:rotate-3",
+              isSelected && "-rotate-3 scale-110 border-foreground/80 ring-foreground shadow-[2px_2px_0_color-mix(in_oklch,var(--foreground)_22%,transparent)]"
             )}
           >
             {isSelected && <Check className="h-4 w-4 text-white" />}

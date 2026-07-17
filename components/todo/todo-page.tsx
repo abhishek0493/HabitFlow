@@ -181,105 +181,104 @@ export function TodoPage({ initialDate, initialTodos }: TodoPageProps) {
   }
 
   return (
-    <div className="animate-fade-in mx-auto max-w-3xl px-4 py-8">
-      {/* Header */}
-      <div className="mb-6 text-center">
-        <p className="text-xs font-bold uppercase tracking-[0.24em] text-brand">
-          Daily plan
+    <div className="page-frame mx-auto max-w-6xl animate-fade-in p-3 sm:p-5 lg:p-6">
+      <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="doodle-label">One small list</p>
+          <h1 className="mt-2 text-3xl font-black tracking-tight text-brand-gradient sm:text-4xl">
+            To-do
+          </h1>
+        </div>
+        <p className="max-w-md text-sm leading-6 text-muted-foreground">
+          A short list for the things that deserve your attention today.
         </p>
-        <h1 className="mt-2 text-3xl font-black tracking-tight text-brand-gradient sm:text-4xl">
-          To-do
-        </h1>
       </div>
 
-      {/* Date navigation */}
-      <TodoDateNav currentDate={currentDate} onDateChange={handleDateChange} />
-
-      {/* Progress + quick add */}
-      <div
-        className="mt-6 space-y-4 transition-opacity duration-300"
-        style={{ opacity: isLoading ? 0.5 : 1 }}
-      >
-        {/* Progress summary */}
-        <div className="premium-panel flex items-center gap-4 rounded-2xl p-4">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand shadow-[0_0_24px_color-mix(in_oklch,var(--brand)_22%,transparent)]">
-            <CheckCircle2 className="h-5 w-5" />
-          </div>
-          <div className="min-w-0 flex-1">
-            <div className="flex items-baseline justify-between gap-2">
-              <p className="text-sm font-semibold text-foreground">
-                {total === 0
-                  ? "Nothing planned yet"
-                  : `${done} of ${total} done`}
-              </p>
-              <span className="font-mono text-sm font-bold text-brand">
-                {pct}%
-              </span>
-            </div>
-            <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted">
-              <motion.div
-                className="h-full rounded-full bg-brand-gradient"
-                initial={false}
-                animate={{ width: `${pct}%` }}
-                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Quick add */}
-        <AddTodoForm onAdd={handleAdd} />
-
-        {/* Task list card */}
-        <div className="premium-panel overflow-hidden rounded-2xl">
-          <div className="flex items-center justify-between border-b border-border/70 bg-card/35 px-5 py-3 text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
-            <span className="flex items-center gap-2">
-              <Sparkles className="h-3.5 w-3.5 text-brand" />
-              Tasks
-            </span>
-            <Button
-              variant="ghost"
-              size="xs"
-              className="gap-1.5 text-[11px] font-semibold normal-case tracking-normal"
-              onClick={handleCarryOver}
-            >
-              <CornerDownRight className="h-3.5 w-3.5" />
-              Carry over unfinished
-            </Button>
-          </div>
-
-          {total === 0 ? (
-            <div className="flex flex-col items-center justify-center gap-3 px-6 py-16 text-center">
-              <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-brand/10 ring-1 ring-inset ring-brand/20">
-                <span className="absolute inset-0 animate-glow-pulse rounded-2xl bg-brand-gradient opacity-30 blur-xl" />
-                <ListChecks className="h-8 w-8 text-brand" />
+      <div className="grid gap-7 xl:grid-cols-[minmax(0,1fr)_18rem]">
+        <div>
+          <TodoDateNav currentDate={currentDate} onDateChange={handleDateChange} />
+          <div
+            className="mt-6 space-y-4 transition-opacity duration-300"
+            style={{ opacity: isLoading ? 0.5 : 1 }}
+          >
+            <div className="premium-panel flex items-center gap-4 rounded-lg p-4">
+              <div className="flex h-11 w-11 shrink-0 -rotate-3 items-center justify-center rounded-md border-2 border-brand/45 bg-brand/10 text-brand">
+                <CheckCircle2 className="h-5 w-5" />
               </div>
-              <h2 className="text-lg font-bold text-foreground">
-                A clear plate
-              </h2>
-              <p className="max-w-sm text-sm text-muted-foreground">
-                Add your first task above to start shaping the day.
-              </p>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-baseline justify-between gap-2">
+                  <p className="text-sm font-semibold text-foreground">
+                    {total === 0
+                      ? "Nothing planned yet"
+                      : `${done} of ${total} done`}
+                  </p>
+                  <span className="font-mono text-sm font-bold text-brand">
+                    {pct}%
+                  </span>
+                </div>
+                <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted">
+                  <motion.div
+                    className="h-full rounded-full bg-brand-gradient"
+                    initial={false}
+                    animate={{ width: `${pct}%` }}
+                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                  />
+                </div>
+              </div>
             </div>
-          ) : (
-            <TodoList
-              todos={todos}
-              onToggle={handleToggle}
-              onUpdate={handleUpdate}
-              onDelete={handleDelete}
-              onReorder={handleReorder}
-            />
-          )}
-        </div>
-      </div>
 
-      {/* Month calendar with progress dots */}
-      <TodoCalendar
-        currentDate={currentDate}
-        onDateSelect={handleDateChange}
-        fetchCountsForMonth={getTodoCountsForMonth}
-        refreshKey={refreshKey}
-      />
+            <AddTodoForm onAdd={handleAdd} />
+
+            <div className="premium-panel overflow-hidden rounded-lg">
+              <div className="flex items-center justify-between border-b border-border/70 bg-card/35 px-5 py-3 text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
+                <span className="flex items-center gap-2">
+                  <Sparkles className="h-3.5 w-3.5 text-brand" />
+                  Tasks
+                </span>
+                <Button
+                  variant="ghost"
+                  size="xs"
+                  className="gap-1.5 text-[11px] font-semibold normal-case tracking-normal"
+                  onClick={handleCarryOver}
+                >
+                  <CornerDownRight className="h-3.5 w-3.5" />
+                  Carry over unfinished
+                </Button>
+              </div>
+
+              {total === 0 ? (
+                <div className="flex flex-col items-center justify-center gap-3 px-6 py-16 text-center">
+                  <div className="relative flex h-16 w-16 items-center justify-center rounded-md border-2 border-brand/45 bg-brand/10 text-brand">
+                    <ListChecks className="h-8 w-8" />
+                  </div>
+                  <h2 className="text-2xl font-bold text-foreground">
+                    A clear plate
+                  </h2>
+                  <p className="max-w-sm text-sm text-muted-foreground">
+                    Add your first task above to start shaping the day.
+                  </p>
+                </div>
+              ) : (
+                <TodoList
+                  todos={todos}
+                  onToggle={handleToggle}
+                  onUpdate={handleUpdate}
+                  onDelete={handleDelete}
+                  onReorder={handleReorder}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+        <aside className="xl:pt-1">
+          <TodoCalendar
+            currentDate={currentDate}
+            onDateSelect={handleDateChange}
+            fetchCountsForMonth={getTodoCountsForMonth}
+            refreshKey={refreshKey}
+          />
+        </aside>
+      </div>
     </div>
   )
 }

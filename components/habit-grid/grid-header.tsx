@@ -46,18 +46,18 @@ export function GridHeader({
       : formatWeekRange(getWeekDays(weekStart)[0], getWeekDays(weekStart)[6])
 
   return (
-    <div className="relative flex flex-wrap items-center gap-2 border-b border-border/70 bg-card/35 p-4 backdrop-blur-xl">
+    <div className="relative flex flex-wrap items-center gap-2 border-b-2 border-border/70 bg-card p-4">
       <Button
         variant="ghost"
         size="icon"
         onClick={onPrevPeriod}
         aria-label="Previous period"
-        className="rounded-full"
+        className="rounded-md"
       >
         <ChevronLeft className="h-4 w-4" />
       </Button>
 
-      <span className="flex min-w-[150px] items-center justify-center gap-2 text-center text-lg font-black tracking-tight text-foreground">
+      <span className="doodle-underline flex min-w-[150px] items-center justify-center gap-2 text-center text-lg font-black tracking-tight text-foreground">
         {periodLabel}
         {isFetching && (
           <Loader2 className="h-3.5 w-3.5 flex-shrink-0 animate-spin text-brand" />
@@ -69,7 +69,7 @@ export function GridHeader({
         size="icon"
         onClick={onNextPeriod}
         aria-label="Next period"
-        className="rounded-full"
+        className="rounded-md"
       >
         <ChevronRight className="h-4 w-4" />
       </Button>
@@ -79,13 +79,13 @@ export function GridHeader({
         size="sm"
         onClick={onToday}
         disabled={isCurrentPeriod}
-        className="rounded-full"
+        className="rounded-md"
       >
         Today
       </Button>
 
       {/* View toggle — segmented control with a sliding indicator */}
-      <div className="ml-auto flex rounded-full border border-border/80 bg-muted/60 p-0.5 shadow-inner backdrop-blur-md">
+      <div className="ml-auto flex rounded-md border-2 border-border bg-muted p-0.5">
         {(["month", "week"] as const).map((mode) => {
           const active = view === mode
           return (
@@ -94,7 +94,7 @@ export function GridHeader({
               type="button"
               onClick={() => onViewChange(mode)}
               className={cn(
-                "relative rounded-full px-3.5 py-1.5 text-sm font-medium capitalize transition-colors",
+                "relative rounded-[4px] px-3.5 py-1.5 text-sm font-bold capitalize transition-colors",
                 active
                   ? "text-white"
                   : "text-muted-foreground hover:text-foreground"
@@ -103,7 +103,7 @@ export function GridHeader({
               {active && (
                 <motion.span
                   layoutId="view-indicator"
-                  className="absolute inset-0 -z-0 rounded-full bg-brand-gradient shadow-lg shadow-brand/30"
+                  className="absolute inset-0 -z-0 rounded-[4px] bg-brand"
                   transition={{ type: "spring", stiffness: 400, damping: 32 }}
                 />
               )}

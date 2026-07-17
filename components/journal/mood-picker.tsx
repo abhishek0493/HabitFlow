@@ -52,7 +52,7 @@ export function MoodPicker({
               data-no-theme-tx
               className={cn(
                 "group flex flex-col items-center gap-1.5 transition-all duration-150 focus-visible:outline-none",
-                "rounded-xl focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card",
+                "rounded-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card",
                 disabled && "cursor-not-allowed opacity-50"
               )}
               aria-label={`Mood: ${label}`}
@@ -61,18 +61,18 @@ export function MoodPicker({
               {/* Circle */}
               <div
                 className={cn(
-                  "flex h-14 w-14 items-center justify-center rounded-2xl transition-all duration-300",
-                  "group-hover:-translate-y-1 group-hover:scale-110 group-hover:shadow-lg",
-                  isSelected ? "scale-105" : "scale-100",
+                  "flex h-14 w-14 items-center justify-center rounded-md border-2 border-foreground/35 transition-all duration-150",
+                  "group-hover:-translate-x-px group-hover:-translate-y-px group-hover:rotate-3",
+                  isSelected ? "scale-105 -rotate-3" : "scale-100",
                   isPopping && "mood-pop",
-                  !isSelected && "bg-muted group-hover:bg-muted-foreground/20"
+                  !isSelected && "bg-muted group-hover:bg-secondary"
                 )}
                 style={
                   isSelected
                     ? {
                         backgroundColor: `${color}20`,
                         border: `2px solid ${color}`,
-                        boxShadow: `0 0 0 4px ${color}15`,
+                        boxShadow: `3px 3px 0 ${color}55`,
                       }
                     : undefined
                 }
