@@ -2,14 +2,12 @@
 
 import { AnimatePresence, motion } from "motion/react"
 import { Check } from "lucide-react"
-import type { CSSProperties } from "react"
 import { cn } from "@/lib/utils"
 
 interface GridCellProps {
   isCompleted: boolean
   isToday: boolean // date is today
   isFuture: boolean // date is in the future
-  color: string // habit hex color, used as fill when completed
   onClick: () => void
 }
 
@@ -17,7 +15,6 @@ export function GridCell({
   isCompleted,
   isToday,
   isFuture,
-  color,
   onClick,
 }: GridCellProps) {
   return (
@@ -38,19 +35,18 @@ export function GridCell({
             isToday && "is-today",
             isCompleted && "is-done"
           )}
-          style={{ "--doodle-color": color } as CSSProperties}
         >
           <AnimatePresence initial={false}>
             {isCompleted && (
               <motion.span
                 key="check"
-                initial={{ opacity: 0, scale: 0.35, rotate: -24 }}
-                animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                exit={{ opacity: 0, scale: 0.35, rotate: 18 }}
+                initial={{ opacity: 0, scale: 0.55 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.55 }}
                 transition={{ type: "spring", stiffness: 560, damping: 23 }}
                 className="relative z-10 grid place-items-center"
               >
-                <Check className="size-4 stroke-[3]" />
+                <Check className="size-3.5 stroke-[3]" />
               </motion.span>
             )}
           </AnimatePresence>

@@ -45,7 +45,7 @@ export function AddHabitModal() {
         <DialogHeader>
           <DialogTitle>Add a new habit</DialogTitle>
           <DialogDescription>
-            Choose a name, colour, and optional emoji.
+            Choose a name and an optional emoji.
           </DialogDescription>
         </DialogHeader>
         {error && <p className="text-sm text-destructive">{error}</p>}

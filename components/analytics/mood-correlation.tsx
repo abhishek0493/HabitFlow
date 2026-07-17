@@ -7,7 +7,6 @@ import { Smile, Frown, Meh, Sparkles, BookOpen } from "lucide-react"
 interface Habit {
   id: string
   name: string
-  color: string
   emoji?: string | null
 }
 
@@ -33,7 +32,6 @@ interface HabitCorrelation {
   habitId: string
   name: string
   emoji?: string | null
-  color: string
   avgMoodCompleted: number
   avgMoodMissed: number
   diff: number
@@ -84,7 +82,6 @@ export function MoodCorrelation({ habits, logs, moods, dates }: MoodCorrelationP
           habitId: habit.id,
           name: habit.name,
           emoji: habit.emoji,
-          color: habit.color,
           avgMoodCompleted,
           avgMoodMissed,
           diff,
@@ -181,10 +178,7 @@ export function MoodCorrelation({ habits, logs, moods, dates }: MoodCorrelationP
                   >
                     {/* Habit Info */}
                     <div className="flex items-center gap-2.5">
-                      <span
-                        className="h-3 w-3 rounded-full shrink-0 ring-2 ring-white/10"
-                        style={{ backgroundColor: data.color }}
-                      />
+                      <span className="h-3 w-3 shrink-0 rounded-sm bg-brand" />
                       {data.emoji && <span className="text-base">{data.emoji}</span>}
                       <span className="text-sm font-semibold text-foreground/95">
                         {data.name}

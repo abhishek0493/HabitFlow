@@ -7,7 +7,6 @@ import { AlertCircle } from "lucide-react"
 interface Habit {
   id: string
   name: string
-  color: string
   emoji?: string | null
 }
 

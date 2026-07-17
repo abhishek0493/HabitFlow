@@ -42,10 +42,7 @@ export function HabitItem({ habit }: HabitItemProps) {
           "relative z-10 rounded-md border-2 border-brand bg-card shadow-[4px_4px_0_color-mix(in_oklch,var(--foreground)_20%,transparent)]"
       )}
     >
-      <span
-        className="absolute inset-y-2 left-0 w-1 rounded-r-full opacity-70 transition-all duration-150 group-hover:opacity-100"
-        style={{ backgroundColor: habit.color }}
-      />
+      <span className="absolute inset-y-2 left-0 w-1 rounded-r-full bg-brand opacity-70 transition-all duration-150 group-hover:opacity-100" />
       {/* Drag handle */}
       <button
         type="button"
@@ -57,10 +54,8 @@ export function HabitItem({ habit }: HabitItemProps) {
         <GripVertical className="h-4 w-4" />
       </button>
 
-      {/* Colour dot */}
       <span
-        className="h-4 w-4 shrink-0 rounded-full border-2 border-foreground/40 transition-transform duration-150 group-hover:scale-125"
-        style={{ backgroundColor: habit.color }}
+        className="h-3.5 w-3.5 shrink-0 rounded-sm border-2 border-brand bg-brand/15 transition-transform duration-150 group-hover:rotate-6"
         aria-hidden
       />
 

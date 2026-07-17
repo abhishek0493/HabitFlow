@@ -7,7 +7,6 @@ import { Award, CheckCircle, Clock, Trophy } from "lucide-react"
 interface Habit {
   id: string
   name: string
-  color: string
 }
 
 interface LogEntry {

@@ -308,41 +308,36 @@
     border-top: 2px dashed color-mix(in oklch, var(--brand-3) 70%, transparent);
   }
   .doodle-check {
-    --doodle-color: var(--brand);
     position: absolute;
-    inset: 6px;
+    top: 50%;
+    left: 50%;
     display: grid;
+    width: 1.15rem;
+    height: 1.15rem;
     place-items: center;
-    border: 2px solid color-mix(in oklch, var(--foreground) 48%, transparent);
-    border-radius: 44% 56% 48% 52% / 52% 44% 56% 48%;
-    background: color-mix(in oklch, var(--card) 76%, transparent);
-    color: var(--foreground);
-    transform: rotate(-2deg);
+    border: 1.5px solid color-mix(in oklch, var(--foreground) 46%, transparent);
+    border-radius: 4px;
+    background: var(--card);
+    color: white;
+    transform: translate(-50%, -50%);
     transition:
-      transform 0.16s ease,
+      transform 0.18s ease,
       background-color 0.16s ease,
-      border-color 0.16s ease;
+      border-color 0.16s ease,
+      box-shadow 0.16s ease;
   }
   .doodle-check::before {
-    content: "";
-    position: absolute;
-    inset: -3px 1px 2px -2px;
-    border: 1px solid color-mix(in oklch, var(--foreground) 30%, transparent);
-    border-radius: 54% 46% 55% 45% / 47% 55% 45% 53%;
-    transform: rotate(5deg);
+    content: none;
   }
   .doodle-check.is-today {
     border-color: var(--brand);
-    background-color: color-mix(in oklch, var(--brand-3) 20%, var(--card));
+    box-shadow: 0 0 0 2px color-mix(in oklch, var(--brand) 16%, transparent);
   }
   .doodle-check.is-done {
-    border-color: var(--doodle-color);
-    background-color: color-mix(in oklch, var(--doodle-color) 25%, var(--card));
-    color: var(--doodle-color);
-    transform: rotate(-6deg) scale(1.04);
-  }
-  .doodle-check.is-done::before {
-    border-color: color-mix(in oklch, var(--doodle-color) 62%, transparent);
+    border-color: var(--brand);
+    background-color: var(--brand);
+    color: white;
+    transform: translate(-50%, -50%) scale(1.04);
   }
   .doodle-checkbox {
     border: 2px solid color-mix(in oklch, var(--foreground) 64%, transparent) !important;
@@ -378,6 +373,7 @@
   }
   .dashboard-shell {
     min-height: 100svh;
+    overflow: clip;
     padding: clamp(0.75rem, 2vw, 1.5rem);
   }
   .dashboard-masthead {

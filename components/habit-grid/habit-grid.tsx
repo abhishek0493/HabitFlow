@@ -256,7 +256,7 @@ export function HabitGrid({
 
   // ── Grid geometry ─────────────────────────────────────────────────────────
   const colWidth = view === "week" ? "80px" : "34px"
-  const gridTemplateColumns = `160px repeat(${displayColumns.length}, ${colWidth})`
+  const gridTemplateColumns = `clamp(190px, 18vw, 240px) repeat(${displayColumns.length}, ${colWidth})`
   const headerHeight = view === "week" ? "h-14" : "h-10"
 
   return (
@@ -337,18 +337,14 @@ export function HabitGrid({
                     duration: 0.32,
                     delay: Math.min(rowIndex * 0.035, 0.4),
                   }}
-                  className="sticky left-0 z-10 flex h-10 items-center gap-2 border-b border-r border-border/70 bg-card px-3"
+                  className="sticky left-0 z-10 flex h-10 items-center gap-2.5 border-b border-r-2 border-border/75 bg-card px-3.5 shadow-[3px_0_0_color-mix(in_oklch,var(--foreground)_5%,transparent)]"
                 >
-                  <span
-                    className="h-3.5 w-3.5 flex-shrink-0 rounded-full border-2 border-foreground/50"
-                    style={{ backgroundColor: habit.color }}
-                  />
                   {habit.emoji && (
-                    <span className="text-sm leading-none">{habit.emoji}</span>
+                    <span className="text-base leading-none">{habit.emoji}</span>
                   )}
                   <HabitNameLabel
                     name={habit.name}
-                    className="text-sm font-semibold text-foreground/90"
+                    className="text-sm font-extrabold text-foreground"
                   />
                 </motion.div>
 
@@ -363,7 +359,6 @@ export function HabitGrid({
                       isCompleted={isCompleted}
                       isFuture={isFuture}
                       isToday={isToday}
-                      color={habit.color}
                       onClick={() =>
                         toggleLog({ habitId: habit.id, date: col.date })
                       }

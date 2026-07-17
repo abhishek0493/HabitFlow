@@ -21,7 +21,6 @@ import type { Priority } from "@/lib/validations"
 interface Habit {
   id: string
   name: string
-  color: string
   emoji?: string | null
   createdAt: string
 }
